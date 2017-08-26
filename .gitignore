@@ -1,11 +1,5 @@
 
 *.backup
-inkTD/Temp/UnityTempFile-fb98e0c579fd8264f95957da928991ad
-inkTD/Temp/UnityTempFile-c2654a240ac41fa4ea572b18c5d19729
-inkTD/Temp/UnityTempFile-752637ebf9a15f240a515be8c27764df
-inkTD/Temp/UnityTempFile-a5e518a8dcd229742bb8e1af6da203ba
-inkTD/Temp/UnityTempFile-5044ec630e9ce0f4fb1e5001bd40f414
-inkTD/Temp/UnityTempFile-40bb979ff53a8444a8171c1990abe3f7
-inkTD/Temp/UnityTempFile-2bac4988f0bc933408807883200935bf
-inkTD/Temp/UnityLockfile
-inkTD/Temp/ProcessJobs/e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+inkTD/Temp/*
+inkTD/Library/CrashedAssetImports.txt
+inkTD/Library/CurrentLayout.dwlt
