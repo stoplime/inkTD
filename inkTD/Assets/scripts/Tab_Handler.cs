@@ -101,7 +101,17 @@ public class Tab_Handler : MonoBehaviour
         }
 
         AlignTabs(UIAnchors.Right);
+
+        helper.Help.onResolutionChange += onResolutionChange;
 	}
+
+    private void onResolutionChange(object sender, System.EventArgs e)
+    {
+        AlignTabs(UIAnchors.Bottom);
+        AlignTabs(UIAnchors.Left);
+        AlignTabs(UIAnchors.Right);
+        AlignTabs(UIAnchors.Top);
+    }
 
     /// <summary>
     /// A method for handling the start of drag events.

@@ -8,6 +8,7 @@ TagManager:
   - Toolbar
   - ToolbarPanel
   - GroundObject
+  - Tower
   layers:
   - Default
   - TransparentFX
