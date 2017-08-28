@@ -17,7 +17,10 @@ namespace helper
 
     public static class Help
     {
-        //TODO: Add helpful methods here.
+
+        public static bool MouseOnUI { get; set; }
+
+
     }
 }
 
