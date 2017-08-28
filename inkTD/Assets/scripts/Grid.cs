@@ -70,7 +70,7 @@ public class Grid : MonoBehaviour {
 	bool towerSelected = true;
 	// Update is called once per frame
 	void Update () {
-		if (towerSelected){
+		if (!Help.MouseOnUI){
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit)){
@@ -97,21 +97,5 @@ public class Grid : MonoBehaviour {
 				}
 			}
 		}
-		// if (Input.GetButtonDown("Fire1"))
-        // {
-        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		// 	RaycastHit hit;
-        //     if (Physics.Raycast(ray, out hit)){
-		// 		if (hit.collider.tag == "GroundObject"){
-		// 			IntVector2 gridPos = posToGrid(hit.point);
-		// 			if (inArena(gridPos) && isGridEmpty(gridPos)){	
-		// 				Vector3 target = gridToPos(gridPos);
-		// 				target.y = 1f;
-		// 				GameObject newCube = Instantiate(particle, target, hit.collider.transform.rotation);
-		// 				grid[(int)gridPos.x, (int)gridPos.y] = newCube;
-		// 			}
-		// 		}
-		// 	}
-        // }
 	}
 }
