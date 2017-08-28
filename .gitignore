@@ -1,5 +1,5 @@
-/[Ll]ibrary/
-/[Tt]emp/
+/[Ll]ibrary/*
+/[Tt]emp/*
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
@@ -28,6 +28,8 @@ ExportedObj/
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+/inkTD/Temp/*
+/inkTD/Library/*
 
 # Builds
 *.apk
