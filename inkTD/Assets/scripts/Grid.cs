@@ -26,7 +26,20 @@ public class Grid : MonoBehaviour {
 	/// <summary>
 	/// array containing the towers of the playing field
 	/// </summary>
-	public Object[,] grid;
+	private GameObject[,] grid;
+
+	public void setGridObject(IntVector2 xy, GameObject obj){
+		grid[xy.x, xy.y] = obj;
+	}
+	public void setGridObject(int x, int y, GameObject obj){
+		grid[x, y] = obj;
+	}
+	public GameObject getGridObject(IntVector2 xy){
+		return grid[xy.x, xy.y];
+	}
+	public GameObject getGridObject(int x, int y){
+		return grid[x, y];
+	}
 
 	/// <summery>
 	/// offset the grid 0,0 per grid unit away
@@ -61,7 +74,7 @@ public class Grid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		grid = new Object[grid_width, grid_height];
+		grid = new GameObject[grid_width, grid_height];
 	}
 
 	public GameObject particle;
@@ -76,7 +89,7 @@ public class Grid : MonoBehaviour {
 			if (Physics.Raycast(ray, out hit)){
 				if (hit.collider.tag == "GroundObject"){
 					IntVector2 gridPos = posToGrid(hit.point);
-					if (inArena(gridPos) && isGridEmpty(gridPos)){	
+					if (inArena(gridPos) && isGridEmpty(gridPos)){
 						Vector3 target = gridToPos(gridPos);
 						target.y = 0.1f;
 						if(existingHighlight == null){
@@ -84,11 +97,10 @@ public class Grid : MonoBehaviour {
 						}else{
 							existingHighlight.transform.position = target;
 						}
-
 						if (Input.GetButtonDown("Fire1")){
 							target.y = 1f;
 							GameObject newCube = Instantiate(particle, target, hit.collider.transform.rotation);
-							grid[(int)gridPos.x, (int)gridPos.y] = newCube;
+							grid[gridPos.x, gridPos.y] = newCube;
 						}
 					}
 					else if(existingHighlight != null){
