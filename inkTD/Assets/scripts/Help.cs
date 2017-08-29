@@ -1,5 +1,6 @@
 ﻿
 using System;
+using UnityEngine;
 
 namespace helper
 {
@@ -25,6 +26,21 @@ namespace helper
         public static bool MouseOnUI { get; set; }
 
         /// <summary>
+        /// A blank button used when moving tabs around.
+        /// </summary>
+        public static GameObject BlankButton { get { return blankButton; } }
+
+        /// <summary>
+        /// The RectTransform component of the BlankButton GameObject.
+        /// </summary>
+        public static RectTransform BlankButtonRect { get { return blankButtonRect; } }
+        
+       
+        private static RectTransform blankButtonRect = null;
+
+        private static GameObject blankButton = null;
+
+        /// <summary>
         /// Triggers the onResolutionChange event when called.
         /// </summary>
         public static void TriggerResolutionChangeEvent()
@@ -33,6 +49,16 @@ namespace helper
             {
                 onResolutionChange(null, EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        /// Sets the blank button of the Help class. The given object must have a rect transform.
+        /// </summary>
+        /// <param name="button">The blank tab prefab loaded, or otherwise a compatable gameobject with a rect transform component.</param>
+        public static void SetBlankButton(GameObject button)
+        {
+            blankButton = button;
+            blankButtonRect = blankButton.GetComponent<RectTransform>();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using helper;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -65,6 +66,9 @@ public class Tab_Handler : MonoBehaviour
     /// </summary>
     private RectTransform buttonTransform;
 
+    /// <summary>
+    /// Chances are this is the panel or UI Menu that this UI element is nested in.
+    /// </summary>
     private GameObject parentObject;
     private RectTransform canvasRect;
     private RectTransform toolbarRect;
@@ -82,6 +86,9 @@ public class Tab_Handler : MonoBehaviour
     private float offsetBottom = 0f;
     private float offsetLeft = 0f;
     private float offsetRight = 0f;
+
+    private float dragOffsetX = 0f;
+    private float dragOffsetY = 0f;
 
 	// Use this for initialization
 	void Start ()
@@ -102,7 +109,12 @@ public class Tab_Handler : MonoBehaviour
 
         AlignTabs(UIAnchors.Right);
 
-        helper.Help.onResolutionChange += onResolutionChange;
+        Help.onResolutionChange += onResolutionChange;
+
+        if (Help.BlankButton == null)
+        {
+            Help.SetBlankButton(Instantiate(Resources.Load("Misc Prefabs/Blank_Tab")) as GameObject);
+        }
 	}
 
     private void onResolutionChange(object sender, System.EventArgs e)
@@ -119,6 +131,20 @@ public class Tab_Handler : MonoBehaviour
     public void OnBeginDrag()
     {
         beingDragged = true;
+
+        if (anchor == UIAnchors.Bottom || anchor == UIAnchors.Top)
+        {
+            dragOffsetX = Input.mousePosition.x - buttonTransform.anchoredPosition.x;
+            dragOffsetY = Input.mousePosition.y - buttonTransform.anchoredPosition.y;
+        }
+        else if (anchor == UIAnchors.Right || anchor == UIAnchors.Left)
+        {
+            dragOffsetX = Help.BlankButtonRect.rect.width / 2;
+            dragOffsetY = Help.BlankButtonRect.rect.height / 2;
+        }
+        
+        Help.BlankButton.transform.SetParent(parentObject.transform, false);
+        Help.BlankButton.SetActive(true);
     }
 
     /// <summary>
@@ -127,6 +153,8 @@ public class Tab_Handler : MonoBehaviour
     public void OnEndDrag()
     {
         beingDragged = false;
+        Help.BlankButton.SetActive(false);
+
         Vector3 mousePos = Input.mousePosition; //Note: y = 0 is the bottom.
         
         //Determining the closest edge of the screen.
@@ -282,10 +310,16 @@ public class Tab_Handler : MonoBehaviour
     }
 
     // Update is called once per frame
-    //void Update ()
-    //{
-        //Update is commented out in the event it is needed in the future.
-	//}
+    void Update()
+    {
+        if (beingDragged)
+        {
+            Vector3 pos = Input.mousePosition;
+            pos.x -= dragOffsetX;
+            pos.y -= dragOffsetY;
+            Help.BlankButton.transform.position = pos;
+        }
+	}
 }
 
 /// <summary>

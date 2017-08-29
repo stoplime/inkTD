@@ -51,8 +51,8 @@ public class Grid : MonoBehaviour {
 	/// checks if grid pos is within the grid arena
 	/// </summery>
 	bool inArena(IntVector2 pos){
-		if (pos.x > 0 && pos.x <= grid_width){
-			if (pos.y > 0 && pos.y <= grid_height){
+		if (pos.x >= 0 && pos.x < grid_width){
+			if (pos.y >= 0 && pos.y < grid_height){
 				return true;
 			}
 		}
