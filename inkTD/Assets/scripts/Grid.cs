@@ -52,8 +52,10 @@ public class Grid : MonoBehaviour {
 	public int grid_width = 20;
 	public int grid_height = 10;
 
-
-	bool isGridEmpty(IntVector2 pos){
+	/// <summery>
+	/// checks if grid pos is currently occupide with a tower
+	/// </summery>
+	public bool isGridEmpty(IntVector2 pos){
 		if (grid[pos.x, pos.y] != null){
 			return false;
 		}
@@ -63,7 +65,7 @@ public class Grid : MonoBehaviour {
 	/// <summery>
 	/// checks if grid pos is within the grid arena
 	/// </summery>
-	bool inArena(IntVector2 pos){
+	public bool inArena(IntVector2 pos){
 		if (pos.x >= 0 && pos.x < grid_width){
 			if (pos.y >= 0 && pos.y < grid_height){
 				return true;
