@@ -121,8 +121,9 @@ GameObject:
   - component: {fileID: 361278080}
   - component: {fileID: 361278082}
   - component: {fileID: 361278081}
+  - component: {fileID: 361278083}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Toolbar Panel
   m_TagString: ToolbarPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,6 +248,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3087f941f0d0387498adb3561ebd8754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &361278083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 361278076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5344364de2427fb4fa90c4525373779f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &417071229
