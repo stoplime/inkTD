@@ -97,3 +97,7 @@ MonoBehaviour:
   range: 5
   price: 100
   priorityTarget: 0
+  projectileLife: 1000
+  projectileObject: {fileID: 1640570988338666, guid: 153ec03f1c88e3745a78a75d41dab6ed,
+    type: 2}
+  projectileSpawnHeight: 2.34

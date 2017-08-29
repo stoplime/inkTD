@@ -62,6 +62,19 @@ namespace helper
         }
 
         /// <summary>
+        /// Computes a three point bezier returning the third point along the curve.
+        /// </summary>
+        /// <param name="point1">The first point.</param>
+        /// <param name="point2">The second point.</param>
+        /// <param name="time">The time along the curve (percentage from point1 to point2).</param>
+        /// <returns></returns>
+        public static Vector3 ComputeBezier(Vector3 point1, Vector3 point2, float time)
+        {
+            //TODO: Actually compute a bezier curve
+            return Vector3.Lerp(point1, point2, time);
+        }
+
+        /// <summary>
         /// An event that runs whenever the resolution changes.
         /// </summary>
         public static event EventHandler onResolutionChange;

@@ -9,6 +9,8 @@ TagManager:
   - ToolbarPanel
   - GroundObject
   - Tower
+  - Debug
+  - Projectile
   layers:
   - Default
   - TransparentFX
