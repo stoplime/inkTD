@@ -34,11 +34,22 @@ namespace helper
         /// The RectTransform component of the BlankButton GameObject.
         /// </summary>
         public static RectTransform BlankButtonRect { get { return blankButtonRect; } }
+
+        /// <summary>
+        /// Gets or sets the volume of the sound effects emitted from towers.
+        /// </summary>
+        public static float TowerSoundEffectVolume
+        {
+            get { return towerSoundEffectVolume; }
+            set { towerSoundEffectVolume = value; }
+        }
         
        
         private static RectTransform blankButtonRect = null;
 
         private static GameObject blankButton = null;
+
+        private static float towerSoundEffectVolume = 0.50f;
 
         /// <summary>
         /// Triggers the onResolutionChange event when called.
