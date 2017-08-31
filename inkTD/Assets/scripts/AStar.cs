@@ -15,9 +15,9 @@ public class AStar : MonoBehaviour {
 	private List<IntVector2> getAdjacentNodes(IntVector2 currentNode, float[,] g){
 		List<IntVector2> l = getAdjacentNodes(currentNode);
 		float currentGvalue = g[currentNode.x, currentNode.y];
-		for(int i = l.Count-1; i >= 0, i--){
+		for(int i = l.Count-1; i >= 0; i--){
 			// if the next step is less than the current step
-			if(g[l[i].x, l[i].y] <= current){
+			if(g[l[i].x, l[i].y] <= currentGvalue){
 				l.RemoveAt(i);
 			}
 		}
@@ -73,7 +73,7 @@ public class AStar : MonoBehaviour {
 		return false;
 	}
 
-	private List<IntVector2> AStar(float[,] g, bool[,] visited, IntVector2 current, IntVector2 end, List<IntVector2> path){
+	private List<IntVector2> RunAStar(float[,] g, bool[,] visited, IntVector2 current, IntVector2 end, List<IntVector2> path){
 		List<IntVector2> validMoves = getAdjacentNodes(current, g);
 
 		if(validMoves.Count == 0){
@@ -93,6 +93,7 @@ public class AStar : MonoBehaviour {
 				
 			}
 		}
+		return path;
 	}
 
 	// Use this for initialization
