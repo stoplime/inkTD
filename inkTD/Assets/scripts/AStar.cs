@@ -33,7 +33,7 @@ public class AStar : MonoBehaviour {
 					offsetNode = new IntVector2(currentNode.x - 1, currentNode.y);
 					break;
 			}
-			if(grid.inArena(offsetNode)){
+			if(grid.inArena(offsetNode) && grid.getGridObject(offsetNode) == null){
 				l.Add(offsetNode);
 			}
 		}
@@ -48,7 +48,7 @@ public class AStar : MonoBehaviour {
 	}
 
 	private bool search(IntVector2 currentNode){
-		
+
 		List<IntVector2> nextNodes = getAdjacentNodes(currentNode);
 		foreach (var nextNode in nextNodes){
 
