@@ -6,9 +6,9 @@ using helper;
 public class AStar : MonoBehaviour {
 
 	private class Node{
-		public IntVector2 Location { get; private set; }
-		public float G { get; private set; }
-		public float H { get; private set; }
+		public IntVector2 Location { get; set; }
+		public float G { get; set; }
+		public float H { get; set; }
 		public float F { get { return this.G + this.H; } }
 		public Node ParentNode { get; set; }
 	}
@@ -18,48 +18,38 @@ public class AStar : MonoBehaviour {
 	public IntVector2 Target;
 
 	public IntVector2 Spawn;
-	
-	// TODO: check if g value is less and make it not a valid move
-	private LinkedList<IntVector2> getAdjacentNodes(IntVector2 currentNode, float[,] g){
-		LinkedList<IntVector2> l = getAdjacentNodes(currentNode);
-		float currentGvalue = g[currentNode.x, currentNode.y];
-		for(int i = l.Count-1; i >= 0; i--){
-			// if the next step is less than the current step
-			if(g[l[i].x, l[i].y] <= currentGvalue){
-				l.RemoveAt(i);
-			}
-		}
-		return l;
-	}
 
 	/// <summery>
 	/// creates a list of adjacent nodes from a current node
 	/// </summery>
-	private LinkedList<Node> getAdjacentNodes(Node currentNode){
+	private LinkedList<Node> getAdjacentNodes(Node currentNode, IntVector2 end, int playerID){
 		LinkedList<Node> l = new LinkedList<Node>();
+		IntVector2 offset;
 		Node offsetNode;
 		for (int i = 0; i < 4; i++){
-			offsetNode = new Node();
-			offsetNode.ParentNode = currentNode;
+			offset = currentNode.Location;
 			switch (i)
 			{
 				case 1:
-					offsetNode.Location = new IntVector2(currentNode.Location.x + 1, currentNode.Location.y);
+					offset.x += 1;
 					break;
 				case 2:
-					offsetNode.Location = new IntVector2(currentNode.Location.x, currentNode.Location.y - 1);
+					offset.y += 1;
 					break;
 				case 3:
-					offsetNode.Location = new IntVector2(currentNode.Location.x, currentNode.Location.y + 1);
+					offset.x -= 1;
 					break;
 				default:
-					offsetNode.Location = new IntVector2(currentNode.Location.x - 1, currentNode.Location.y);
+					offset.y -= 1;
 					break;
 			}
-			if(grid.inArena(offsetNode.Location) && grid.getGridObject(offsetNode) == null){
-				l.Add(offsetNode);
+			if(PlayerManager.GetGrid(playerID).inArena(offset) && PlayerManager.GetGrid(playerID).getGridObject(offset) == null){
+				offsetNode = new Node();
+				offsetNode.ParentNode = currentNode;
+				offsetNode.G = currentNode.G + 1;
+				offsetNode.H = Dist(offset, end);
+				l.AddLast(offsetNode);
 			}
-
 		}
 		return l;
 	}
@@ -67,47 +57,103 @@ public class AStar : MonoBehaviour {
 	/// <summery>
 	/// calculate an estimate distance value
 	/// </summery>
-	private float dist(IntVector2 node1, IntVector2 node2){
+	private float Dist(IntVector2 node1, IntVector2 node2){
 		float x = (float)node1.x - node2.x;
 		float y = (float)node1.y - node2.y;
 		return Mathf.Sqrt(x*x + y*y);
 	}
 
-	private float calculateF(float g, IntVector2 i, IntVector2 end){ // use ref if inefficent
-		return g + dist(i, end);
-	}
-
-	public bool PathExists(IntVector2 currentNode){
-		
-		List<IntVector2> nextNodes = getAdjacentNodes(currentNode);
-		foreach (var nextNode in nextNodes){
-
-		}
-		return false;
-	}
-
-	private List<IntVector2> RunAStar(float[,] g, bool[,] visited, IntVector2 current, IntVector2 end, List<IntVector2> path){
-		List<IntVector2> validMoves = getAdjacentNodes(current, g);
-
-		if(validMoves.Count == 0){
-			return path;
-		}
-
-		float minFValue = calculateF(g[validMoves[0].x, validMoves[0].y], current, end);
-		IntVector2 minIndex = validMoves[0];
-		if(validMoves.Count > 1){
-			float fValue;
-			for (int i = 0; i < validMoves.Count; i++){
-				fValue = calculateF(g[validMoves[i].x, validMoves[i].y], current, end);
-				if(minFValue > fValue){
-					minFValue = fValue;
-					minIndex = validMoves[i];
+	private void Merge(LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes){
+		for(LinkedListNode<Node> newIt = newNodes.First; newIt != null; newIt = newIt.Next){
+			bool exists = false;
+			for(LinkedListNode<Node> pathIt = pathMap.First; pathIt != null; pathIt = pathIt.Next){
+				if(pathIt.Value.Location.Equals(newIt.Value.Location)){
+					exists = true;
+					break;
 				}
-				
+			}
+			if(!exists){
+				for(LinkedListNode<Node> availIt = availableNodes.First; availIt != null; availIt = availIt.Next){
+					if(availIt.Value.Location.Equals(newIt.Value.Location)){
+						exists = true;
+						if(newIt.Value.F < availIt.Value.F){
+							availIt.Value = newIt.Value;
+						}
+						break;
+					}
+				}
+			}
+			if(!exists){
+				availableNodes.AddLast(newIt);
 			}
 		}
+		newNodes.Clear();
+	}
+
+	private LinkedList<Node> GetBestPath(LinkedList<Node> pathMap){
+		LinkedList<Node> path = new LinkedList<Node>();
+		Node node = pathMap.Last.Value;
+		while (node != null){
+            path.AddLast(node);
+            node = node.ParentNode;
+        }
+        // path.Reverse();
 		return path;
 	}
+
+	private LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID){
+		Node startNode = new Node();
+		startNode.Location = start;
+		LinkedList<Node> pathMap = new LinkedList<Node>();
+		LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID);
+		
+		while(availableNodes.Count > 0){
+			LinkedListNode<Node> it = availableNodes.First;
+			LinkedListNode<Node> minIt = availableNodes.First;
+			float minF = it.Value.F;
+			it = it.Next;
+			while(it != null){
+				if(minF > it.Value.F){
+					minF = it.Value.F;
+					minIt = it;
+				}
+				it = it.Next;
+			}
+			Merge(getAdjacentNodes(minIt.Value, end, playerID), ref pathMap, ref availableNodes);
+			pathMap.AddLast(minIt);
+
+			if(minIt.Value.Location.Equals(end)){
+				return GetBestPath(pathMap);
+			}
+			availableNodes.Remove(minIt);
+		}
+		
+		
+		return new LinkedList<Node>();
+	}
+
+	// private List<IntVector2> RunAStar(float[,] g, bool[,] visited, IntVector2 current, IntVector2 end, List<IntVector2> path){
+	// 	List<IntVector2> validMoves = getAdjacentNodes(current, g);
+
+	// 	if(validMoves.Count == 0){
+	// 		return path;
+	// 	}
+
+	// 	float minFValue = calculateF(g[validMoves[0].x, validMoves[0].y], current, end);
+	// 	IntVector2 minIndex = validMoves[0];
+	// 	if(validMoves.Count > 1){
+	// 		float fValue;
+	// 		for (int i = 0; i < validMoves.Count; i++){
+	// 			fValue = calculateF(g[validMoves[i].x, validMoves[i].y], current, end);
+	// 			if(minFValue > fValue){
+	// 				minFValue = fValue;
+	// 				minIndex = validMoves[i];
+	// 			}
+				
+	// 		}
+	// 	}
+	// 	return path;
+	// }
 
 	// Use this for initialization
 	void Start () {

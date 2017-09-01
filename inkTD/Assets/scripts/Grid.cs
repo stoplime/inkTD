@@ -5,7 +5,9 @@ using helper;
 
 public class Grid : MonoBehaviour {
 
-	public static float gridSize = 2;
+	public int ID;
+
+	public static float gridSize = 3;
 
 	/// <summary>
 	/// Takes an input Vector3 and converts it to the grid IntVector2
@@ -74,15 +76,17 @@ public class Grid : MonoBehaviour {
 		return false;
 	}
 
-	// Use this for initialization
-	void Start () {
-		grid = new GameObject[grid_width, grid_height];
-	}
-
 	public GameObject particle;
 	public GameObject highlight;
 	GameObject existingHighlight = null;
 	bool towerSelected = true;
+
+	// Use this for initialization
+	void Start () {
+		grid = new GameObject[grid_width, grid_height];
+		highlight.transform.localScale = new Vector3(gridSize, 0.1f, gridSize);
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (!Help.MouseOnUI){

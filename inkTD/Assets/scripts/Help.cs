@@ -15,7 +15,11 @@ namespace helper
         public IntVector2 (int x, int y) {
             this.x = x;
             this.y = y;
-        } 
+        }
+
+        public bool Equals(IntVector2 other){
+            return other.x == this.x && other.y == this.y;
+        }
     }
 
     public static class Help
