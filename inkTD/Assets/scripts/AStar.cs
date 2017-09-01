@@ -5,6 +5,14 @@ using helper;
 
 public class AStar : MonoBehaviour {
 
+	private class Node{
+		public IntVector2 Location { get; private set; }
+		public float G { get; private set; }
+		public float H { get; private set; }
+		public float F { get { return this.G + this.H; } }
+		public Node ParentNode { get; set; }
+	}
+
 	public Grid grid = GameObject.Find("Player Field").GetComponent<Grid>();
 
 	public IntVector2 Target;
@@ -12,8 +20,8 @@ public class AStar : MonoBehaviour {
 	public IntVector2 Spawn;
 	
 	// TODO: check if g value is less and make it not a valid move
-	private List<IntVector2> getAdjacentNodes(IntVector2 currentNode, float[,] g){
-		List<IntVector2> l = getAdjacentNodes(currentNode);
+	private LinkedList<IntVector2> getAdjacentNodes(IntVector2 currentNode, float[,] g){
+		LinkedList<IntVector2> l = getAdjacentNodes(currentNode);
 		float currentGvalue = g[currentNode.x, currentNode.y];
 		for(int i = l.Count-1; i >= 0; i--){
 			// if the next step is less than the current step
@@ -27,28 +35,31 @@ public class AStar : MonoBehaviour {
 	/// <summery>
 	/// creates a list of adjacent nodes from a current node
 	/// </summery>
-	private List<IntVector2> getAdjacentNodes(IntVector2 currentNode){
-		List<IntVector2> l = new List<IntVector2>();
-		IntVector2 offsetNode;
+	private LinkedList<Node> getAdjacentNodes(Node currentNode){
+		LinkedList<Node> l = new LinkedList<Node>();
+		Node offsetNode;
 		for (int i = 0; i < 4; i++){
+			offsetNode = new Node();
+			offsetNode.ParentNode = currentNode;
 			switch (i)
 			{
 				case 1:
-					offsetNode = new IntVector2(currentNode.x + 1, currentNode.y);
+					offsetNode.Location = new IntVector2(currentNode.Location.x + 1, currentNode.Location.y);
 					break;
 				case 2:
-					offsetNode = new IntVector2(currentNode.x, currentNode.y - 1);
+					offsetNode.Location = new IntVector2(currentNode.Location.x, currentNode.Location.y - 1);
 					break;
 				case 3:
-					offsetNode = new IntVector2(currentNode.x, currentNode.y + 1);
+					offsetNode.Location = new IntVector2(currentNode.Location.x, currentNode.Location.y + 1);
 					break;
 				default:
-					offsetNode = new IntVector2(currentNode.x - 1, currentNode.y);
+					offsetNode.Location = new IntVector2(currentNode.Location.x - 1, currentNode.Location.y);
 					break;
 			}
-			if(grid.inArena(offsetNode) && grid.getGridObject(offsetNode) == null){
+			if(grid.inArena(offsetNode.Location) && grid.getGridObject(offsetNode) == null){
 				l.Add(offsetNode);
 			}
+
 		}
 		return l;
 	}
@@ -57,7 +68,9 @@ public class AStar : MonoBehaviour {
 	/// calculate an estimate distance value
 	/// </summery>
 	private float dist(IntVector2 node1, IntVector2 node2){
-		return Mathf.Abs(node1.x - node2.x) + Mathf.Abs(node1.y - node2.y);
+		float x = (float)node1.x - node2.x;
+		float y = (float)node1.y - node2.y;
+		return Mathf.Sqrt(x*x + y*y);
 	}
 
 	private float calculateF(float g, IntVector2 i, IntVector2 end){ // use ref if inefficent
