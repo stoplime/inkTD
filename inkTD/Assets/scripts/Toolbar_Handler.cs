@@ -14,6 +14,13 @@ public class Toolbar_Handler : MonoBehaviour
         toolbarRectangle = GetComponent<RectTransform>();
         Align();
         helper.Help.onResolutionChange += onResolutionChange;
+
+        GameObject[] grids = GameObject.FindGameObjectsWithTag("Grid");
+        foreach (GameObject g in grids)
+        {
+            Grid grid = g.GetComponent<Grid>();
+            PlayerManager.AddGrid(grid.ID, grid);
+        }
     }
 
     private void onResolutionChange(object sender, System.EventArgs e)

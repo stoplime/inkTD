@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using helper;
+using System;
 
 public class Grid : MonoBehaviour {
 
 	public int ID;
+
+    public int startX = 0;
+    public int startY = 0;
+    public int endX = 1;
+    public int endY = 1;
 
 	public static float gridSize = 3;
 
@@ -32,10 +38,12 @@ public class Grid : MonoBehaviour {
 
 	public void setGridObject(IntVector2 xy, GameObject obj){
 		grid[xy.x, xy.y] = obj;
-	}
+        RunOnGridChange();
+    }
 	public void setGridObject(int x, int y, GameObject obj){
 		grid[x, y] = obj;
-	}
+        RunOnGridChange();
+    }
 	public GameObject getGridObject(IntVector2 xy){
 		return grid[xy.x, xy.y];
 	}
@@ -81,9 +89,12 @@ public class Grid : MonoBehaviour {
 	GameObject existingHighlight = null;
 	bool towerSelected = true;
 
+    void Awake() {
+        grid = new GameObject[grid_width, grid_height];
+    }
+
 	// Use this for initialization
 	void Start () {
-		grid = new GameObject[grid_width, grid_height];
 		highlight.transform.localScale = new Vector3(gridSize, 0.1f, gridSize);
 	}
 
@@ -106,7 +117,7 @@ public class Grid : MonoBehaviour {
 						if (Input.GetButtonDown("Fire1")){
 							target.y = 1f;
 							GameObject newCube = Instantiate(particle, target, hit.collider.transform.rotation);
-							grid[gridPos.x, gridPos.y] = newCube;
+                            setGridObject(gridPos, newCube);
 						}
 					}
 					else if(existingHighlight != null){
@@ -116,4 +127,28 @@ public class Grid : MonoBehaviour {
 			}
 		}
 	}
+
+    /// <summary>
+    /// Calls the OnGridChange event if it exists.
+    /// </summary>
+    private void RunOnGridChange() {
+        if (OnGridChange != null)
+            OnGridChange(this, EventArgs.Empty);
+    }
+
+    //Properties:
+
+    /// <summary>
+    /// Gets the start position for this grid.
+    /// </summary>
+    public IntVector2 StartPosition { get; private set; }
+
+    /// <summary>
+    /// Gets the end position for this grid.
+    /// </summary>
+    public IntVector2 EndPosition { get; private set; }
+
+    //Events:
+
+    public event EventHandler OnGridChange;
 }

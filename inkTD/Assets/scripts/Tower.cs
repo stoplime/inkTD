@@ -45,6 +45,9 @@ public class Tower : MonoBehaviour
     [Tooltip("The sound effect that plays whenever a projectile is fired from this tower.")]
     public AudioClip shootSoundEffect;
 
+    [Tooltip("The ID of the player which owns this tower.")]
+    public int ownerID = 0;
+
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
     /// </summary>
@@ -112,6 +115,11 @@ public class Tower : MonoBehaviour
         SetTowerPosition(gridPositionX, gridPositionY);
 	}
 
+    void OnValidate()
+    {
+        SetTowerPosition(initialGridPositionX, initialGridPositionY);
+    }
+
     private void SetTarget(GameObject target)
     {
         this.target = target;
@@ -158,10 +166,11 @@ public class Tower : MonoBehaviour
     {
         //empty the grid position at gridPositionX, gridPositionY
         Vector3 realPos = Grid.gridToPos(new IntVector2(x, y));
-        gameObject.transform.position = new Vector3(realPos.x, gameObject.transform.position.y, realPos.z);
+        transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = x;
         gridPositionY = y;
         //fill the grid position at x, y
+        PlayerManager.SetGameObject(ownerID, gameObject, x, y);
     }
 
     // Update is called once per frame

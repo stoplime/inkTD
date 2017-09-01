@@ -12,6 +12,7 @@ TagManager:
   - Debug
   - Projectile
   - Grid
+  - Selector
   layers:
   - Default
   - TransparentFX
