@@ -17,11 +17,24 @@ public static class PlayerManager {
         grid.OnGridChange += Grid_OnGridChange;
 	}
 
-    private static void Grid_OnGridChange(object sender, System.EventArgs e)
+    private static void Grid_OnGridChange(Grid grid, OnGridChangeEventArgs e)
     {
-        Grid grid = (sender as Grid);
-        int id = grid.ID;
-        bestPaths[id] = Help.GetGridPath(0, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+        if (bestPaths.ContainsKey(e.PlayerID))
+        {
+            List<IntVector2> bestPath = bestPaths[e.PlayerID];
+            for (int i = 0; i < bestPath.Count; i++)
+            {
+                if (bestPath[i].x == e.XChanged && bestPath[i].y == e.YChanged)
+                {
+                    bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+                    return;
+                }
+            }
+        }
+        else
+        {
+            bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+        }
     }
 
     /// <summary>
