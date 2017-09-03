@@ -38,11 +38,11 @@ public class Grid : MonoBehaviour {
 
 	public void setGridObject(IntVector2 xy, GameObject obj){
 		grid[xy.x, xy.y] = obj;
-        RunOnGridChange();
+        RunOnGridChange(xy.x, xy.y);
     }
 	public void setGridObject(int x, int y, GameObject obj){
 		grid[x, y] = obj;
-        RunOnGridChange();
+        RunOnGridChange(x,y);
     }
 	public GameObject getGridObject(IntVector2 xy){
 		return grid[xy.x, xy.y];
@@ -89,6 +89,8 @@ public class Grid : MonoBehaviour {
 	GameObject existingHighlight = null;
 	bool towerSelected = true;
 
+    private RaycastHit hit;
+
     void Awake() {
         grid = new GameObject[grid_width, grid_height];
     }
@@ -101,9 +103,7 @@ public class Grid : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!Help.MouseOnUI){
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit)){
+			if (Help.GetObjectInMousePath(out hit)){
 				if (hit.collider.tag == "GroundObject"){
 					IntVector2 gridPos = posToGrid(hit.point);
 					if (inArena(gridPos) && isGridEmpty(gridPos)){
@@ -131,9 +131,9 @@ public class Grid : MonoBehaviour {
     /// <summary>
     /// Calls the OnGridChange event if it exists.
     /// </summary>
-    private void RunOnGridChange() {
+    private void RunOnGridChange(int x, int y) {
         if (OnGridChange != null)
-            OnGridChange(this, EventArgs.Empty);
+            OnGridChange(this, new OnGridChangeEventArgs(ID, x, y));
     }
 
     //Properties:
@@ -150,5 +150,5 @@ public class Grid : MonoBehaviour {
 
     //Events:
 
-    public event EventHandler OnGridChange;
+    public event OnGridChangeEventHandler OnGridChange;
 }

@@ -338,11 +338,11 @@ MonoBehaviour:
   ID: 0
   startX: 0
   startY: 0
-  endX: 19
-  endY: 9
+  endX: 32
+  endY: 32
   gridOffset: {x: 0, y: 0}
-  grid_width: 20
-  grid_height: 10
+  grid_width: 33
+  grid_height: 33
   particle: {fileID: 1250968764351004, guid: de7e38a41d04682478a417131eca256f, type: 2}
   highlight: {fileID: 1771114354878494, guid: 5d88aaf6cb0c2064782036aa260f6f69, type: 2}
 --- !u!4 &417071231

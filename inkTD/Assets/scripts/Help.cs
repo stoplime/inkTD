@@ -18,6 +18,11 @@ namespace helper
             this.y = y;
         }
 
+        /// <summary>
+        /// Determines if two IntVector2s are equal in both x and y values.
+        /// </summary>
+        /// <param name="other">The other IntVector2 being compared.</param>
+        /// <returns>Returns true if both IntVector2 structs have the same values.</returns>
         public bool Equals(IntVector2 other){
             return other.x == this.x && other.y == this.y;
         }
@@ -30,6 +35,18 @@ namespace helper
 
     public static class Help
     {
+        /// <summary>
+        /// A node used during A* calculations.
+        /// </summary>
+        private class Node
+        {
+            public IntVector2 Location { get; set; }
+            public float G { get; set; }
+            public float H { get; set; }
+            public float F { get { return this.G + this.H; } }
+            public Node ParentNode { get; set; }
+        }
+
         /// <summary>
         /// If true then the mouse is currently over some UI element, false otherwise.
         /// </summary>
@@ -95,13 +112,15 @@ namespace helper
             return Vector3.Lerp(point1, point2, time);
         }
 
-        private class Node
+        /// <summary>
+        /// Gets the object directly in front of the mouse. Returns true if an object was hit, false otherwise.
+        /// </summary>
+        /// <param name="hit">The raycast hit results.</param>
+        /// <returns>Returns true if there was an object that was hit, false otherwise.</returns>
+        public static bool GetObjectInMousePath(out RaycastHit hit)
         {
-            public IntVector2 Location { get; set; }
-            public float G { get; set; }
-            public float H { get; set; }
-            public float F { get { return this.G + this.H; } }
-            public Node ParentNode { get; set; }
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            return Physics.Raycast(ray, out hit);
         }
 
         /// <summery>
@@ -136,6 +155,7 @@ namespace helper
                     offsetNode.ParentNode = currentNode;
                     offsetNode.G = currentNode.G + 1;
                     offsetNode.H = Dist(offset, end);
+                    //offsetNode.H = Math.Abs(end.x - offset.x) + Math.Abs(end.y - offset.y);
                     offsetNode.Location = offset;
                     l.AddLast(offsetNode);
                 }
@@ -183,10 +203,7 @@ namespace helper
                 }
                 if (!exists)
                 {
-                    //if (availableNodes.Count > 0)
-                        availableNodes.AddLast(newIt.Value);
-                    //else
-                        //availableNodes.AddFirst(newIt);
+                    availableNodes.AddLast(newIt.Value);
                 }
             }
             newNodes.Clear();
@@ -211,33 +228,64 @@ namespace helper
             startNode.Location = start;
             LinkedList<Node> pathMap = new LinkedList<Node>();
             pathMap.AddFirst(startNode);
-            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID);
+            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID); //new LinkedList<Node>();
+            LinkedList<Node> immediateNodes = new LinkedList<Node>();//getAdjacentNodes(startNode, end, playerID);
+            LinkedListNode<Node> it;
+            LinkedListNode<Node> minIt;
+            Node minNode;
 
-            while (availableNodes.Count > 0)
+            while (availableNodes.Count > 0 || immediateNodes.Count > 0)
             {
-                LinkedListNode<Node> it = availableNodes.First;
-                LinkedListNode<Node> minIt = availableNodes.First;
-                float minF = it.Value.F;
-                it = it.Next;
-                while (it != null)
-                {
-                    if (minF > it.Value.F)
-                    {
-                        minF = it.Value.F;
-                        minIt = it;
-                    }
+                //if (immediateNodes.Count == 0)
+                //{//loop through available nodes if there are no immediate nodes.
+                    it = availableNodes.First;
+                    minIt = availableNodes.First;
+                    minNode = it.Value;
                     it = it.Next;
-                }
-                Merge(getAdjacentNodes(minIt.Value, end, playerID), ref pathMap, ref availableNodes);
-                pathMap.AddLast(minIt.Value);
 
-                if (minIt.Value.Location.Equals(end))
+                    //TODO: Instead of looping through all available nodes to find the lowest F, it would instead be beneficial to make
+                    //available nodes into a priority queue (something like https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp).
+                    while (it != null)
+                    {
+                        if (minNode.F > it.Value.F)
+                        {
+                            minNode = it.Value;
+                            minIt = it;
+                        }
+                        it = it.Next;
+                    }
+                    availableNodes.Remove(minIt);
+                    Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref availableNodes);
+                //}
+                //else
+                //{//loop through immediate nodes (nodes within 1 distance of the currentNode) if there's at least 1 option.
+                //    it = immediateNodes.First;
+                //    minIt = immediateNodes.First;
+                //    minNode = it.Value;
+                //    it = it.Next;
+                //    while (it != null)
+                //    {
+                //        if (minNode.F > it.Value.F)
+                //        {
+                //            minNode = it.Value;
+                //            minIt = it;
+                //        }
+                //        it = it.Next;
+                //    }
+                //    immediateNodes.Remove(minIt);
+                //    Merge(immediateNodes, ref pathMap, ref availableNodes); //Merge leftover immediate nodes into available nodes.
+                //    immediateNodes.Clear();
+                //}
+
+                //Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref immediateNodes); //Get the new list of immediate nodes.
+
+                pathMap.AddLast(minNode);
+
+                if (minNode.Location.Equals(end))
                 {
                     return GetBestPath(pathMap);
                 }
-                availableNodes.Remove(minIt);
             }
-
 
             return new LinkedList<Node>();
         }

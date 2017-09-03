@@ -39,6 +39,12 @@ public class Projectile_Controller : MonoBehaviour
         get { return life; }
         set { life = value / 1000f; }
     }
+
+    /// <summary>
+    /// If true the projectile will track the target object.
+    /// </summary>
+    [Tooltip("IF true, the projectile will track the target object.")]
+    public bool trackingProjectile = true;
     
     private GameObject target;
 
@@ -67,7 +73,15 @@ public class Projectile_Controller : MonoBehaviour
 	void Update ()
     {
         currentLife += Time.deltaTime;
-        transform.position = helper.Help.ComputeBezier(startPosition, targetPosition,  currentLife / life);
+        if (trackingProjectile)
+        {
+            transform.position = helper.Help.ComputeBezier(startPosition, target.transform.position, currentLife / life);
+            transform.LookAt(target.transform);
+        }
+        else
+        {
+            transform.position = helper.Help.ComputeBezier(startPosition, targetPosition, currentLife / life);
+        }
 
         if (currentLife > life)
         {
