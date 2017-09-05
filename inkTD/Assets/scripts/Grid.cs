@@ -16,6 +16,26 @@ public class Grid : MonoBehaviour {
 	public static float gridSize = 3;
 
 	/// <summary>
+	/// Takes an input Vector3 and converts it to the grid IntVector2
+	/// </summary>
+	/// <param name="input">World position</param>
+	/// <returns></returns>
+	public static IntVector2 posToGrid(Vector3 input){
+		return new IntVector2((int)System.Math.Round(input.x/gridSize),
+							(int)System.Math.Round(input.z/gridSize));
+	}
+
+	/// <summary>
+	/// Takes an grid IntVector2 and converts it to the pos Vector3
+	/// </summary>
+	/// <param name="input">grid coordinates</param>
+	/// <returns></returns>
+	public static Vector3 gridToPos(IntVector2 input){
+		return new Vector3(input.x*gridSize, 0,
+						input.y*gridSize);
+	}
+
+	/// <summary>
 	/// array containing the towers of the playing field
 	/// </summary>
 	private GameObject[,] grid;

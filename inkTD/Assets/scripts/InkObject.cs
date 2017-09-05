@@ -51,7 +51,6 @@ public abstract class InkObject : MonoBehaviour
     protected int maxHealth;
     protected int health;
     
-    protected float speed;
     protected IntVector2 gridPos;
     protected Vector3 pos;
 
