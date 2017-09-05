@@ -142,7 +142,7 @@ public class Tower : InkObject
     public void SetTowerPosition(int x, int y)
     {
         //empty the grid position at gridPositionX, gridPositionY
-        Vector3 realPos = Grid.gridToPos(new IntVector2(x, y));
+        Vector3 realPos = gridToPos(new IntVector2(x, y));
         transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = x;
         gridPositionY = y;

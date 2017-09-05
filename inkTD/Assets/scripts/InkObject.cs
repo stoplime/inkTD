@@ -47,5 +47,17 @@ public abstract class InkObject : MonoBehaviour
     [Tooltip("The ID of the player which owns this tower/creature.")]
     public int ownerID = 0;
 
+
+    protected int maxHealth;
+    protected int health;
     
+    protected float speed;
+    protected IntVector2 gridPos;
+    protected Vector3 pos;
+
+    // global rotation along the y-axis
+    protected float rotation;
+    
+    
+
 }
