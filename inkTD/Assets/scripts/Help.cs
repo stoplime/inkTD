@@ -309,6 +309,21 @@ namespace helper
         }
 
         /// <summary>
+        /// Gets the partcile prefab name of the given modifier type. Returns an empty string if no prefab exists.
+        /// </summary>
+        /// <param name="type">The type of modifier whose particle prefab name will be returned.</param>
+        /// <returns></returns>
+        public static string GetModifierParticlePrefab(ModiferTypes type)
+        {
+            switch (type)
+            {
+                default: return string.Empty;
+                case ModiferTypes.Fire: return "Flames";
+                case ModiferTypes.Ice: return "Ice";
+            }
+        }
+
+        /// <summary>
         /// An event that runs whenever the resolution changes.
         /// </summary>
         public static event EventHandler onResolutionChange;

@@ -90,6 +90,10 @@ public class Tower : InkObject
         audioSource = GetComponent<AudioSource>();
 
         SetTowerPosition(gridPositionX, gridPositionY);
+
+        //TEST ONLY:
+        modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
+        modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
 	}
 
     void OnValidate()
@@ -126,6 +130,19 @@ public class Tower : InkObject
         }
 
         projectile.transform.LookAt(target.transform);
+
+        //Applying the particles based on the modifiers present:
+        string particleName = string.Empty;
+        GameObject particle;
+        foreach (Modifier m in modifiers)
+        {
+            particleName = Help.GetModifierParticlePrefab(m.type);
+            if (particleName != string.Empty)
+            {
+                particle = Instantiate(Resources.Load("Particles/" + particleName), projectile.transform) as GameObject;
+                particle.transform.localRotation = Quaternion.Euler(-180, 0, 0);
+            }
+        }
 
         if (audioSource != null && shootSoundEffect != null)
         {

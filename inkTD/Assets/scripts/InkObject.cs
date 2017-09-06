@@ -47,6 +47,11 @@ public abstract class InkObject : MonoBehaviour
     [Tooltip("The ID of the player which owns this tower/creature.")]
     public int ownerID = 0;
 
+    /// <summary>
+    /// The list of currently active modifiers on the tower or creature.
+    /// </summary>
+    [Tooltip("The list of modifiers applied to the tower or creature.")]
+    public List<Modifier> modifiers = new List<Modifier>();
 
     protected int maxHealth;
     protected int health;
