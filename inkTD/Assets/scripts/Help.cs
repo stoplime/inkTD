@@ -35,6 +35,8 @@ namespace helper
 
     public static class Help
     {
+        private static float epsilon = 1.5f;
+
         /// <summary>
         /// A node used during A* calculations.
         /// </summary>
@@ -43,7 +45,7 @@ namespace helper
             public IntVector2 Location { get; set; }
             public float G { get; set; }
             public float H { get; set; }
-            public float F { get { return this.G + this.H; } }
+            public float F { get { return this.G + epsilon*this.H; } }
             public Node ParentNode { get; set; }
         }
 
@@ -228,16 +230,16 @@ namespace helper
             startNode.Location = start;
             LinkedList<Node> pathMap = new LinkedList<Node>();
             pathMap.AddFirst(startNode);
-            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID); //new LinkedList<Node>();
-            LinkedList<Node> immediateNodes = new LinkedList<Node>();//getAdjacentNodes(startNode, end, playerID);
+            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID); //*/new LinkedList<Node>();
+            LinkedList<Node> immediateNodes = new LinkedList<Node>();//*/getAdjacentNodes(startNode, end, playerID);
             LinkedListNode<Node> it;
             LinkedListNode<Node> minIt;
             Node minNode;
 
             while (availableNodes.Count > 0 || immediateNodes.Count > 0)
             {
-                //if (immediateNodes.Count == 0)
-                //{//loop through available nodes if there are no immediate nodes.
+                // if (immediateNodes.Count == 0)
+                // {//loop through available nodes if there are no immediate nodes.
                     it = availableNodes.First;
                     minIt = availableNodes.First;
                     minNode = it.Value;
@@ -256,9 +258,9 @@ namespace helper
                     }
                     availableNodes.Remove(minIt);
                     Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref availableNodes);
-                //}
-                //else
-                //{//loop through immediate nodes (nodes within 1 distance of the currentNode) if there's at least 1 option.
+                // }
+                // else
+                // {//loop through immediate nodes (nodes within 1 distance of the currentNode) if there's at least 1 option.
                 //    it = immediateNodes.First;
                 //    minIt = immediateNodes.First;
                 //    minNode = it.Value;
@@ -275,15 +277,15 @@ namespace helper
                 //    immediateNodes.Remove(minIt);
                 //    Merge(immediateNodes, ref pathMap, ref availableNodes); //Merge leftover immediate nodes into available nodes.
                 //    immediateNodes.Clear();
-                //}
+                // }
 
-                //Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref immediateNodes); //Get the new list of immediate nodes.
+                // Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref immediateNodes); //Get the new list of immediate nodes.
 
                 pathMap.AddLast(minNode);
 
                 if (minNode.Location.Equals(end))
                 {
-                    return GetBestPath(pathMap);
+                    return pathMap; //*/GetBestPath(pathMap);
                 }
             }
 
