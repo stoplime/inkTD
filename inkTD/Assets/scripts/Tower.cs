@@ -3,36 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using helper;
 
-public class Tower : MonoBehaviour
+public class Tower : InkObject
 {
 
-    [Tooltip("The base damage value excluding all modifiers. Example 10")]
-    public float damage;
-
-    [Tooltip("The number of projectiles fired per minute. Example: 30")]
-    public float speed;
-    
     [Tooltip("The distance in all directions around the tower in world coordinates that can be fired upon. Example: 5")]
     public float range;
-
-    [Tooltip("The cost to purchase this tower. Example 50")]
-    public int price;
-
-    /// <summary>
-    /// This variable is no longer used after the tower has been created. 
-    /// </summary>
-    [Tooltip("The position along the playing grid's x axis.")]
-    public int initialGridPositionX = 0;
-
-    /// <summary>
-    /// This variable is no longer used after the tower has been created.
-    /// </summary>
-    [Tooltip("The position along the playing grid's y axis.")]
-    public int initialGridPositionY = 0;
 
     [Tooltip("The target the tower will attempt to fire at.")]
     public TargetTypes priorityTarget = TargetTypes.First;
 
+    // might not want to use this, I'd rather have the projectiles themselves calculate whether they have collided or not.
     [Tooltip("The total lifetime in milliseconds the projectile will live.")]
     public float projectileLife = 1000;
 
@@ -44,9 +24,6 @@ public class Tower : MonoBehaviour
 
     [Tooltip("The sound effect that plays whenever a projectile is fired from this tower.")]
     public AudioClip shootSoundEffect;
-
-    [Tooltip("The ID of the player which owns this tower.")]
-    public int ownerID = 0;
 
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
