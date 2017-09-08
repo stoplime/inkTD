@@ -331,4 +331,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abab7a98365de0a4a8cdc84e4add5921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackingProjectile: 1
+  trackingProjectile: 0
