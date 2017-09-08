@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class PlayerManager {
+public static class PlayerManager
+{
+
 	private static Dictionary<int, Grid> grids = new Dictionary<int, Grid>();
     private static Dictionary<int, List<IntVector2>> bestPaths = new Dictionary<int, List<IntVector2>>();
 
@@ -16,6 +18,15 @@ public static class PlayerManager {
 		grids.Add(playerID, grid);
         grid.OnGridChange += Grid_OnGridChange;
 	}
+
+    /// <summary>
+    /// Gets the number of creatures
+    /// </summary>
+    /// <returns></returns>
+    public static int GetGridCount()
+    {
+        return grids.Count;
+    }
 
     private static void Grid_OnGridChange(Grid grid, OnGridChangeEventArgs e)
     {
