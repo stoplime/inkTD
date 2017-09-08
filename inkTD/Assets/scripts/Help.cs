@@ -285,7 +285,7 @@ namespace helper
 
                 if (minNode.Location.Equals(end))
                 {
-                    return pathMap; //*/GetBestPath(pathMap);
+                    return /*pathMap; //*/GetBestPath(pathMap);
                 }
             }
 

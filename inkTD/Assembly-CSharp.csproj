@@ -60,6 +60,7 @@
      <Compile Include="Assets\scripts\GridVisualizer.cs" />
      <Compile Include="Assets\scripts\Help.cs" />
      <Compile Include="Assets\scripts\InkObject.cs" />
+     <Compile Include="Assets\scripts\Modifier.cs" />
      <Compile Include="Assets\scripts\PathTraverser.cs" />
      <Compile Include="Assets\scripts\PlayerManager.cs" />
      <Compile Include="Assets\scripts\Projectile_Controller.cs" />
