@@ -75,7 +75,8 @@ public class Projectile_Controller : MonoBehaviour
         currentLife += Time.deltaTime;
         if (trackingProjectile)
         {
-            transform.position = helper.Help.ComputeBezier(startPosition, target.transform.position, currentLife / life);
+            Vector3[] points = {startPosition, new Vector3((startPosition.x+target.transform.position.x)/2, startPosition.y+2, (startPosition.z+target.transform.position.x)/2), target.transform.position};
+            transform.position = helper.Help.ComputeBezier(points, currentLife / life);
             transform.LookAt(target.transform);
         }
         else

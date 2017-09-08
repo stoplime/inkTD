@@ -114,6 +114,29 @@ namespace helper
             return Vector3.Lerp(point1, point2, time);
         }
 
+
+        /// <summary>
+        /// Steffen Lim universal bezier curve
+        /// Computes an n point bezier returning the final point along the curve.
+        /// </summary>
+        /// <param name="points">The first point.</param>
+        /// <param name="time">The time along the curve (percentage from start to finish). Value from 0 to 1</param>
+        /// <returns> Vector 3 point of the position at the given time step</returns>
+        public static Vector3 ComputeBezier(Vector3[] points, float time)
+        {
+            if (points.Length == 1)
+                return points[0];
+            
+            Vector3[] subPoints = new Vector3[points.Length-1];
+
+            for (int i = 0; i < points.Length-1; i++)
+            {
+                subPoints[i] = points[i] + time * (points[i+1] - points[i]);
+            }
+
+            return ComputeBezier(subPoints, time);
+        }
+
         /// <summary>
         /// Gets the object directly in front of the mouse. Returns true if an object was hit, false otherwise.
         /// </summary>
