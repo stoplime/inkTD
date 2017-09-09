@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using helper;
 
 public class Projectile_Controller : MonoBehaviour
 {
@@ -28,7 +29,11 @@ public class Projectile_Controller : MonoBehaviour
     public Vector3 TargetPosition
     {
         get { return targetPosition; }
-        set { targetPosition = value; }
+        set
+        {
+            targetPosition = value;
+            points[2] = targetPosition;
+        }
     }
 
     /// <summary>
@@ -55,10 +60,16 @@ public class Projectile_Controller : MonoBehaviour
 
     private Tower creator;
 
-	// Use this for initialization
-	void Start ()
+    private Vector3[] points = new Vector3[3];
+    private Vector3 currentBezierCurve;
+
+    // Use this for initialization
+    void Start ()
     {
-	}
+        points[0] = startPosition;
+        points[1] = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.x) / 2);
+        points[2] = targetPosition;
+    }
 
     /// <summary>
     /// Sets the tower which created this projectile.
@@ -75,19 +86,19 @@ public class Projectile_Controller : MonoBehaviour
         currentLife += Time.deltaTime;
         if (trackingProjectile)
         {
-            Vector3[] points = {startPosition, new Vector3((startPosition.x+target.transform.position.x)/2, startPosition.y+2, (startPosition.z+target.transform.position.x)/2), target.transform.position};
-            transform.position = helper.Help.ComputeBezier(points, currentLife / life);
+            transform.position = Help.ComputeBezier(currentLife / life, points);
             transform.LookAt(target.transform);
         }
         else
         {
-            transform.position = helper.Help.ComputeBezier(startPosition, targetPosition, currentLife / life);
+            currentBezierCurve = Help.ComputeBezier(currentLife / life, points); 
+            transform.LookAt(currentBezierCurve);
+            transform.position = currentBezierCurve;
         }
 
         if (currentLife > life)
         {
             //apply damage to target here.
-
             Destroy(gameObject);
         }
     }

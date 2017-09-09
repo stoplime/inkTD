@@ -9,6 +9,18 @@ public class Tower : InkObject
     [Tooltip("The distance in all directions around the tower in world coordinates that can be fired upon. Example: 5")]
     public float range;
 
+    /// <summary>
+    /// This variable is no longer used after the tower/creature has been created. 
+    /// </summary>
+    [Tooltip("The position along the playing grid's x axis.")]
+    public int initialGridPositionX = 0;
+
+    /// <summary>
+    /// This variable is no longer used after the tower/creature has been created.
+    /// </summary>
+    [Tooltip("The position along the playing grid's y axis.")]
+    public int initialGridPositionY = 0;
+
     [Tooltip("The target the tower will attempt to fire at.")]
     public TargetTypes priorityTarget = TargetTypes.First;
 
@@ -92,8 +104,8 @@ public class Tower : InkObject
         SetTowerPosition(gridPositionX, gridPositionY);
 
         //TEST ONLY:
-        modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
-        modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
+        Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
+        Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
 	}
 
     void OnValidate()
@@ -134,7 +146,7 @@ public class Tower : InkObject
         //Applying the particles based on the modifiers present:
         string particleName = string.Empty;
         GameObject particle;
-        foreach (Modifier m in modifiers)
+        foreach (Modifier m in Modifiers)
         {
             particleName = Help.GetModifierParticlePrefab(m.type);
             if (particleName != string.Empty)

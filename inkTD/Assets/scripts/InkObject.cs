@@ -25,19 +25,7 @@ public abstract class InkObject : MonoBehaviour
     /// </summary>
     [Tooltip("The cost to purchase this tower. Example 50")]
     public int price;
-
-    /// <summary>
-    /// This variable is no longer used after the tower/creature has been created. 
-    /// </summary>
-    [Tooltip("The position along the playing grid's x axis.")]
-    public int initialGridPositionX = 0;
-
-    /// <summary>
-    /// This variable is no longer used after the tower/creature has been created.
-    /// </summary>
-    [Tooltip("The position along the playing grid's y axis.")]
-    public int initialGridPositionY = 0;
-
+    
     /// <summary>
     /// ID for the grid parent.
     /// For towers, the id represent which grid it's on.
@@ -48,10 +36,21 @@ public abstract class InkObject : MonoBehaviour
     public int ownerID = 0;
 
     /// <summary>
+    /// The description for the tower or creature.
+    /// </summary>
+    [Tooltip("The short description of the tower or creature.")]
+    public string description = "";
+
+    /// <summary>
+    /// The list of currently active modifiers on the tower or creature.
+    /// </summary>
+    public List<Modifier> Modifiers { get { return modifiers; } }
+
+    /// <summary>
     /// The list of currently active modifiers on the tower or creature.
     /// </summary>
     [Tooltip("The list of modifiers applied to the tower or creature.")]
-    public List<Modifier> modifiers = new List<Modifier>();
+    private List<Modifier> modifiers = new List<Modifier>();
 
     protected int maxHealth;
     protected int health;

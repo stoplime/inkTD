@@ -58,7 +58,7 @@ public class PathTraverser : MonoBehaviour {
         {
             progress += Time.deltaTime;
             Vector3[] points = {startPos, new Vector3(startPos.x, startPos.y+2, startPos.z), new Vector3(endPos.x, startPos.y+2, endPos.z), endPos};
-            traversee.transform.position = helper.Help.ComputeBezier(points, progress / speed);
+            traversee.transform.position = helper.Help.ComputeBezier(progress / speed, points);
             if (progress > speed)
             {
                 currentPathIndex--;

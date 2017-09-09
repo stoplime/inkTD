@@ -34,6 +34,14 @@ public class TaylorTimer
         set { targetTime = value / 1000; }
     }
 
+    /// <summary>
+    /// The current time the timer is at.
+    /// </summary>
+    public double CurrentTime
+    {
+        get { return currentTime * 1000; }
+    }
+
     private bool active = true;
     private bool loop = true;
 

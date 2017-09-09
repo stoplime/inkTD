@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\scripts\BezierVisualizer.cs" />
      <Compile Include="Assets\scripts\Camera_Controller.cs" />
      <Compile Include="Assets\scripts\circles.cs" />
      <Compile Include="Assets\scripts\Creature.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\scripts\Projectile_Controller.cs" />
      <Compile Include="Assets\scripts\Tab_Handler.cs" />
      <Compile Include="Assets\scripts\TaylorTimer.cs" />
+     <Compile Include="Assets\scripts\TimerDisplayer.cs" />
      <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
      <Compile Include="Assets\scripts\Tower.cs" />
      <Compile Include="Assets\scripts\UI_Tracker.cs" />

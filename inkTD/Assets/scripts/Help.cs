@@ -114,10 +114,10 @@ namespace helper
         /// <param name="point2">The second point.</param>
         /// <param name="time">The time along the curve (percentage from point1 to point2).</param>
         /// <returns></returns>
-        public static Vector3 ComputeBezier(Vector3 point1, Vector3 point2, float time)
+        public static Vector3 ComputeBezier(Vector3 point1, Vector3 point2, Vector3 point3, float time)
         {
-            //TODO: Actually compute a bezier curve
-            return Vector3.Lerp(point1, point2, time);
+            float inverseTime = 1 - time;
+            return inverseTime * inverseTime * point1 + 2 * inverseTime * time * point2 + time * time * point3;
         }
 
 
@@ -128,7 +128,7 @@ namespace helper
         /// <param name="points">The first point.</param>
         /// <param name="time">The time along the curve (percentage from start to finish). Value from 0 to 1</param>
         /// <returns> Vector 3 point of the position at the given time step</returns>
-        public static Vector3 ComputeBezier(Vector3[] points, float time)
+        public static Vector3 ComputeBezier(float time, params Vector3[] points)
         {
             if (points.Length == 1)
                 return points[0];
@@ -140,7 +140,7 @@ namespace helper
                 subPoints[i] = points[i] + time * (points[i+1] - points[i]);
             }
 
-            return ComputeBezier(subPoints, time);
+            return ComputeBezier(time, subPoints);
         }
 
         /// <summary>
