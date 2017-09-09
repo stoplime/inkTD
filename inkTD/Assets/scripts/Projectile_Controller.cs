@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using helper;
 
 public class Projectile_Controller : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class Projectile_Controller : MonoBehaviour
     void Start ()
     {
         points[0] = startPosition;
-        points[1] = new Vector3((startPosition.x + targetPosition.x) / 2, startPosition.y + 2, (startPosition.z + targetPosition.x) / 2);
+        points[1] = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.x) / 2);
         points[2] = targetPosition;
     }
 
@@ -85,12 +86,12 @@ public class Projectile_Controller : MonoBehaviour
         currentLife += Time.deltaTime;
         if (trackingProjectile)
         {
-            transform.position = helper.Help.ComputeBezier(startPosition, targetPosition, currentLife / life);
+            transform.position = Help.ComputeBezier(currentLife / life, points);
             transform.LookAt(target.transform);
         }
         else
         {
-            currentBezierCurve = helper.Help.ComputeBezier(points, currentLife / life);
+            currentBezierCurve = Help.ComputeBezier(currentLife / life, points); 
             transform.LookAt(currentBezierCurve);
             transform.position = currentBezierCurve;
         }
@@ -98,7 +99,6 @@ public class Projectile_Controller : MonoBehaviour
         if (currentLife > life)
         {
             //apply damage to target here.
-
             Destroy(gameObject);
         }
     }

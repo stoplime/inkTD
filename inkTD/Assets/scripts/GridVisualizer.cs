@@ -27,6 +27,7 @@ public class GridVisualizer : MonoBehaviour {
 	void Start ()
     {
         PlayerManager.GetGrid(gridID).OnGridChange += GridVisualizer_OnGridChange;
+        ComputeBestPath();
 	}
 
     /// <summary>
