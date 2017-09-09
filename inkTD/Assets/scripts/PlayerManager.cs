@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class PlayerManager {
 	private static Dictionary<int, Grid> grids = new Dictionary<int, Grid>();
-    private static Dictionary<int, List<IntVector2>> bestPaths = new Dictionary<int, List<IntVector2>>();
+    private static Dictionary<int, List<IntVector2> > bestPaths = new Dictionary<int, List<IntVector2> >();
 
     /// <summary>
     /// Adds a grid for the given player id.

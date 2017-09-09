@@ -10,6 +10,8 @@ public class Camera_Controller : MonoBehaviour
     private Transform cameraTransform;
     private Vector3 position;
 
+    private float zoom = 1;
+
 	// Use this for initialization
 	void Start ()
     {

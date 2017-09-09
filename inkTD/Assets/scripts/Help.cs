@@ -31,11 +31,16 @@ namespace helper
         {
             return new IntVector2(a.x + b.x, a.y + b.y);
         }
+
+        public static IntVector2 operator-(IntVector2 a, IntVector2 b)
+        {
+            return new IntVector2(a.x - b.x, a.y - b.y);
+        }
     }
 
     public static class Help
     {
-        private static float epsilon = 1.5f;
+        private static float Epsilon = 1.5f;
 
         /// <summary>
         /// A node used during A* calculations.
@@ -45,6 +50,7 @@ namespace helper
             public IntVector2 Location { get; set; }
             public float G { get; set; }
             public float H { get; set; }
+            public float epsilon { get; set; }
             public float F { get { return this.G + epsilon*this.H; } }
             public Node ParentNode { get; set; }
         }
@@ -151,7 +157,7 @@ namespace helper
         /// <summery>
         /// creates a list of adjacent nodes from a current node
         /// </summery>
-        private static LinkedList<Node> getAdjacentNodes(Node currentNode, IntVector2 end, int playerID)
+        private static LinkedList<Node> getAdjacentNodes(Node currentNode, IntVector2 end, int playerID, float epsilon)
         {
             LinkedList<Node> l = new LinkedList<Node>();
             IntVector2 offset;
@@ -174,10 +180,11 @@ namespace helper
                         offset.y -= 1;
                         break;
                 }
-                if (PlayerManager.GetGrid(playerID).inArena(offset) && PlayerManager.GetGrid(playerID).getGridObject(offset) == null)
+                if (PlayerManager.GetGrid(playerID).inArena(offset) && PlayerManager.GetGrid(playerID).isGridEmpty(offset))
                 {
                     offsetNode = new Node();
                     offsetNode.ParentNode = currentNode;
+                    offsetNode.epsilon = epsilon;
                     offsetNode.G = currentNode.G + 1;
                     offsetNode.H = Dist(offset, end);
                     //offsetNode.H = Math.Abs(end.x - offset.x) + Math.Abs(end.y - offset.y);
@@ -249,11 +256,19 @@ namespace helper
 
         private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID)
         {
+            return AStart(start, end, playerID, Epsilon);
+        }
+
+        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID, float eps)
+        {
+            if (!PlayerManager.GetGrid(playerID).isGridEmpty(start))
+                return new LinkedList<Node>();
+            
             Node startNode = new Node();
             startNode.Location = start;
             LinkedList<Node> pathMap = new LinkedList<Node>();
             pathMap.AddFirst(startNode);
-            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID); //*/new LinkedList<Node>();
+            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID, eps); //*/new LinkedList<Node>();
             LinkedList<Node> immediateNodes = new LinkedList<Node>();//*/getAdjacentNodes(startNode, end, playerID);
             LinkedListNode<Node> it;
             LinkedListNode<Node> minIt;
@@ -261,48 +276,24 @@ namespace helper
 
             while (availableNodes.Count > 0 || immediateNodes.Count > 0)
             {
-                // if (immediateNodes.Count == 0)
-                // {//loop through available nodes if there are no immediate nodes.
-                    it = availableNodes.First;
-                    minIt = availableNodes.First;
-                    minNode = it.Value;
-                    it = it.Next;
+                it = availableNodes.First;
+                minIt = availableNodes.First;
+                minNode = it.Value;
+                it = it.Next;
 
-                    //TODO: Instead of looping through all available nodes to find the lowest F, it would instead be beneficial to make
-                    //available nodes into a priority queue (something like https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp).
-                    while (it != null)
+                //TODO: Instead of looping through all available nodes to find the lowest F, it would instead be beneficial to make
+                //available nodes into a priority queue (something like https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp).
+                while (it != null)
+                {
+                    if (minNode.F > it.Value.F)
                     {
-                        if (minNode.F > it.Value.F)
-                        {
-                            minNode = it.Value;
-                            minIt = it;
-                        }
-                        it = it.Next;
+                        minNode = it.Value;
+                        minIt = it;
                     }
-                    availableNodes.Remove(minIt);
-                    Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref availableNodes);
-                // }
-                // else
-                // {//loop through immediate nodes (nodes within 1 distance of the currentNode) if there's at least 1 option.
-                //    it = immediateNodes.First;
-                //    minIt = immediateNodes.First;
-                //    minNode = it.Value;
-                //    it = it.Next;
-                //    while (it != null)
-                //    {
-                //        if (minNode.F > it.Value.F)
-                //        {
-                //            minNode = it.Value;
-                //            minIt = it;
-                //        }
-                //        it = it.Next;
-                //    }
-                //    immediateNodes.Remove(minIt);
-                //    Merge(immediateNodes, ref pathMap, ref availableNodes); //Merge leftover immediate nodes into available nodes.
-                //    immediateNodes.Clear();
-                // }
-
-                // Merge(getAdjacentNodes(minNode, end, playerID), ref pathMap, ref immediateNodes); //Get the new list of immediate nodes.
+                    it = it.Next;
+                }
+                availableNodes.Remove(minIt);
+                Merge(getAdjacentNodes(minNode, end, playerID, eps), ref pathMap, ref availableNodes);
 
                 pathMap.AddLast(minNode);
 
