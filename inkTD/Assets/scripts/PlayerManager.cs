@@ -30,7 +30,7 @@ public static class PlayerManager
     private static Dictionary<int, float> balance = new Dictionary<int, float>();
 
     /// <summary>
-    /// /// The list of creatures in a grid of the given player id. IE: the key is the playerID of the grid where the creatures are located.
+    /// The list of creatures in a grid of the given player id. IE: the key is the playerID of the grid where the creatures are located.
     /// </summary>
     private static Dictionary<int, List<Creature>> creatures = new Dictionary<int, List<Creature>>();
 
@@ -39,6 +39,17 @@ public static class PlayerManager
     /// </summary>
     public const int CurrentPlayer = 0;
 
+    /// <summary>
+    /// Meathod to add the creature into the creatures list.
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <param name="gridId"></param>
+    /// <param name="creature"></param>
+    public static void SpawnCreature(int playerID, int gridId, Creature creature)
+    {
+        creatures[gridId].Add(creature);
+        grids[gridId].OnGridChange += creature.OnGridChange;
+    }
 
     /// <summary>
     /// Returns the list of creatures present on a player's grid.
@@ -184,6 +195,11 @@ public static class PlayerManager
     /// <returns>Returns the best path for the given player's grid.</returns>
     public static List<IntVector2> GetBestPath(int playerID)
     {
+        if (!bestPaths.ContainsKey(playerID))
+        {
+            Grid grid = grids[playerID];
+            bestPaths[playerID] = Help.GetGridPath(playerID, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+        }
         return bestPaths[playerID];
     }
 

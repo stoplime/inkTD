@@ -56,7 +56,7 @@ public abstract class InkObject : MonoBehaviour
     protected int health;
     
     protected IntVector2 gridPos;
-    protected Vector3 pos;
+    protected Vector3 pos = Vector3.zero;
 
     // global rotation along the y-axis
     protected float rotation;
