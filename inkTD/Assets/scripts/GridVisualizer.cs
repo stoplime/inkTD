@@ -8,6 +8,12 @@ public class GridVisualizer : MonoBehaviour {
     [Tooltip("The player ID that corresponds to the grid being visualized.")]
     public int gridID = 0;
 
+    [Tooltip("The color the grid visualizer blocks take on the closer they get to the start.")]
+    public Color startColor = Color.gray;
+
+    [Tooltip("The color the grid visualizer blocks take on the closer they get to the end.")]
+    public Color endColor = Color.gray;
+
     [Tooltip("The object that covers the individual grid blocks.")]
     public GameObject visualizerObject;
 
@@ -27,7 +33,7 @@ public class GridVisualizer : MonoBehaviour {
 	void Start ()
     {
         PlayerManager.GetGrid(gridID).OnGridChange += GridVisualizer_OnGridChange;
-        ComputeBestPath();
+        VisualizePath(PlayerManager.GetBestPath(gridID));
 	}
 
     /// <summary>
@@ -41,7 +47,7 @@ public class GridVisualizer : MonoBehaviour {
     private void GridVisualizer_OnGridChange(object sender, System.EventArgs e)
     {
         if (Application.isPlaying)
-            ComputeBestPath();
+            VisualizePath(PlayerManager.GetBestPath(gridID));
     }
 
     private void SetVisiblity(bool val)
@@ -53,10 +59,12 @@ public class GridVisualizer : MonoBehaviour {
         }
     }
 
-    private void ComputeBestPath()
+    /// <summary>
+    /// Visualizes a given path.
+    /// </summary>
+    /// <param name="path">The path to visualize.</param>
+    public void VisualizePath(List<IntVector2> path)
     {
-        List<IntVector2> path = PlayerManager.GetBestPath(gridID);
-        
         if (createdObjects.Count > path.Count)
         {
             int start = createdObjects.Count - 1;
@@ -75,6 +83,7 @@ public class GridVisualizer : MonoBehaviour {
         {
             GameObject obj = Instantiate(visualizerObject);
             obj.transform.position = Grid.gridToPos(new IntVector2(path[i].x, path[i].y));
+            obj.GetComponent<MeshRenderer>().material.color = Color.Lerp(endColor, startColor, (float)i / path.Count);
             obj.SetActive(visible);
             createdObjects.Add(obj);
         }
@@ -82,6 +91,6 @@ public class GridVisualizer : MonoBehaviour {
 
     public void OnClick()
     {
-        ComputeBestPath();
+        VisualizePath(PlayerManager.GetBestPath(gridID)); //Is this needed?
     }
 }
