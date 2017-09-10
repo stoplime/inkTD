@@ -51,8 +51,12 @@ namespace helper
             public float G { get; set; }
             public float H { get; set; }
             public float epsilon { get; set; }
-            public float F { get { return this.G + epsilon*this.H; } }
+
+            public float F;
+
+            //public float F { get { return this.G + epsilon*this.H; } }
             public Node ParentNode { get; set; }
+            public byte listNumb { get; set; }
         }
 
         /// <summary>
@@ -157,7 +161,7 @@ namespace helper
         /// <summery>
         /// creates a list of adjacent nodes from a current node
         /// </summery>
-        private static LinkedList<Node> getAdjacentNodes(Node currentNode, IntVector2 end, int playerID, float epsilon)
+        private static LinkedList<Node> getAdjacentNodes(int[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, int playerID, float epsilon)
         {
             LinkedList<Node> l = new LinkedList<Node>();
             IntVector2 offset;
@@ -180,15 +184,17 @@ namespace helper
                         offset.y -= 1;
                         break;
                 }
-                if (PlayerManager.GetGrid(playerID).inArena(offset) && PlayerManager.GetGrid(playerID).isGridEmpty(offset))
+                if (playerGrid.inArena(offset) && playerGrid.isGridEmpty(offset))
                 {
                     offsetNode = new Node();
                     offsetNode.ParentNode = currentNode;
                     offsetNode.epsilon = epsilon;
                     offsetNode.G = currentNode.G + 1;
                     offsetNode.H = Dist(offset, end);
+                    offsetNode.F = offsetNode.G + epsilon * offsetNode.H;
                     //offsetNode.H = Math.Abs(end.x - offset.x) + Math.Abs(end.y - offset.y);
                     offsetNode.Location = offset;
+                    offsetNode.listNumb = 0; //0 for no list.
                     l.AddLast(offsetNode);
                 }
             }
@@ -205,40 +211,63 @@ namespace helper
             return Mathf.Sqrt(x * x + y * y);
         }
 
-        private static void Merge(LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes)
+        private static void Merge(int[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes)
         {
+            int currentNode = 0;
             for (LinkedListNode<Node> newIt = newNodes.First; newIt != null; newIt = newIt.Next)
             {
                 bool exists = false;
-                for (LinkedListNode<Node> pathIt = pathMap.First; pathIt != null; pathIt = pathIt.Next)
-                {
-                    if (pathIt.Value.Location.Equals(newIt.Value.Location))
-                    {
-                        exists = true;
-                        break;
-                    }
-                }
+                currentNode = nodes[newIt.Value.Location.x, newIt.Value.Location.y];
+                if (currentNode == 1)
+                    exists = true;
+                //for (LinkedListNode<Node> pathIt = pathMap.First; pathIt != null; pathIt = pathIt.Next)
+                //{
+                //    if (pathIt.Value.Location.Equals(newIt.Value.Location))
+                //    {
+                //        exists = true;
+                //        break;
+                //    }
+                //}
                 if (!exists)
                 {
-                    for (LinkedListNode<Node> availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
+                    //for (LinkedListNode<Node> availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
+                    //{
+                    //    if (availIt.Value.Location.Equals(newIt.Value.Location))
+                    //    {
+                    //        exists = true;
+                    //        if (newIt.Value.F < availIt.Value.F)
+                    //        {
+                    //            availIt.Value = newIt.Value;
+                    //        }
+                    //        break;
+                    //    }
+                    //}
+                    if (currentNode == 2)
                     {
-                        if (availIt.Value.Location.Equals(newIt.Value.Location))
+                        exists = true;
+                        LinkedListNode<Node> availIt;
+                        for (availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
                         {
-                            exists = true;
-                            if (newIt.Value.F < availIt.Value.F)
+                            if (newIt.Value.Location.x == availIt.Value.Location.x &&
+                                newIt.Value.Location.y == availIt.Value.Location.y)
                             {
-                                availIt.Value = newIt.Value;
+                                break;
                             }
-                            break;
+                        }
+                        if (newIt.Value.F < availIt.Value.F)
+                        {
+                            //replacing the node
+                            availIt.Value = newIt.Value;
                         }
                     }
                 }
                 if (!exists)
                 {
+                    nodes[newIt.Value.Location.x, newIt.Value.Location.y] = 2; //2 for availableNodes.
                     availableNodes.AddLast(newIt.Value);
                 }
             }
-            newNodes.Clear();
+            //newNodes.Clear();
         }
 
         private static LinkedList<Node> GetBestPath(LinkedList<Node> pathMap)
@@ -263,18 +292,22 @@ namespace helper
         {
             if (!PlayerManager.GetGrid(playerID).isGridEmpty(start))
                 return new LinkedList<Node>();
-            
+
+            Grid grid = PlayerManager.GetGrid(playerID);
+            int height = grid.grid_height;
+            int width = grid.grid_width;
+            int[,] nodeArray = new int[width,height];
+
             Node startNode = new Node();
             startNode.Location = start;
             LinkedList<Node> pathMap = new LinkedList<Node>();
             pathMap.AddFirst(startNode);
-            LinkedList<Node> availableNodes = getAdjacentNodes(startNode, end, playerID, eps); //*/new LinkedList<Node>();
-            LinkedList<Node> immediateNodes = new LinkedList<Node>();//*/getAdjacentNodes(startNode, end, playerID);
+            LinkedList<Node> availableNodes = getAdjacentNodes(nodeArray, grid, startNode, end, playerID, eps); //*/new LinkedList<Node>();
             LinkedListNode<Node> it;
             LinkedListNode<Node> minIt;
             Node minNode;
 
-            while (availableNodes.Count > 0 || immediateNodes.Count > 0)
+            while (availableNodes.Count > 0)
             {
                 it = availableNodes.First;
                 minIt = availableNodes.First;
@@ -293,8 +326,9 @@ namespace helper
                     it = it.Next;
                 }
                 availableNodes.Remove(minIt);
-                Merge(getAdjacentNodes(minNode, end, playerID, eps), ref pathMap, ref availableNodes);
+                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, playerID, eps), ref pathMap, ref availableNodes);
 
+                nodeArray[minNode.Location.x, minNode.Location.y] = 1; //1 for pathMap
                 pathMap.AddLast(minNode);
 
                 if (minNode.Location.Equals(end))

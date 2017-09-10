@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465809, g: 0.49641508, b: 0.5748199, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657993, g: 0.49641442, b: 0.5748189, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1474,6 +1474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridID: 0
+  startColor: {r: 0.48539558, g: 1, b: 0.13235295, a: 0.78431374}
+  endColor: {r: 1, g: 0, b: 0, a: 0.78431374}
   visualizerObject: {fileID: 1184395962956912, guid: d96f2e8d742620745a844af36fab2b39,
     type: 2}
 --- !u!1001 &1419909333

@@ -98,7 +98,7 @@ public class Creature : InkObject
 			if (pathIndex-1 < 0)
 			{
 				pos = Help.ComputeBezier(time, getGridCurve(gridPos, path[pathIndex+1], true));
-				print(path.Count);
+				//print(path.Count);
 			}
 			else if (path.Count-1 == pathIndex+1)
 			{
@@ -129,7 +129,7 @@ public class Creature : InkObject
 	{
 		if(pathUpdateFlag)
 		{
-			print("PAth Chaned");
+			//print("PAth Chaned");
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
 		}
