@@ -85,7 +85,7 @@ public class Creature : InkObject
 	private void move(ref float time, float gridSpeed, float animationSpeed)
 	{
 		time += Time.deltaTime * gridSpeed;
-		print(time);
+		// print(time);
 		if (time > 1)
 		{
 			time -= 1;
@@ -98,6 +98,7 @@ public class Creature : InkObject
 			if (pathIndex-1 < 0)
 			{
 				pos = Help.ComputeBezier(time, getGridCurve(gridPos, path[pathIndex+1], true));
+				print(path.Count);
 			}
 			else if (path.Count-1 == pathIndex+1)
 			{
@@ -124,11 +125,13 @@ public class Creature : InkObject
 	/// <summary>
 	/// recalculates the path if pathUpdateFlag is true.
 	/// </summary>
-	private void updatePath()
+	private void updatePath(IntVector2 end)
 	{
 		if(pathUpdateFlag)
 		{
-			path = Help.GetGridPath(gridID, gridPos, gridEnd);
+			print("PAth Chaned");
+			pathUpdateFlag = false;
+			path = Help.GetGridPath(gridID, gridPos, end);
 		}
 	}
 
@@ -137,6 +140,7 @@ public class Creature : InkObject
 	/// </summary>
 	public void OnGridChange(Grid grid, OnGridChangeEventArgs e)
 	{
+		// print("GRid Chaned");
 		if (grid.ID == gridID)
 		{
 			pathUpdateFlag = true;
@@ -153,10 +157,12 @@ public class Creature : InkObject
 		{
 			throw new System.ArgumentException("Best path does not exist", "pathing");
 		}
+		gridEnd = path[path.Count-1];
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		move(ref time, speed, speed);
+		updatePath(gridEnd);
 	}
 }
