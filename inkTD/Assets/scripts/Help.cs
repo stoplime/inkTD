@@ -161,7 +161,7 @@ namespace helper
         /// <summery>
         /// creates a list of adjacent nodes from a current node
         /// </summery>
-        private static LinkedList<Node> getAdjacentNodes(int[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, int playerID, float epsilon)
+        private static LinkedList<Node> getAdjacentNodes(byte[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, int playerID, float epsilon)
         {
             LinkedList<Node> l = new LinkedList<Node>();
             IntVector2 offset;
@@ -211,23 +211,17 @@ namespace helper
             return Mathf.Sqrt(x * x + y * y);
         }
 
-        private static void Merge(int[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes)
+        private static void Merge(byte[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes)
         {
             int currentNode = 0;
             for (LinkedListNode<Node> newIt = newNodes.First; newIt != null; newIt = newIt.Next)
             {
                 bool exists = false;
                 currentNode = nodes[newIt.Value.Location.x, newIt.Value.Location.y];
+
                 if (currentNode == 1)
                     exists = true;
-                //for (LinkedListNode<Node> pathIt = pathMap.First; pathIt != null; pathIt = pathIt.Next)
-                //{
-                //    if (pathIt.Value.Location.Equals(newIt.Value.Location))
-                //    {
-                //        exists = true;
-                //        break;
-                //    }
-                //}
+
                 if (!exists)
                 {
                     //for (LinkedListNode<Node> availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
@@ -296,7 +290,7 @@ namespace helper
             Grid grid = PlayerManager.GetGrid(playerID);
             int height = grid.grid_height;
             int width = grid.grid_width;
-            int[,] nodeArray = new int[width,height];
+            byte[,] nodeArray = new byte[width,height];
 
             Node startNode = new Node();
             startNode.Location = start;

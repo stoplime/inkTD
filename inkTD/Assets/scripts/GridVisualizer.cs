@@ -26,7 +26,7 @@ public class GridVisualizer : MonoBehaviour {
         set { SetVisiblity(value); }
     }
 
-    private static List<GameObject> createdObjects = new List<GameObject>();
+    private List<GameObject> createdObjects = new List<GameObject>();
     private bool visible = true;
 
 	// Use this for initialization
