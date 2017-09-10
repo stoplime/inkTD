@@ -163,11 +163,11 @@ public class Creature : InkObject
 
 	// Use this for initialization
 	void Start () {
-		gridPos = new IntVector2(initX, initY);
+		gridPos = new IntVector2(6, 0);
 		pos = Grid.gridToPos(gridPos);
 		PlayerManager.SpawnCreature(ownerID, gridID, this);
 		var a = PlayerManager.GetBestPath(gridID);
-		gridEnd = a[a.Count-1];
+		gridEnd = new IntVector2(10,15);
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
 		
 		if (path.Count == 0)
@@ -178,7 +178,7 @@ public class Creature : InkObject
 	
 	// Update is called once per frame
 	void Update () {
-		move(ref time, speed, speed);
-		updatePath(gridEnd);
+		// move(ref time, speed, speed);
+		// updatePath(gridEnd);
 	}
 }
