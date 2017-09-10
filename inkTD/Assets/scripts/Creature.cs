@@ -98,7 +98,11 @@ public class Creature : InkObject
 			if (pathIndex-1 < 0)
 			{
 				pos = Help.ComputeBezier(time, getGridCurve(gridPos, path[pathIndex+1], true));
+<<<<<<< HEAD
 				//print(path.Count);
+=======
+				// print(path.Count);
+>>>>>>> e551e3d32e269a6266424ba4cfe3d4d192e28f1b
 			}
 			else if (path.Count-1 == pathIndex+1)
 			{
@@ -129,7 +133,11 @@ public class Creature : InkObject
 	{
 		if(pathUpdateFlag)
 		{
+<<<<<<< HEAD
 			//print("PAth Chaned");
+=======
+			// print("PAth Chaned");
+>>>>>>> e551e3d32e269a6266424ba4cfe3d4d192e28f1b
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
 		}
@@ -146,18 +154,26 @@ public class Creature : InkObject
 			pathUpdateFlag = true;
 			if(gridEnd.x != grid.endX || gridEnd.y != grid.endY)
 				gridEnd = new IntVector2(grid.endX, grid.endY);
+			gameObject.GetComponent<GridVisualizer>().VisualizePath(path);
 		}
 	}
 
+	public int initX;
+	public int initY;
+
 	// Use this for initialization
 	void Start () {
+		gridPos = new IntVector2(initX, initY);
+		pos = Grid.gridToPos(gridPos);
 		PlayerManager.SpawnCreature(ownerID, gridID, this);
-		path = PlayerManager.GetBestPath(gridID);
+		var a = PlayerManager.GetBestPath(gridID);
+		gridEnd = a[a.Count-1];
+		path = Help.GetGridPath(gridID, gridPos, gridEnd);
+		
 		if (path.Count == 0)
 		{
 			throw new System.ArgumentException("Best path does not exist", "pathing");
 		}
-		gridEnd = path[path.Count-1];
 	}
 	
 	// Update is called once per frame
