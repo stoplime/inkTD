@@ -98,11 +98,7 @@ public class Creature : InkObject
 			if (pathIndex-1 < 0)
 			{
 				pos = Help.ComputeBezier(time, getGridCurve(gridPos, path[pathIndex+1], true));
-<<<<<<< HEAD
-				//print(path.Count);
-=======
 				// print(path.Count);
->>>>>>> e551e3d32e269a6266424ba4cfe3d4d192e28f1b
 			}
 			else if (path.Count-1 == pathIndex+1)
 			{
@@ -133,11 +129,6 @@ public class Creature : InkObject
 	{
 		if(pathUpdateFlag)
 		{
-<<<<<<< HEAD
-			//print("PAth Chaned");
-=======
-			// print("PAth Chaned");
->>>>>>> e551e3d32e269a6266424ba4cfe3d4d192e28f1b
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
 		}
