@@ -32,7 +32,7 @@ public class Projectile_Controller : MonoBehaviour
         set
         {
             targetPosition = value;
-            points[2] = targetPosition;
+            curveEnd = targetPosition;
         }
     }
 
@@ -59,16 +59,35 @@ public class Projectile_Controller : MonoBehaviour
     private float currentLife;
 
     private Tower creator;
-
-    private Vector3[] points = new Vector3[3];
+    
+    public Vector3 curveStart;
+    public Vector3 curveMid;
+    public Vector3 curveEnd;
     private Vector3 currentBezierCurve;
 
     // Use this for initialization
     void Start ()
     {
-        points[0] = startPosition;
-        points[1] = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.x) / 2);
-        points[2] = targetPosition;
+        currentBezierCurve = Help.ComputeBezier((currentLife + Time.deltaTime) / life, curveStart, curveMid, curveEnd);
+        transform.LookAt(currentBezierCurve);
+    }
+
+    /// <summary>
+    /// Sets the points the projectile will curve along.
+    /// </summary>
+    /// <param name="start">The start point.</param>
+    /// <param name="mid">The middle of the bezier curve.</param>
+    /// <param name="end">The end of the bezier curve.</param>
+    public void SetCurvePoints(Vector3 start, Vector3 mid, Vector3 end)
+    {
+        curveStart = start;
+        curveMid = mid;
+        curveEnd = end;
+
+
+        //curveStart = startPosition;
+        //curveMid = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.z) / 2);
+        //curveEnd = targetPosition;
     }
 
     /// <summary>
@@ -86,12 +105,12 @@ public class Projectile_Controller : MonoBehaviour
         currentLife += Time.deltaTime;
         if (trackingProjectile)
         {
-            transform.position = Help.ComputeBezier(currentLife / life, points);
+            transform.position = Help.ComputeBezier(currentLife / life, curveStart, curveMid, curveEnd);
             transform.LookAt(target.transform);
         }
         else
         {
-            currentBezierCurve = Help.ComputeBezier(currentLife / life, points); 
+            currentBezierCurve = Help.ComputeBezier(currentLife / life, curveStart, curveMid, curveEnd); 
             transform.LookAt(currentBezierCurve);
             transform.position = currentBezierCurve;
         }

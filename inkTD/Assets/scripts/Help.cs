@@ -118,7 +118,7 @@ namespace helper
         /// <param name="point2">The second point.</param>
         /// <param name="time">The time along the curve (percentage from point1 to point2).</param>
         /// <returns></returns>
-        public static Vector3 ComputeBezier(Vector3 point1, Vector3 point2, Vector3 point3, float time)
+        public static Vector3 ComputeBezier(float time, Vector3 point1, Vector3 point2, Vector3 point3)
         {
             float inverseTime = 1 - time;
             return inverseTime * inverseTime * point1 + 2 * inverseTime * time * point2 + time * time * point3;

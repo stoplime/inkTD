@@ -37,6 +37,9 @@ public class Tower : InkObject
     [Tooltip("The sound effect that plays whenever a projectile is fired from this tower.")]
     public AudioClip shootSoundEffect;
 
+    [Tooltip("If true the bezier curve representing the firing arc of the tower will be shown. This requires a BezierVisualizer script attached.")]
+    public bool visualizeBezier = false;
+
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
     /// </summary>
@@ -72,6 +75,10 @@ public class Tower : InkObject
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
 
+    private BezierVisualizer visualizer;
+
+    private Vector3 spawnPos;
+
     private int gridPositionX;
     private int gridPositionY;
 
@@ -103,6 +110,16 @@ public class Tower : InkObject
 
         SetTowerPosition(gridPositionX, gridPositionY);
 
+        visualizer = gameObject.GetComponent<BezierVisualizer>();
+
+        spawnPos = meshRenderer.bounds.center;
+        spawnPos.y += projectileSpawnHeight;
+
+        if (visualizeBezier)
+        {
+            VisualizeBezier();
+        }
+
         //TEST ONLY:
         Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
@@ -110,10 +127,42 @@ public class Tower : InkObject
 
     void OnValidate()
     {
-        if (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001)
+        if (Application.isPlaying && timer != null && (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001))
             timer.TargetTime = 60000 / speed;
 
         SetTowerPosition(initialGridPositionX, initialGridPositionY);
+
+        if (meshRenderer != null)
+        {
+            spawnPos = meshRenderer.bounds.center;
+            spawnPos.y += projectileSpawnHeight;
+        }
+
+        VisualizeBezier();
+    }
+
+    private void VisualizeBezier()
+    {
+        if (target != null)
+        {
+            Vector3 curveEnd = target.transform.position;
+            Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
+            VisualizeBezier(curveMid, curveEnd);
+        }
+    }
+
+    private void VisualizeBezier(Vector3 curveMid, Vector3 curveEnd)
+    {
+        if (visualizeBezier && target != null && visualizer != null)
+        {
+            curveEnd = target.transform.position;
+            curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
+
+            visualizer.points = new Vector3[3];
+            visualizer.points[0] = spawnPos;
+            visualizer.points[1] = curveMid;
+            visualizer.points[2] = curveEnd;
+        }
     }
 
     private void SetTarget(GameObject target)
@@ -126,15 +175,12 @@ public class Tower : InkObject
     private void Timer_Elapsed(object sender, System.EventArgs e)
     {
         Quaternion rotation = Quaternion.identity;
-        Vector3 spawnPos = meshRenderer.bounds.center;
-        spawnPos.y += projectileSpawnHeight;
         GameObject projectile = Instantiate(projectileObject, spawnPos, rotation) as GameObject;
         Projectile_Controller controller = projectile.GetComponent<Projectile_Controller>();
         controller.SetCreator(this);
         controller.Life = projectileLife;
         controller.Target = target;
         controller.StartPosition = spawnPos;
-
         if (targetRenderer == null)
         {
             controller.TargetPosition = target.transform.position;
@@ -144,7 +190,13 @@ public class Tower : InkObject
             controller.TargetPosition = targetRenderer.bounds.center;
         }
 
-        projectile.transform.LookAt(target.transform);
+
+        Vector3 curveEnd = target.transform.position;
+        Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
+
+        controller.SetCurvePoints(spawnPos, curveMid, curveEnd);
+
+        VisualizeBezier(curveMid, curveEnd);
 
         //Applying the particles based on the modifiers present:
         string particleName = string.Empty;
@@ -186,7 +238,7 @@ public class Tower : InkObject
     void Update ()
     {
         //DEBUG ONLY
-        if (target == null)
+        if (Application.isEditor && target == null)
         {
             SetTarget(GameObject.FindGameObjectWithTag("Debug"));
         }
