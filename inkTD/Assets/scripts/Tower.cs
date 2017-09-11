@@ -78,9 +78,12 @@ public class Tower : InkObject
     private BezierVisualizer visualizer;
 
     private Vector3 spawnPos;
+    private Vector3 projectileSize;
 
     private int gridPositionX;
     private int gridPositionY;
+
+    private float height;
 
     /// <summary>
     /// A list of targets a tower can target.
@@ -112,12 +115,19 @@ public class Tower : InkObject
 
         visualizer = gameObject.GetComponent<BezierVisualizer>();
 
+        if (projectileObject != null)
+        {
+            projectileSize = projectileObject.transform.Find("Projectile_Front").gameObject.GetComponent<MeshRenderer>().bounds.size;//projectileObject.GetComponentInChildren<MeshRenderer>().bounds.size;
+        }
+
         SetSpawnPos();
 
         if (visualizeBezier)
         {
             VisualizeBezier();
         }
+
+        height = meshRenderer.bounds.max.y;
 
         //TEST ONLY:
         Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
@@ -151,19 +161,18 @@ public class Tower : InkObject
         {
             Vector3 curveEnd = target.transform.position;
             Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
-            VisualizeBezier(curveMid, curveEnd);
+            VisualizeBezier(spawnPos, curveMid, curveEnd);
         }
     }
 
-    private void VisualizeBezier(Vector3 curveMid, Vector3 curveEnd)
+    private void VisualizeBezier(Vector3 curveStart, Vector3 curveMid, Vector3 curveEnd)
     {
         if (visualizeBezier && target != null && visualizer != null)
         {
-            curveEnd = target.transform.position;
-            curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
-
+            //curveEnd = target.transform.position;
+            //curveMid = new Vector3((curveStart.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (curveStart.z + curveEnd.z) / 2);
             visualizer.points = new Vector3[3];
-            visualizer.points[0] = spawnPos;
+            visualizer.points[0] = curveStart;
             visualizer.points[1] = curveMid;
             visualizer.points[2] = curveEnd;
         }
@@ -178,13 +187,14 @@ public class Tower : InkObject
 
     private void Timer_Elapsed(object sender, System.EventArgs e)
     {
+        Vector3 curveStart;
         Quaternion rotation = Quaternion.identity;
         GameObject projectile = Instantiate(projectileObject, spawnPos, rotation) as GameObject;
         Projectile_Controller controller = projectile.GetComponent<Projectile_Controller>();
         controller.SetCreator(this);
         controller.Life = projectileLife;
         controller.Target = target;
-        controller.StartPosition = spawnPos;
+
         if (targetRenderer == null)
         {
             controller.TargetPosition = target.transform.position;
@@ -194,12 +204,17 @@ public class Tower : InkObject
             controller.TargetPosition = targetRenderer.bounds.center;
         }
         
+        //Computing the 'rough' estimate for the projectile's arc using the spawn position
         Vector3 curveEnd = target.transform.position;
-        Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
-
+        Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, height, (spawnPos.z + curveEnd.z) / 2);
         controller.SetCurvePoints(spawnPos, curveMid, curveEnd);
 
-        VisualizeBezier(curveMid, curveEnd);
+        //Computing the actual projectile arc.
+        curveStart = spawnPos + (projectile.transform.forward * (projectileSize.y * 0.75f));
+        curveMid = new Vector3((curveStart.x + curveEnd.x) / 2, height, (curveStart.z + curveEnd.z) / 2);
+        controller.SetCurvePoints(curveStart, curveMid, curveEnd);
+
+        VisualizeBezier(curveStart, curveMid, curveEnd);
 
         //Applying the particles based on the modifiers present:
         string particleName = string.Empty;
