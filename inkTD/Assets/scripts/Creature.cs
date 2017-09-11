@@ -167,9 +167,9 @@ public class Creature : InkObject
 	void Start () {
 		gridPos = new IntVector2(initX, initY);
 		pos = Grid.gridToPos(gridPos);
-		PlayerManager.SpawnCreature(ownerID, gridID, this);
+		PlayerManager.AddCreature(ownerID, gridID, this);
 		var a = PlayerManager.GetBestPath(gridID);
-		gridEnd = new IntVector2(10,15);
+		gridEnd = a[a.Count-1];
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
         gameObject.GetComponent<GridVisualizer>().SetPath(path);
         PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;

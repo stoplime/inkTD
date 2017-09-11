@@ -32,7 +32,7 @@ public static class PlayerManager
     /// <summary>
     /// The list of creatures in a grid of the given player id. IE: the key is the playerID of the grid where the creatures are located.
     /// </summary>
-    private static Dictionary<int, List<Creature>> creatures = new Dictionary<int, List<Creature>>();
+    private static Dictionary<int, List<Creature> > creatures = new Dictionary<int, List<Creature> >();
 
     /// <summary>
     /// The current player's playerID.
@@ -45,7 +45,7 @@ public static class PlayerManager
     /// <param name="playerID"></param>
     /// <param name="gridId"></param>
     /// <param name="creature"></param>
-    public static void SpawnCreature(int playerID, int gridId, Creature creature)
+    public static void AddCreature(int playerID, int gridId, Creature creature)
     {
         creatures[gridId].Add(creature);
     }
@@ -245,4 +245,16 @@ public static class PlayerManager
     /// An event that runs when the current player's income of ink changes.
     /// </summary>
     public static event EventHandler OnCurrentPlayerIncomeChange;
+
+    public static void CreateCreature(int playerID, Transform pose, string creaturePrefab)
+	{
+		foreach (KeyValuePair<int, List<Creature> > v in creatures)
+		{
+			if (playerID != v.Key)
+			{
+				Creature creature = MonoBehaviour.Instantiate(Resources.Load("Creatures/" + creaturePrefab), pose) as Creature;
+			    AddCreature(playerID, v.Key, creature);
+			}
+		}
+	}
 }
