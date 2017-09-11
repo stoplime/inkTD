@@ -110,6 +110,9 @@ public class Tower : InkObject
 
     void OnValidate()
     {
+        if (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001)
+            timer.TargetTime = 60000 / speed;
+
         SetTowerPosition(initialGridPositionX, initialGridPositionY);
     }
 
