@@ -35,7 +35,7 @@ public class PathTraverser : MonoBehaviour {
     {
         moving = !moving;
         bestPath = PlayerManager.GetBestPath(gridID);
-        currentPathIndex = bestPath.Count - 1;
+        currentPathIndex = 0;
         UpdatePositions(currentPathIndex);
     }
 	
@@ -44,10 +44,11 @@ public class PathTraverser : MonoBehaviour {
         currentPos = Grid.gridToPos(bestPath[i]);
         currentPos.y += 0.3f;
         startPos = currentPos;
-        if (i == 0)
+        if (i == bestPath.Count - 1)
             endPos = Grid.gridToPos(bestPath[bestPath.Count - 1]);
         else
-            endPos = Grid.gridToPos(bestPath[i - 1]);
+            endPos = Grid.gridToPos(bestPath[i + 1]);
+
         endPos.y += 0.3f;
     }
 
@@ -61,9 +62,9 @@ public class PathTraverser : MonoBehaviour {
             traversee.transform.position = helper.Help.ComputeBezier(progress / speed, points);
             if (progress > speed)
             {
-                currentPathIndex--;
+                currentPathIndex++;
                 progress = 0f;
-                if (currentPathIndex < 0)
+                if (currentPathIndex >= bestPath.Count)
                 {
                     moving = false;
                     currentPathIndex = 0;

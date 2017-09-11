@@ -345,7 +345,7 @@ namespace helper
         {
             LinkedList<Node> nodes = AStart(start, end, playerID);
             List<IntVector2> path = new List<IntVector2>(nodes.Count);
-            for (LinkedListNode<Node> it = nodes.First; it != null; it = it.Next)
+            for (LinkedListNode<Node> it = nodes.Last; it != null; it = it.Previous)
             {
                 path.Add(it.Value.Location);
             }
