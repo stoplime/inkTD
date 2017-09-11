@@ -27,6 +27,8 @@ public class Creature : InkObject
 
 	private IntVector2 gridEnd;
 
+	private Vector3 animatePos;
+
 	/// <summary>
 	/// the current best path for a specific instance of a creature.
 	/// </summary>
@@ -42,6 +44,7 @@ public class Creature : InkObject
 	private bool pathUpdateFlag = false;
 
 	private float time = 0;
+	private float animateTime = 0;
 
 	private Vector3[] getGridCurve(IntVector2 previous, IntVector2 current, IntVector2 next)
 	{
@@ -82,7 +85,7 @@ public class Creature : InkObject
 	/// </summary>
 	/// <param name="gridSpeed"></param>
 	/// <param name="animationSpeed"></param>
-	private void move(float gridSpeed, float animationSpeed)
+	private void move(float gridSpeed)
 	{
 		time += Time.deltaTime * gridSpeed;
 		print(time);
@@ -98,7 +101,6 @@ public class Creature : InkObject
 			}
 		}
 
-		// pos = Vector3.Lerp(Grid.gridToPos(path[pathIndex]), Grid.gridToPos(path[pathIndex+1]), time);
 		if (path.Count > 1 && pathIndex != path.Count)
 		{
 			if (pathIndex-1 < 0)
@@ -115,12 +117,22 @@ public class Creature : InkObject
 				pos = Help.ComputeBezier(time, getGridCurve(path[pathIndex-1], path[pathIndex], path[pathIndex+1]));
 			}
 		}
-		transform.position = pos;
 	}
 
-	private void animate(float time)
+	private void animate(float animationSpeed)
 	{
+		animateTime += Time.deltaTime * animationSpeed;
+		if(animateTime > 1){
+			animateTime -= 1;
+		}
 
+		Vector3[] animatePoints = {Vector3.zero, new Vector3(0, animationHeight, 0), Vector3.zero};
+
+		animatePos = Help.ComputeBezier(animateTime, animatePoints);
+
+		Vector3 lookAtTarget = new Vector3(pos.x, transform.position.y, pos.z);
+		transform.LookAt(lookAtTarget);
+		transform.position = animatePos+pos;
 	}
 
 	/// <summary>
@@ -179,7 +191,8 @@ public class Creature : InkObject
 	
 	// Update is called once per frame
 	void Update () {
-		move(speed, speed);
+		move(speed);
+		animate(2*speed);
 		updatePath(gridEnd);
 	}
 }
