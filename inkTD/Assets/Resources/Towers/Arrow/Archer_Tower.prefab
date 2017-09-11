@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 82572700486173084}
   - component: {fileID: 114770962494211584}
   - component: {fileID: 114279521683953384}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Archer_Tower
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   samples: 20
+  snapToObject: 0
   points: []
 --- !u!114 &114770962494211584
 MonoBehaviour:
