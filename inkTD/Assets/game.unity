@@ -226,6 +226,11 @@ Prefab:
       propertyPath: initialGridPositionY
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114770962494211584, guid: a76e4b7ca5d4d6b43a70fc31235200f6,
+        type: 2}
+      propertyPath: visualizeBezier
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a76e4b7ca5d4d6b43a70fc31235200f6, type: 2}
   m_IsPrefabParent: 0
@@ -677,6 +682,11 @@ Prefab:
         type: 2}
       propertyPath: initialGridPositionY
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114770962494211584, guid: a76e4b7ca5d4d6b43a70fc31235200f6,
+        type: 2}
+      propertyPath: visualizeBezier
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a76e4b7ca5d4d6b43a70fc31235200f6, type: 2}
@@ -1724,6 +1734,11 @@ Prefab:
       propertyPath: speed
       value: 77
       objectReference: {fileID: 0}
+    - target: {fileID: 114770962494211584, guid: a76e4b7ca5d4d6b43a70fc31235200f6,
+        type: 2}
+      propertyPath: visualizeBezier
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a76e4b7ca5d4d6b43a70fc31235200f6, type: 2}
   m_IsPrefabParent: 0
@@ -2228,8 +2243,8 @@ GameObject:
   - component: {fileID: 1871428120}
   - component: {fileID: 1871428119}
   - component: {fileID: 1871428118}
-  - component: {fileID: 1871428116}
   - component: {fileID: 1871428117}
+  - component: {fileID: 1871428116}
   - component: {fileID: 1871428121}
   m_Layer: 0
   m_Name: Sphere
@@ -2303,7 +2318,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1871428115}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5627041, y: 0.5, z: 0.5208266}
+  m_LocalPosition: {x: 1.3, y: 0.5, z: 0.5208266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

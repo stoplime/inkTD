@@ -20,15 +20,18 @@ public class BezierVisualizer : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Vector3 previous;
-        Vector3 next;
-        float time = 0;
-        for (int i = 0; i < samples; i++)
+        if (points != null && points.Length > 2)
         {
-            previous = Help.ComputeBezier(time, points);
-            time += 1f / samples;
-            next = Help.ComputeBezier(time, points);
-            Gizmos.DrawLine(previous,next);
+            Vector3 previous;
+            Vector3 next;
+            float time = 0;
+            for (int i = 0; i < samples; i++)
+            {
+                previous = Help.ComputeBezier(time, points);
+                time += 1f / samples;
+                next = Help.ComputeBezier(time, points);
+                Gizmos.DrawLine(previous, next);
+            }
         }
     }
 
