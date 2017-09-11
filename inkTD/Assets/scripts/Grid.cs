@@ -41,24 +41,24 @@ public class Grid : MonoBehaviour {
 	private GameObject[,] grid;
 
 	public void setGridObject(IntVector2 xy, GameObject obj){
-		grid[xy.x, xy.y] = obj;
+		grid[xy.x - gridOffset.x, xy.y - gridOffset.y] = obj;
         RunOnGridChange(xy.x, xy.y);
     }
 	public void setGridObject(int x, int y, GameObject obj){
-		grid[x, y] = obj;
+		grid[x - gridOffset.x, y - gridOffset.y] = obj;
         RunOnGridChange(x,y);
     }
 	public GameObject getGridObject(IntVector2 xy){
-		return grid[xy.x, xy.y];
+		return grid[xy.x - gridOffset.x, xy.y - gridOffset.y];
 	}
 	public GameObject getGridObject(int x, int y){
-		return grid[x, y];
+		return grid[x - gridOffset.x, y - gridOffset.y];
 	}
 
 	/// <summery>
 	/// offset the grid 0,0 per grid unit away
 	/// </summery>
-	public Vector2 gridOffset;
+	public IntVector2 gridOffset;
 
 	/// <summary>
 	/// width and height of each playing field
@@ -70,7 +70,7 @@ public class Grid : MonoBehaviour {
 	/// checks if grid pos is currently occupide with a tower
 	/// </summery>
 	public bool isGridEmpty(IntVector2 pos){
-		if (grid[pos.x, pos.y] != null){
+		if (grid[pos.x - gridOffset.x, pos.y - gridOffset.y] != null){
 			return false;
 		}
 		return true;
@@ -80,8 +80,8 @@ public class Grid : MonoBehaviour {
 	/// checks if grid pos is within the grid arena
 	/// </summery>
 	public bool inArena(IntVector2 pos){
-		if (pos.x >= 0 && pos.x < grid_width){
-			if (pos.y >= 0 && pos.y < grid_height){
+		if (pos.x >= gridOffset.x && pos.x < grid_width+gridOffset.x){
+			if (pos.y >= gridOffset.y && pos.y < grid_height+gridOffset.y){
 				return true;
 			}
 		}
@@ -93,9 +93,13 @@ public class Grid : MonoBehaviour {
 	GameObject existingHighlight = null;
 	bool towerSelected = true;
 
+	public int OffsetX;
+	public int OffsetY;
+
     private RaycastHit hit;
 
     void Awake() {
+		gridOffset = new IntVector2(OffsetX, OffsetY);
         grid = new GameObject[grid_width, grid_height];
     }
 

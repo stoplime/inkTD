@@ -250,11 +250,11 @@ public static class PlayerManager
 	{
 		foreach (KeyValuePair<int, List<Creature> > v in creatures)
 		{
-			if (playerID != v.Key)
-			{
+			// if (playerID != v.Key)
+			// {
 				Creature creature = MonoBehaviour.Instantiate(Resources.Load("Creatures/" + creaturePrefab), pose) as Creature;
 			    AddCreature(playerID, v.Key, creature);
-			}
+			// }
 		}
 	}
 }
