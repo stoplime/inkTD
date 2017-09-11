@@ -26,15 +26,35 @@ public class GridVisualizer : MonoBehaviour {
         set { SetVisiblity(value); }
     }
 
+    /// <summary>
+    /// Gets or sets whether the path to visualize is manually set.
+    /// </summary>
+    public bool VisualizeManualPath
+    {
+        get { return visualizeManualPath; }
+        set { visualizeManualPath = value; }
+    }
+
     private List<GameObject> createdObjects = new List<GameObject>();
     private bool visible = true;
+    private bool visualizeManualPath = false;
+    private List<IntVector2> path = new List<IntVector2>();
 
 	// Use this for initialization
 	void Start ()
     {
         PlayerManager.GetGrid(gridID).OnGridChange += GridVisualizer_OnGridChange;
-        VisualizePath(PlayerManager.GetBestPath(gridID));
+        if (path.Count == 0)
+        {
+            path = PlayerManager.GetBestPath(gridID);
+            VisualizePath();
+        }
 	}
+
+    void OnDestroy()
+    {
+        PlayerManager.GetGrid(gridID).OnGridChange -= GridVisualizer_OnGridChange;
+    }
 
     /// <summary>
     /// toggles the visiblity of the grid visualizer.
@@ -44,10 +64,24 @@ public class GridVisualizer : MonoBehaviour {
         SetVisiblity(!visible);
     }
 
+    /// <summary>
+    /// Forces the grid visualizer to manually visualize the given path.
+    /// </summary>
+    /// <param name="path"></param>
+    public void SetPath(List<IntVector2> path)
+    {
+        this.path = path;
+        visualizeManualPath = true;
+        VisualizePath();
+    }
+
     private void GridVisualizer_OnGridChange(object sender, System.EventArgs e)
     {
-        if (Application.isPlaying)
-            VisualizePath(PlayerManager.GetBestPath(gridID));
+        if (Application.isPlaying && !visualizeManualPath)
+        {
+            path = PlayerManager.GetBestPath(gridID);
+            VisualizePath();
+        }
     }
 
     private void SetVisiblity(bool val)
@@ -63,7 +97,7 @@ public class GridVisualizer : MonoBehaviour {
     /// Visualizes a given path.
     /// </summary>
     /// <param name="path">The path to visualize.</param>
-    public void VisualizePath(List<IntVector2> path)
+    private void VisualizePath()
     {
         if (createdObjects.Count > path.Count)
         {
@@ -87,10 +121,5 @@ public class GridVisualizer : MonoBehaviour {
             obj.SetActive(visible);
             createdObjects.Add(obj);
         }
-    }
-
-    public void OnClick()
-    {
-        VisualizePath(PlayerManager.GetBestPath(gridID)); //Is this needed?
     }
 }

@@ -145,7 +145,8 @@ public class Creature : InkObject
 			pathUpdateFlag = true;
 			if(gridEnd.x != grid.endX || gridEnd.y != grid.endY)
 				gridEnd = new IntVector2(grid.endX, grid.endY);
-			gameObject.GetComponent<GridVisualizer>().VisualizePath(path);
+
+            gameObject.GetComponent<GridVisualizer>().SetPath(path);
 		}
 	}
 
@@ -160,12 +161,19 @@ public class Creature : InkObject
 		var a = PlayerManager.GetBestPath(gridID);
 		gridEnd = new IntVector2(10,15);
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
-		
-		if (path.Count == 0)
+        gameObject.GetComponent<GridVisualizer>().SetPath(path);
+        PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
+
+        if (path.Count == 0)
 		{
 			throw new System.ArgumentException("Best path does not exist", "pathing");
 		}
 	}
+
+    void OnDestroy()
+    {
+        PlayerManager.GetGrid(gridID).OnGridChange -= OnGridChange;
+    }
 	
 	// Update is called once per frame
 	void Update () {

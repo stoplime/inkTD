@@ -48,7 +48,6 @@ public static class PlayerManager
     public static void SpawnCreature(int playerID, int gridId, Creature creature)
     {
         creatures[gridId].Add(creature);
-        grids[gridId].OnGridChange += creature.OnGridChange;
     }
 
     /// <summary>
