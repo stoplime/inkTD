@@ -15,15 +15,6 @@ public class Projectile_Controller : MonoBehaviour
     }
 
     /// <summary>
-    /// The position the projectile begins at.
-    /// </summary>
-    public Vector3 StartPosition
-    {
-        get { return startPosition; }
-        set { startPosition = value; }
-    }
-
-    /// <summary>
     /// The position the projectile is heading to.
     /// </summary>
     public Vector3 TargetPosition
@@ -52,8 +43,7 @@ public class Projectile_Controller : MonoBehaviour
     public bool trackingProjectile = true;
     
     private GameObject target;
-
-    private Vector3 startPosition;
+    
     private Vector3 targetPosition;
     private float life = 1;
     private float currentLife;
@@ -83,6 +73,9 @@ public class Projectile_Controller : MonoBehaviour
         curveStart = start;
         curveMid = mid;
         curveEnd = end;
+        currentBezierCurve = Help.ComputeBezier((currentLife + Time.deltaTime) / life, curveStart, curveMid, curveEnd);
+        transform.LookAt(currentBezierCurve);
+        ComputeMovement();
     }
 
     /// <summary>
@@ -93,11 +86,9 @@ public class Projectile_Controller : MonoBehaviour
     {
         creator = t;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void ComputeMovement()
     {
-        currentLife += Time.deltaTime;
         if (trackingProjectile)
         {
             transform.position = Help.ComputeBezier(currentLife / life, curveStart, curveMid, curveEnd);
@@ -105,10 +96,17 @@ public class Projectile_Controller : MonoBehaviour
         }
         else
         {
-            currentBezierCurve = Help.ComputeBezier(currentLife / life, curveStart, curveMid, curveEnd); 
+            currentBezierCurve = Help.ComputeBezier(currentLife / life, curveStart, curveMid, curveEnd);
             transform.LookAt(currentBezierCurve);
             transform.position = currentBezierCurve;
         }
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        currentLife += Time.deltaTime;
+        ComputeMovement();
 
         if (currentLife > life)
         {
