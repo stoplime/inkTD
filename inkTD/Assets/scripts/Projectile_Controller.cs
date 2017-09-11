@@ -83,11 +83,6 @@ public class Projectile_Controller : MonoBehaviour
         curveStart = start;
         curveMid = mid;
         curveEnd = end;
-
-
-        //curveStart = startPosition;
-        //curveMid = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.z) / 2);
-        //curveEnd = targetPosition;
     }
 
     /// <summary>

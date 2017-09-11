@@ -54,6 +54,10 @@ public class GridVisualizer : MonoBehaviour {
     void OnDestroy()
     {
         PlayerManager.GetGrid(gridID).OnGridChange -= GridVisualizer_OnGridChange;
+        for (int i = createdObjects.Count - 1; i >= 0; i--)
+        {
+            Destroy(createdObjects[i]);
+        }
     }
 
     /// <summary>

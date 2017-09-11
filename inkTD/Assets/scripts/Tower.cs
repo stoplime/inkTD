@@ -112,8 +112,7 @@ public class Tower : InkObject
 
         visualizer = gameObject.GetComponent<BezierVisualizer>();
 
-        spawnPos = meshRenderer.bounds.center;
-        spawnPos.y += projectileSpawnHeight;
+        SetSpawnPos();
 
         if (visualizeBezier)
         {
@@ -125,6 +124,12 @@ public class Tower : InkObject
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
 	}
 
+    private void SetSpawnPos()
+    {
+        spawnPos = meshRenderer.bounds.center;
+        spawnPos.y += projectileSpawnHeight;
+    }
+
     void OnValidate()
     {
         if (Application.isPlaying && timer != null && (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001))
@@ -134,8 +139,7 @@ public class Tower : InkObject
 
         if (meshRenderer != null)
         {
-            spawnPos = meshRenderer.bounds.center;
-            spawnPos.y += projectileSpawnHeight;
+            SetSpawnPos();
         }
 
         VisualizeBezier();
@@ -189,8 +193,7 @@ public class Tower : InkObject
         {
             controller.TargetPosition = targetRenderer.bounds.center;
         }
-
-
+        
         Vector3 curveEnd = target.transform.position;
         Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (spawnPos.z + curveEnd.z) / 2);
 
