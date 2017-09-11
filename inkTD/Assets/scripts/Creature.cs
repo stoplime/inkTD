@@ -59,18 +59,18 @@ public class Creature : InkObject
 	
 	private Vector3[] getGridCurve(IntVector2 current, IntVector2 next, bool startCenter)
 	{
-		Vector3[] bezier = new Vector3[3];
+		Vector3[] bezier = new Vector3[2];
 
 		Vector3 s1 = Grid.gridToPos(current);
 		Vector3 s2 = Grid.gridToPos(next);
 		if (startCenter)
 		{
-			bezier[1] = s1;
-			bezier[2] = (s1+s2)/2;
+			bezier[0] = s1;
+			bezier[1] = (s1+s2)/2;
 		}
 		else
 		{
-			bezier[1] = (s1+s2)/2;
+			bezier[0] = (s1+s2)/2;
 			bezier[1] = s2;
 		}
 
@@ -82,36 +82,37 @@ public class Creature : InkObject
 	/// </summary>
 	/// <param name="gridSpeed"></param>
 	/// <param name="animationSpeed"></param>
-	private void move(ref float time, float gridSpeed, float animationSpeed)
+	private void move(float gridSpeed, float animationSpeed)
 	{
 		time += Time.deltaTime * gridSpeed;
-		// print(time);
+		print(time);
 		if (time > 1)
 		{
 			time -= 1;
 			pathIndex++;
-			gridPos = Grid.posToGrid(pos);
+			if(pathIndex == path.Count){
+				Destroy(gameObject);
+			}
+			else{
+				gridPos = path[pathIndex];//*/Grid.posToGrid(pos);
+			}
 		}
 
-		if (path.Count > 1)
+		// pos = Vector3.Lerp(Grid.gridToPos(path[pathIndex]), Grid.gridToPos(path[pathIndex+1]), time);
+		if (path.Count > 1 && pathIndex != path.Count)
 		{
 			if (pathIndex-1 < 0)
 			{
-				pos = Help.ComputeBezier(time, getGridCurve(gridPos, path[pathIndex+1], true));
+				pos = Help.ComputeBezier(time, getGridCurve(path[pathIndex], path[pathIndex+1], true));
 				// print(path.Count);
 			}
-			else if (path.Count-1 == pathIndex+1)
+			else if (path.Count-1 == pathIndex)
 			{
-				pos = Help.ComputeBezier(time, getGridCurve(gridPos, path[pathIndex+1], false));
-			}
-			else if (path.Count-1 > pathIndex+1)
-			{
-				// TODO: Creature has finished the path and needs to be destroyed
-				return;
+				pos = Help.ComputeBezier(time, getGridCurve(path[pathIndex-1], path[pathIndex], false));
 			}
 			else
 			{
-				pos = Help.ComputeBezier(time, getGridCurve(path[pathIndex-1], gridPos, path[pathIndex+1]));
+				pos = Help.ComputeBezier(time, getGridCurve(path[pathIndex-1], path[pathIndex], path[pathIndex+1]));
 			}
 		}
 		transform.position = pos;
@@ -131,6 +132,8 @@ public class Creature : InkObject
 		{
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
+			pathIndex = 0;
+            gameObject.GetComponent<GridVisualizer>().SetPath(path);
 		}
 	}
 
@@ -139,14 +142,9 @@ public class Creature : InkObject
 	/// </summary>
 	public void OnGridChange(Grid grid, OnGridChangeEventArgs e)
 	{
-		// print("GRid Chaned");
 		if (grid.ID == gridID)
 		{
 			pathUpdateFlag = true;
-			if(gridEnd.x != grid.endX || gridEnd.y != grid.endY)
-				gridEnd = new IntVector2(grid.endX, grid.endY);
-
-            gameObject.GetComponent<GridVisualizer>().SetPath(path);
 		}
 	}
 
@@ -155,7 +153,7 @@ public class Creature : InkObject
 
 	// Use this for initialization
 	void Start () {
-		gridPos = new IntVector2(6, 0);
+		gridPos = new IntVector2(initX, initY);
 		pos = Grid.gridToPos(gridPos);
 		PlayerManager.SpawnCreature(ownerID, gridID, this);
 		var a = PlayerManager.GetBestPath(gridID);
@@ -181,7 +179,7 @@ public class Creature : InkObject
 	
 	// Update is called once per frame
 	void Update () {
-        move(ref time, speed, speed);
-        updatePath(gridEnd);
-    }
+		move(speed, speed);
+		updatePath(gridEnd);
+	}
 }

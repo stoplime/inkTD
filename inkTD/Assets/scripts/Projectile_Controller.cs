@@ -67,7 +67,7 @@ public class Projectile_Controller : MonoBehaviour
     void Start ()
     {
         points[0] = startPosition;
-        points[1] = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.x) / 2);
+        points[1] = new Vector3((startPosition.x + targetPosition.x) / 2, creator.GetComponent<MeshRenderer>().bounds.max.y, (startPosition.z + targetPosition.z) / 2);
         points[2] = targetPosition;
     }
 
