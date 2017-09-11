@@ -8,9 +8,24 @@ public class Grid : MonoBehaviour {
 
 	public int ID;
 
+	/// <summary>
+	/// For code, use StartPosition instead.
+	/// </summary>
     public int startX = 0;
+
+	/// <summary>
+	/// For code, use StartPosition instead.
+	/// </summary>
     public int startY = 0;
+
+	/// <summary>
+	/// For code, use EndPosition instead.
+	/// </summary>
     public int endX = 1;
+
+	/// <summary>
+	/// For code, use EndPosition instead.
+	/// </summary>
     public int endY = 1;
 
 	public static float gridSize = 3;
@@ -97,6 +112,12 @@ public class Grid : MonoBehaviour {
 	public int OffsetY;
 
     private RaycastHit hit;
+
+	void OnValidate()
+	{
+		StartPosition = new IntVector2(startX, startY) + new IntVector2(OffsetX, OffsetY);
+		EndPosition = new IntVector2(endX, endY) + new IntVector2(OffsetX, OffsetY);
+	}
 
     void Awake() {
 		gridOffset = new IntVector2(OffsetX, OffsetY);

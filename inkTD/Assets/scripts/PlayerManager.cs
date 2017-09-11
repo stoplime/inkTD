@@ -176,14 +176,14 @@ public static class PlayerManager
             {
                 if (bestPath[i].x == e.XChanged && bestPath[i].y == e.YChanged)
                 {
-                    bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+                    bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, grid.StartPosition, grid.EndPosition);
                     return;
                 }
             }
         }
         else
         {
-            bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+            bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, grid.StartPosition, grid.EndPosition);
         }
     }
 
@@ -197,7 +197,7 @@ public static class PlayerManager
         if (!bestPaths.ContainsKey(playerID))
         {
             Grid grid = grids[playerID];
-            bestPaths[playerID] = Help.GetGridPath(playerID, new IntVector2(grid.startX, grid.startY), new IntVector2(grid.endX, grid.endY));
+            bestPaths[playerID] = Help.GetGridPath(playerID, grid.StartPosition, grid.EndPosition);
         }
         return bestPaths[playerID];
     }

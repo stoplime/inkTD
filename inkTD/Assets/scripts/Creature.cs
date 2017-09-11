@@ -88,7 +88,7 @@ public class Creature : InkObject
 	private void move(float gridSpeed)
 	{
 		time += Time.deltaTime * gridSpeed;
-		print(time);
+		// print(time);
 		if (time > 1)
 		{
 			time -= 1;

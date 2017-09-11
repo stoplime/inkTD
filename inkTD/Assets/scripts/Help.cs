@@ -211,13 +211,13 @@ namespace helper
             return Mathf.Sqrt(x * x + y * y);
         }
 
-        private static void Merge(byte[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes)
+        private static void Merge(byte[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes, Grid g)
         {
             int currentNode = 0;
             for (LinkedListNode<Node> newIt = newNodes.First; newIt != null; newIt = newIt.Next)
             {
                 bool exists = false;
-                currentNode = nodes[newIt.Value.Location.x, newIt.Value.Location.y];
+                currentNode = nodes[newIt.Value.Location.x - g.OffsetX, newIt.Value.Location.y - g.OffsetY];
 
                 if (currentNode == 1)
                     exists = true;
@@ -257,7 +257,7 @@ namespace helper
                 }
                 if (!exists)
                 {
-                    nodes[newIt.Value.Location.x, newIt.Value.Location.y] = 2; //2 for availableNodes.
+                    nodes[newIt.Value.Location.x - g.OffsetX, newIt.Value.Location.y - g.OffsetY] = 2; //2 for availableNodes.
                     availableNodes.AddLast(newIt.Value);
                 }
             }
@@ -320,9 +320,9 @@ namespace helper
                     it = it.Next;
                 }
                 availableNodes.Remove(minIt);
-                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, playerID, eps), ref pathMap, ref availableNodes);
+                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, playerID, eps), ref pathMap, ref availableNodes, grid);
 
-                nodeArray[minNode.Location.x, minNode.Location.y] = 1; //1 for pathMap
+                nodeArray[minNode.Location.x - grid.OffsetX, minNode.Location.y  - grid.OffsetY] = 1; //1 for pathMap
                 pathMap.AddLast(minNode);
 
                 if (minNode.Location.Equals(end))
