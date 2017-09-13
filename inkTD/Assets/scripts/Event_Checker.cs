@@ -8,7 +8,8 @@ using UnityEngine;
 public class Event_Checker : MonoBehaviour
 {
 
-    private Resolution prevResolution = new Resolution();
+    private float prevWidth = 0f;
+    private float prevHeight = 0f;
 
 	// Use this for initialization
 	void Start ()
@@ -19,9 +20,11 @@ public class Event_Checker : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if (prevResolution.width != Screen.currentResolution.width && prevResolution.height != Screen.currentResolution.height)
+		if (prevWidth != Screen.width || prevHeight != Screen.height)
         {
             helper.Help.TriggerResolutionChangeEvent();
+            prevWidth = Screen.width;
+            prevHeight = Screen.height;
         }
 	}
 }

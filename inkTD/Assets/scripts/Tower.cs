@@ -132,7 +132,9 @@ public class Tower : InkObject
         //TEST ONLY:
         Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
-	}
+        Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
+
+    }
 
     private void SetSpawnPos()
     {
@@ -169,8 +171,6 @@ public class Tower : InkObject
     {
         if (visualizeBezier && target != null && visualizer != null)
         {
-            //curveEnd = target.transform.position;
-            //curveMid = new Vector3((curveStart.x + curveEnd.x) / 2, gameObject.GetComponent<MeshRenderer>().bounds.max.y, (curveStart.z + curveEnd.z) / 2);
             visualizer.points = new Vector3[3];
             visualizer.points[0] = curveStart;
             visualizer.points[1] = curveMid;
@@ -203,7 +203,7 @@ public class Tower : InkObject
         {
             controller.TargetPosition = targetRenderer.bounds.center;
         }
-        
+
         //Computing the 'rough' estimate for the projectile's arc using the spawn position
         Vector3 curveEnd = target.transform.position;
         Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, height, (spawnPos.z + curveEnd.z) / 2);

@@ -13,6 +13,12 @@ public class Tab_Handler : MonoBehaviour
     //Editor Modifiable Values:
     public float spaceBetweenButtons = 15f;
 
+    [Tooltip("The script of the menu that this tab corresponds to. Drag the GameObject with the script attached into this spot.")]
+    public TabMenu menuScript;
+
+
+    //Properties:
+
     /// <summary>
     /// Gets whether the button this script is attached to is being dragged or not.
     /// </summary>
@@ -22,14 +28,18 @@ public class Tab_Handler : MonoBehaviour
     /// Gets the face of the screen the button is attached to.
     /// </summary>
     public UIAnchors Anchor { get { return anchor; } }
-
+    
     /// <summary>
     /// Gets or sets the offset from the top of the screen for top aligned tabs.
     /// </summary>
     public float OffsetTop
     {
         get { return offsetTop; }
-        set { offsetTop = value; }
+        set
+        {
+            offsetTop = value;
+            AlignTabs(UIAnchors.Top);
+        }
     }
 
     /// <summary>
@@ -38,7 +48,11 @@ public class Tab_Handler : MonoBehaviour
     public float OffsetBottom
     {
         get { return offsetBottom; }
-        set { offsetBottom = value; }
+        set
+        {
+            offsetBottom = value;
+            AlignTabs(UIAnchors.Bottom);
+        }
     }
 
     /// <summary>
@@ -47,7 +61,11 @@ public class Tab_Handler : MonoBehaviour
     public float OffsetRight
     {
         get { return offsetRight; }
-        set { offsetRight = value; }
+        set
+        {
+            offsetRight = value;
+            AlignTabs(UIAnchors.Right);
+        }
     }
 
     /// <summary>
@@ -56,7 +74,11 @@ public class Tab_Handler : MonoBehaviour
     public float OffsetLeft
     {
         get { return offsetLeft; }
-        set { offsetLeft = value; }
+        set
+        {
+            offsetLeft = value;
+            AlignTabs(UIAnchors.Left);
+        }
     }
     
     private float ScreenHeight { get { return canvasRect.rect.height - toolbarRect.rect.height; } }
@@ -82,10 +104,10 @@ public class Tab_Handler : MonoBehaviour
     private UIAnchors anchor = UIAnchors.Right;
     private bool beingDragged = false;
 
-    private float offsetTop = 0f;
-    private float offsetBottom = 0f;
-    private float offsetLeft = 0f;
-    private float offsetRight = 0f;
+    private static float offsetTop = 0f;
+    private static float offsetBottom = 0f;
+    private static float offsetLeft = 0f;
+    private static float offsetRight = 0f;
 
     private float dragOffsetX = 0f;
     private float dragOffsetY = 0f;
@@ -145,6 +167,11 @@ public class Tab_Handler : MonoBehaviour
         
         Help.BlankButton.transform.SetParent(parentObject.transform, false);
         Help.BlankButton.SetActive(true);
+
+        if (menuScript != null)
+        {
+            menuScript.HideMenu();
+        }
     }
 
     /// <summary>
@@ -218,6 +245,11 @@ public class Tab_Handler : MonoBehaviour
 
         AlignTabs(anchor);
         AlignTabs(previousAnchor);
+
+        if (menuScript != null)
+        {
+            menuScript.Anchor = anchor;
+        }
     }
 
     /// <summary>

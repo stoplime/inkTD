@@ -364,6 +364,7 @@ namespace helper
                 default: return string.Empty;
                 case ModiferTypes.Fire: return "Flames";
                 case ModiferTypes.Ice: return "Ice";
+                case ModiferTypes.Acid: return "Acid";
             }
         }
 
