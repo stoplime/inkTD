@@ -93,7 +93,7 @@ public class Creature : InkObject
 		{
 			time -= 1;
 			pathIndex++;
-			if(pathIndex == path.Count){
+			if(pathIndex >= path.Count){
 				Destroy(gameObject);
 			}
 			else{

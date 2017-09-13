@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 54527379452818610}
   - component: {fileID: 75248909378932440}
   - component: {fileID: 114042810595965756}
+  - component: {fileID: 114368823979894382}
+  - component: {fileID: 114641838588613314}
   m_Layer: 0
   m_Name: DebugCreature
   m_TagString: Debug
@@ -55,6 +57,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,6 +73,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -134,3 +138,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab830610e2da443d1ba4ad01a72e1958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114368823979894382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1828616832853498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf78681ea9a3274ca7cee59732293b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  speed: 1
+  price: 100
+  ownerID: 0
+  description: 
+  defense: 0
+  inkcomeValue: 10
+  dropInk: 50
+  gridID: 0
+  animationHeight: 2
+  initX: 0
+  initY: 7
+--- !u!114 &114641838588613314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1828616832853498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63543c372708d78419de84e4a07e28a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridID: 0
+  startColor: {r: 0.94482756, g: 1, b: 0, a: 1}
+  endColor: {r: 1, g: 0.40202844, b: 0.014705896, a: 1}
+  visualizerObject: {fileID: 1184395962956912, guid: d96f2e8d742620745a844af36fab2b39,
+    type: 2}

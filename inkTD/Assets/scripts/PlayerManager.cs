@@ -246,14 +246,14 @@ public static class PlayerManager
     /// </summary>
     public static event EventHandler OnCurrentPlayerIncomeChange;
 
-    public static void CreateCreature(int playerID, Transform pose, string creaturePrefab)
+    public static void CreateCreature(int playerID, string creaturePrefab, GameObject spawner)
 	{
 		foreach (KeyValuePair<int, List<Creature> > v in creatures)
 		{
 			// if (playerID != v.Key)
 			// {
-				Creature creature = MonoBehaviour.Instantiate(Resources.Load("Creatures/" + creaturePrefab), pose) as Creature;
-			    AddCreature(playerID, v.Key, creature);
+				GameObject creature = MonoBehaviour.Instantiate(Resources.Load("Creatures/" + creaturePrefab)) as GameObject;
+			    AddCreature(playerID, v.Key, creature.GetComponent<Creature>());
 			// }
 		}
 	}
