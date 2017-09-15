@@ -253,7 +253,10 @@ public static class PlayerManager
 			// if (playerID != v.Key)
 			// {
 				GameObject creature = MonoBehaviour.Instantiate(Resources.Load("Creatures/" + creaturePrefab)) as GameObject;
-			    AddCreature(playerID, v.Key, creature.GetComponent<Creature>());
+                Creature clone = creature.GetComponent<Creature>();
+                clone.gridID = v.Key;
+                clone.ownerID = playerID;
+			    AddCreature(playerID, v.Key, clone);
 			// }
 		}
 	}

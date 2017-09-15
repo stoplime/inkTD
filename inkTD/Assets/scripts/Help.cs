@@ -161,7 +161,7 @@ namespace helper
         /// <summery>
         /// creates a list of adjacent nodes from a current node
         /// </summery>
-        private static LinkedList<Node> getAdjacentNodes(byte[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, int playerID, float epsilon)
+        private static LinkedList<Node> getAdjacentNodes(byte[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, float epsilon)
         {
             LinkedList<Node> l = new LinkedList<Node>();
             IntVector2 offset;
@@ -277,17 +277,18 @@ namespace helper
             return path;
         }
 
-        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID)
+        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int gridID)
         {
-            return AStart(start, end, playerID, Epsilon);
+            return AStart(start, end, gridID, Epsilon);
         }
 
-        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID, float eps)
+        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int gridID, float eps)
         {
-            if (!PlayerManager.GetGrid(playerID).isGridEmpty(start))
+            Grid grid = PlayerManager.GetGrid(gridID);
+
+            if (!PlayerManager.GetGrid(gridID).isGridEmpty(start - new IntVector2(grid.OffsetX, grid.OffsetY)))
                 return new LinkedList<Node>();
 
-            Grid grid = PlayerManager.GetGrid(playerID);
             int height = grid.grid_height;
             int width = grid.grid_width;
             byte[,] nodeArray = new byte[width,height];
@@ -296,7 +297,7 @@ namespace helper
             startNode.Location = start;
             LinkedList<Node> pathMap = new LinkedList<Node>();
             pathMap.AddFirst(startNode);
-            LinkedList<Node> availableNodes = getAdjacentNodes(nodeArray, grid, startNode, end, playerID, eps); //*/new LinkedList<Node>();
+            LinkedList<Node> availableNodes = getAdjacentNodes(nodeArray, grid, startNode, end, eps); //*/new LinkedList<Node>();
             LinkedListNode<Node> it;
             LinkedListNode<Node> minIt;
             Node minNode;
@@ -320,7 +321,7 @@ namespace helper
                     it = it.Next;
                 }
                 availableNodes.Remove(minIt);
-                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, playerID, eps), ref pathMap, ref availableNodes, grid);
+                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, eps), ref pathMap, ref availableNodes, grid);
 
                 nodeArray[minNode.Location.x - grid.OffsetX, minNode.Location.y  - grid.OffsetY] = 1; //1 for pathMap
                 pathMap.AddLast(minNode);
@@ -337,13 +338,13 @@ namespace helper
         /// <summary>
         /// Gets the best path within the grid of the given player id.
         /// </summary>
-        /// <param name="playerID">The player's id who controls the grid which the path will be determined.</param>
+        /// <param name="gridID">The grid id which the path will be determined.</param>
         /// <param name="start">The starting point in the grid.</param>
         /// <param name="end">The end point in the grid.</param>
         /// <returns></returns>
-        public static List<IntVector2> GetGridPath(int playerID, IntVector2 start, IntVector2 end)
+        public static List<IntVector2> GetGridPath(int gridID, IntVector2 start, IntVector2 end)
         {
-            LinkedList<Node> nodes = AStart(start, end, playerID);
+            LinkedList<Node> nodes = AStart(start, end, gridID);
             List<IntVector2> path = new List<IntVector2>(nodes.Count);
             for (LinkedListNode<Node> it = nodes.Last; it != null; it = it.Previous)
             {
