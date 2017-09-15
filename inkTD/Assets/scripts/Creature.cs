@@ -165,7 +165,8 @@ public class Creature : InkObject
 
 	// Use this for initialization
 	void Start () {
-		gridPos = new IntVector2(initX, initY);
+		Grid grid = PlayerManager.GetGrid(gridID);
+		gridPos = grid.StartPosition;
 		pos = Grid.gridToPos(gridPos);
 		PlayerManager.AddCreature(ownerID, gridID, this);
 		var a = PlayerManager.GetBestPath(gridID);

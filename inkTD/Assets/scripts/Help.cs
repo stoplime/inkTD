@@ -286,7 +286,9 @@ namespace helper
         {
             Grid grid = PlayerManager.GetGrid(gridID);
 
-            if (!PlayerManager.GetGrid(gridID).isGridEmpty(start - new IntVector2(grid.OffsetX, grid.OffsetY)))
+            MonoBehaviour.print(start.x);
+            MonoBehaviour.print(start.y);
+            if (!PlayerManager.GetGrid(gridID).isGridEmpty(start))
                 return new LinkedList<Node>();
 
             int height = grid.grid_height;
