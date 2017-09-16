@@ -147,7 +147,10 @@ public class Creature : InkObject
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
 			pathIndex = 0;
-            gameObject.GetComponent<GridVisualizer>().SetPath(path);
+			if (gameObject.GetComponent<GridVisualizer>().enabled)
+			{
+            	gameObject.GetComponent<GridVisualizer>().SetPath(path);
+			}
 		}
 	}
 

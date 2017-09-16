@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4673870381509864}
   - component: {fileID: 198874358766293102}
   - component: {fileID: 199547099544223264}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DropFade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

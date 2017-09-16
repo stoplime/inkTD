@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4944232518051764}
   - component: {fileID: 33075068098739290}
   - component: {fileID: 23571690148870698}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Image_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4861106467441156}
   - component: {fileID: 114040524031153742}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Arrow_Projectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4331686147746954}
   - component: {fileID: 33519224517908704}
   - component: {fileID: 23181147838024392}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Projectile_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 4414240266878652}
   - component: {fileID: 33900360669921706}
   - component: {fileID: 23286424822771656}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Projectile_Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4439821862690506}
   - component: {fileID: 33469294679893088}
   - component: {fileID: 23050847190055400}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Image_Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,3 +332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackingProjectile: 0
+  curveStart: {x: 0, y: 0, z: 0}
+  curveMid: {x: 0, y: 0, z: 0}
+  curveEnd: {x: 0, y: 0, z: 0}
