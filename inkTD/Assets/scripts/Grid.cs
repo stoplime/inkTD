@@ -60,6 +60,8 @@ public class Grid : MonoBehaviour {
         RunOnGridChange(xy.x, xy.y);
     }
 	public void setGridObject(int x, int y, GameObject obj){
+		print(ID.ToString() + " /" + gridOffset.x.ToString());
+		print(gridOffset.y);
 		grid[x - gridOffset.x, y - gridOffset.y] = obj;
         RunOnGridChange(x,y);
     }

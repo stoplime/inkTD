@@ -28,10 +28,11 @@ public class TowerSpawner : MonoBehaviour {
 							existingHighlight.transform.position = target;
 						}
 						if (Input.GetButtonDown("Fire1")){
-							target.y = 1f;
+							target.y = 0;
 							GameObject newTower = Instantiate(Resources.Load("Towers/Arrow/" + towerPrefab), target, hit.collider.transform.rotation) as GameObject;
 							Tower ntScript = newTower.GetComponent<Tower>();
 							ntScript.SetTowerPosition(gridPos);
+							ntScript.ownerID = parentGrid.ID;
                             parentGrid.setGridObject(gridPos, newTower);
 						}
 					}

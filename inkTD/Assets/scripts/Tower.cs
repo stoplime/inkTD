@@ -245,7 +245,7 @@ public class Tower : InkObject
     {
         //empty the grid position at gridPositionX, gridPositionY
         Vector3 realPos = Grid.gridToPos(new IntVector2(x, y));
-        transform.position = new Vector3(realPos.x, 0, realPos.z);
+        transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = x;
         gridPositionY = y;
         //fill the grid position at x, y
@@ -260,7 +260,7 @@ public class Tower : InkObject
     {
         //empty the grid position at gridPositionX, gridPositionY
         Vector3 realPos = Grid.gridToPos(xy);
-        transform.position = new Vector3(realPos.x, 0, realPos.z);
+        transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = xy.x;
         gridPositionY = xy.y;
         //fill the grid position at x, y
