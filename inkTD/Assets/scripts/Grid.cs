@@ -102,12 +102,6 @@ public class Grid : MonoBehaviour {
 		}
 		return false;
 	}
-
-	public GameObject particle;
-	public GameObject highlight;
-	GameObject existingHighlight = null;
-	bool towerSelected = true;
-
 	public int OffsetX;
 	public int OffsetY;
 
@@ -126,40 +120,12 @@ public class Grid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		highlight.transform.localScale = new Vector3(gridSize, 0.1f, gridSize);
+		
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (!Help.MouseOnUI){
-			if (Help.GetObjectInMousePath(out hit)){
-				if (hit.collider.tag == "GroundObject"){
-					IntVector2 gridPos = posToGrid(hit.point);
-					if (inArena(gridPos) && isGridEmpty(gridPos)){
-						Vector3 target = gridToPos(gridPos);
-						target.y = 0.1f;
-						if(existingHighlight == null){
-							existingHighlight = Instantiate(highlight, target, hit.collider.transform.rotation);
-						}else{
-							existingHighlight.transform.position = target;
-						}
-						if (Input.GetButtonDown("Fire1")){
-							target.y = 1f;
-							GameObject newCube = Instantiate(particle, target, hit.collider.transform.rotation);
-                            setGridObject(gridPos, newCube);
-						}
-					}
-					else if(existingHighlight != null){
-						existingHighlight.transform.position = new Vector3(0,-100,0);
-					}
-				}
-			}
-		}
-		else
-		if(existingHighlight != null)
-		{
-			existingHighlight.transform.position = new Vector3(0,-100,0);
-		}
+
 	}
 
     /// <summary>

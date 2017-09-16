@@ -245,11 +245,26 @@ public class Tower : InkObject
     {
         //empty the grid position at gridPositionX, gridPositionY
         Vector3 realPos = Grid.gridToPos(new IntVector2(x, y));
-        transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
+        transform.position = new Vector3(realPos.x, 0, realPos.z);
         gridPositionX = x;
         gridPositionY = y;
         //fill the grid position at x, y
         PlayerManager.SetGameObject(ownerID, gameObject, x, y);
+    }
+
+    /// <summary>
+    /// Aligns the tower to the given x and y within the playing grid.
+    /// </summary>
+    /// <param name="xy">The IntVector2 grid position.</param>
+    public void SetTowerPosition(IntVector2 xy)
+    {
+        //empty the grid position at gridPositionX, gridPositionY
+        Vector3 realPos = Grid.gridToPos(xy);
+        transform.position = new Vector3(realPos.x, 0, realPos.z);
+        gridPositionX = xy.x;
+        gridPositionY = xy.y;
+        //fill the grid position at x, y
+        PlayerManager.SetGameObject(ownerID, gameObject, xy.x, xy.y);
     }
 
     // Update is called once per frame
