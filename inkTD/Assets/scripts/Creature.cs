@@ -25,6 +25,8 @@ public class Creature : InkObject
 
 	public float animationHeight = 2;
 
+	public bool debug = false;
+
 	private IntVector2 gridEnd;
 
 	private Vector3 animatePos;
@@ -158,22 +160,26 @@ public class Creature : InkObject
 		{
 			pathUpdateFlag = true;
 		}
-	}
-
-	public int initX;
-	public int initY;
+	} 
 
 	// Use this for initialization
 	void Start () {
 		Grid grid = PlayerManager.GetGrid(gridID);
 		gridPos = grid.StartPosition;
 		pos = Grid.gridToPos(gridPos);
-		PlayerManager.AddCreature(ownerID, gridID, this);
+
+		if(debug){
+			PlayerManager.AddCreature(ownerID, gridID, this);
+		}
+		
 		var a = PlayerManager.GetBestPath(gridID);
 		gridEnd = a[a.Count-1];
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
-        gameObject.GetComponent<GridVisualizer>().SetPath(path);
-        PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
+
+		if(debug){
+        	gameObject.GetComponent<GridVisualizer>().SetPath(path);
+		}
+		PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
         
         if (path.Count == 0)
 		{

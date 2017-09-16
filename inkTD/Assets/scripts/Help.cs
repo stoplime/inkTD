@@ -286,8 +286,8 @@ namespace helper
         {
             Grid grid = PlayerManager.GetGrid(gridID);
 
-            MonoBehaviour.print(start.x);
-            MonoBehaviour.print(start.y);
+            // MonoBehaviour.print(start.x);
+            // MonoBehaviour.print(start.y);
             if (!PlayerManager.GetGrid(gridID).isGridEmpty(start))
                 return new LinkedList<Node>();
 
