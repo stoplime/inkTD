@@ -155,6 +155,11 @@ public class Grid : MonoBehaviour {
 				}
 			}
 		}
+		else
+		if(existingHighlight != null)
+		{
+			existingHighlight.transform.position = new Vector3(0,-100,0);
+		}
 	}
 
     /// <summary>
