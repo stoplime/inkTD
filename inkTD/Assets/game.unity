@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465809, g: 0.49641508, b: 0.5748199, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657993, g: 0.49641442, b: 0.5748189, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -581,10 +581,10 @@ MonoBehaviour:
   ID: 0
   startX: 0
   startY: 0
-  endX: 25
-  endY: 13
-  grid_width: 26
-  grid_height: 14
+  endX: 110
+  endY: 110
+  grid_width: 111
+  grid_height: 111
   particle: {fileID: 1250968764351004, guid: de7e38a41d04682478a417131eca256f, type: 2}
   highlight: {fileID: 1771114354878494, guid: 5d88aaf6cb0c2064782036aa260f6f69, type: 2}
   OffsetX: 0
