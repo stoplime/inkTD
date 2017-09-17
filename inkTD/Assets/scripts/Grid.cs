@@ -40,20 +40,33 @@ public class Grid : MonoBehaviour {
 							(int)System.Math.Round(input.z/gridSize));
 	}
 
-	/// <summary>
-	/// Takes an grid IntVector2 and converts it to the pos Vector3
-	/// </summary>
-	/// <param name="input">grid coordinates</param>
-	/// <returns></returns>
-	public static Vector3 gridToPos(IntVector2 input){
-		return new Vector3(input.x*gridSize, 0,
-						input.y*gridSize);
-	}
+    /// <summary>
+    /// Takes an grid IntVector2 and converts it to the world pos Vector3
+    /// </summary>
+    /// <param name="input">grid coordinates</param>
+    /// <returns></returns>
+    public static Vector3 gridToPos(IntVector2 input)
+    {
+        return new Vector3(input.x * gridSize, 0,
+                        input.y * gridSize);
+    }
 
-	/// <summary>
-	/// array containing the towers of the playing field
+    /// <summary>
+	/// Takes in x and y grid coordinates and converts it to the world pos Vector3
 	/// </summary>
-	private GameObject[,] grid;
+    /// <param name="x">The horizontal grid tile to convert to world position.</param>
+    /// <param name="y">The vertical grid tile to convert to world position.</param>
+	/// <returns></returns>
+	public static Vector3 gridToPos(int x, int y)
+    {
+        return new Vector3(x * gridSize, 0,
+                        y * gridSize);
+    }
+
+    /// <summary>
+    /// array containing the towers of the playing field
+    /// </summary>
+    private GameObject[,] grid;
 
 	public void setGridObject(IntVector2 xy, GameObject obj){
 		grid[xy.x - gridOffset.x, xy.y - gridOffset.y] = obj;
@@ -80,6 +93,17 @@ public class Grid : MonoBehaviour {
 	/// </summary>
 	public int grid_width = 20;
 	public int grid_height = 10;
+
+    /// <summary>
+    /// Gets the world position of the given tile coordinates by applying the grid's offset to them.
+    /// </summary>
+    /// <param name="x">The x tile to get the world coordinates of (note: 0 is the left of this grid).</param>
+    /// <param name="y">The y tile to get the world coordinates of (note: 0 is the bottom of this grid).</param>
+    /// <returns></returns>
+    public Vector3 GetWorldPosFromLocal(int x, int y)
+    {
+        return Grid.gridToPos(x + gridOffset.x, y + gridOffset.y);
+    }
 
 	/// <summery>
 	/// checks if grid pos is currently occupide with a tower

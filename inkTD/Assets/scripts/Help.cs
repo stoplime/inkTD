@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Priority_Queue;
 
 namespace helper
 {
@@ -46,11 +45,9 @@ namespace helper
         /// <summary>
         /// A node used during A* calculations.
         /// </summary>
-        private class Node : FastPriorityQueueNode
+        private class Node
         {
-            public int x;
-
-            public int y;
+            public IntVector2 Location { get; set; }
             public float G { get; set; }
             public float H { get; set; }
             public float epsilon { get; set; }
@@ -60,15 +57,6 @@ namespace helper
             //public float F { get { return this.G + epsilon*this.H; } }
             public Node ParentNode { get; set; }
             public byte listNumb { get; set; }
-
-            public override bool Equals(object obj)
-            {
-                Node n = obj as Node;
-                if (n != null)
-                    return n.x == x && n.y == y;
-
-                return false;
-            }
         }
 
         /// <summary>
@@ -173,14 +161,14 @@ namespace helper
         /// <summery>
         /// creates a list of adjacent nodes from a current node
         /// </summery>
-        private static LinkedList<Node> getAdjacentNodes(Node[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, float epsilon)
+        private static LinkedList<Node> getAdjacentNodes(byte[,] nodes, Grid playerGrid, Node currentNode, IntVector2 end, int playerID, float epsilon)
         {
             LinkedList<Node> l = new LinkedList<Node>();
             IntVector2 offset;
             Node offsetNode;
             for (int i = 0; i < 4; i++)
             {
-                offset = new IntVector2(currentNode.x, currentNode.y);
+                offset = currentNode.Location;
                 switch (i)
                 {
                     case 1:
@@ -205,8 +193,7 @@ namespace helper
                     offsetNode.H = Dist(offset, end);
                     offsetNode.F = offsetNode.G + epsilon * offsetNode.H;
                     //offsetNode.H = Math.Abs(end.x - offset.x) + Math.Abs(end.y - offset.y);
-                    offsetNode.x = offset.x;
-                    offsetNode.y = offset.y;
+                    offsetNode.Location = offset;
                     offsetNode.listNumb = 0; //0 for no list.
                     l.AddLast(offsetNode);
                 }
@@ -224,44 +211,55 @@ namespace helper
             return Mathf.Sqrt(x * x + y * y);
         }
 
-        private static void Merge(Node[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref FastPriorityQueue<Node> availableNodes, Grid g)
+        private static void Merge(byte[,] nodes, LinkedList<Node> newNodes, ref LinkedList<Node> pathMap, ref LinkedList<Node> availableNodes, Grid g)
         {
-            Node currentNode;
-            bool exists = false;
+            int currentNode = 0;
             for (LinkedListNode<Node> newIt = newNodes.First; newIt != null; newIt = newIt.Next)
             {
-                currentNode = nodes[newIt.Value.x - g.OffsetX, newIt.Value.y - g.OffsetY];
+                bool exists = false;
+                currentNode = nodes[newIt.Value.Location.x - g.OffsetX, newIt.Value.Location.y - g.OffsetY];
 
-                if (currentNode != null)
+                if (currentNode == 1)
+                    exists = true;
+
+                if (!exists)
                 {
-                    exists = currentNode.listNumb == 1;
-
-                    if (!exists)
+                    //for (LinkedListNode<Node> availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
+                    //{
+                    //    if (availIt.Value.Location.Equals(newIt.Value.Location))
+                    //    {
+                    //        exists = true;
+                    //        if (newIt.Value.F < availIt.Value.F)
+                    //        {
+                    //            availIt.Value = newIt.Value;
+                    //        }
+                    //        break;
+                    //    }
+                    //}
+                    if (currentNode == 2)
                     {
-                        exists = currentNode.listNumb == 2;
-                        if (exists)
+                        exists = true;
+                        LinkedListNode<Node> availIt;
+                        for (availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
                         {
-                            Node availableNode = nodes[currentNode.x - g.OffsetX, currentNode.y - g.OffsetY];
-                            if (newIt.Value.F < availableNode.F)
+                            if (newIt.Value.Location.x == availIt.Value.Location.x &&
+                                newIt.Value.Location.y == availIt.Value.Location.y)
                             {
-                                //replacing the node
-                                availableNodes.Remove(availableNode);
-                                availableNodes.Enqueue(newIt.Value, newIt.Value.F);
+                                break;
                             }
+                        }
+                        if (newIt.Value.F < availIt.Value.F)
+                        {
+                            //replacing the node
+                            availIt.Value = newIt.Value;
                         }
                     }
                 }
-                else
+                if (!exists)
                 {
-                    nodes[newIt.Value.x - g.OffsetX, newIt.Value.y - g.OffsetY] = newIt.Value;
-                    newIt.Value.listNumb = 2;//2 for availableNodes.
-                    availableNodes.Enqueue(newIt.Value, newIt.Value.F);
+                    nodes[newIt.Value.Location.x - g.OffsetX, newIt.Value.Location.y - g.OffsetY] = 2; //2 for availableNodes.
+                    availableNodes.AddLast(newIt.Value);
                 }
-
-                //if (currentNode == null || !exists)
-                //{
-                    
-                //}
             }
             //newNodes.Clear();
         }
@@ -279,47 +277,55 @@ namespace helper
             return path;
         }
 
-        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int gridID)
+        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID)
         {
-            return AStart(start, end, gridID, Epsilon);
+            return AStart(start, end, playerID, Epsilon);
         }
 
-        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int gridID, float eps)
+        private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID, float eps)
         {
-            Grid grid = PlayerManager.GetGrid(gridID);
-            
-            if (grid == null || !grid.isGridEmpty(start))
+            if (!PlayerManager.GetGrid(playerID).isGridEmpty(start))
                 return new LinkedList<Node>();
 
+            Grid grid = PlayerManager.GetGrid(playerID);
             int height = grid.grid_height;
             int width = grid.grid_width;
-            Node[,] nodeArray = new Node[width,height];
+            byte[,] nodeArray = new byte[width,height];
 
             Node startNode = new Node();
-            startNode.x = start.x;
-            startNode.y = start.y;
+            startNode.Location = start;
             LinkedList<Node> pathMap = new LinkedList<Node>();
             pathMap.AddFirst(startNode);
-            FastPriorityQueue<Node> availableNodes = new FastPriorityQueue<Node>(width * height);
-            LinkedList<Node> adjacents = getAdjacentNodes(nodeArray, grid, startNode, end, eps);
-
-            foreach (Node n in adjacents)
-            {
-                availableNodes.Enqueue(n, n.F);
-            }
+            LinkedList<Node> availableNodes = getAdjacentNodes(nodeArray, grid, startNode, end, playerID, eps); //*/new LinkedList<Node>();
+            LinkedListNode<Node> it;
+            LinkedListNode<Node> minIt;
             Node minNode;
 
             while (availableNodes.Count > 0)
             {
-                minNode = availableNodes.First;
-                availableNodes.Dequeue();
-                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, eps), ref pathMap, ref availableNodes, grid);
+                it = availableNodes.First;
+                minIt = availableNodes.First;
+                minNode = it.Value;
+                it = it.Next;
 
-                minNode.listNumb = 1;
-                nodeArray[minNode.x - grid.OffsetX, minNode.y  - grid.OffsetY] = minNode; //1 for pathMap
+                //TODO: Instead of looping through all available nodes to find the lowest F, it would instead be beneficial to make
+                //available nodes into a priority queue (something like https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp).
+                while (it != null)
+                {
+                    if (minNode.F > it.Value.F)
+                    {
+                        minNode = it.Value;
+                        minIt = it;
+                    }
+                    it = it.Next;
+                }
+                availableNodes.Remove(minIt);
+                Merge(nodeArray, getAdjacentNodes(nodeArray, grid, minNode, end, playerID, eps), ref pathMap, ref availableNodes, grid);
+
+                nodeArray[minNode.Location.x - grid.OffsetX, minNode.Location.y  - grid.OffsetY] = 1; //1 for pathMap
                 pathMap.AddLast(minNode);
 
-                if (minNode.x == end.x && minNode.y == end.y)
+                if (minNode.Location.Equals(end))
                 {
                     return /*pathMap; //*/GetBestPath(pathMap);
                 }
@@ -331,17 +337,17 @@ namespace helper
         /// <summary>
         /// Gets the best path within the grid of the given player id.
         /// </summary>
-        /// <param name="gridID">The grid id which the path will be determined.</param>
+        /// <param name="playerID">The player's id who controls the grid which the path will be determined.</param>
         /// <param name="start">The starting point in the grid.</param>
         /// <param name="end">The end point in the grid.</param>
         /// <returns></returns>
-        public static List<IntVector2> GetGridPath(int gridID, IntVector2 start, IntVector2 end)
+        public static List<IntVector2> GetGridPath(int playerID, IntVector2 start, IntVector2 end)
         {
-            LinkedList<Node> nodes = AStart(start, end, gridID);
+            LinkedList<Node> nodes = AStart(start, end, playerID);
             List<IntVector2> path = new List<IntVector2>(nodes.Count);
             for (LinkedListNode<Node> it = nodes.Last; it != null; it = it.Previous)
             {
-                path.Add(new IntVector2(it.Value.x, it.Value.y));
+                path.Add(it.Value.Location);
             }
             return path;
         }

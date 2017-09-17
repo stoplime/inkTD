@@ -10,6 +10,11 @@ using UnityEngine;
 public static class PlayerManager
 {
     /// <summary>
+    /// Gets the number of grids within the player manager.
+    /// </summary>
+    public static int GridCount { get { return grids.Count; } }
+
+    /// <summary>
     /// The grids of the players.
     /// </summary>
 	private static Dictionary<int, Grid> grids = new Dictionary<int, Grid>();
