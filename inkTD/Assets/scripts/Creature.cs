@@ -25,6 +25,8 @@ public class Creature : InkObject
 
 	public float animationHeight = 2;
 
+	public bool debug = false;
+
 	private IntVector2 gridEnd;
 
 	private Vector3 animatePos;
@@ -145,14 +147,10 @@ public class Creature : InkObject
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
 			pathIndex = 0;
-<<<<<<< HEAD
-            gameObject.GetComponent<GridVisualizer>().SetPath(path);
-=======
 			if (gameObject.GetComponent<PathVisualizer>().enabled)
 			{
             	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 			}
->>>>>>> 7329b82644969bb7330daea13c47d1e6302d8e4e
 		}
 	}
 
@@ -178,16 +176,11 @@ public class Creature : InkObject
 		var a = PlayerManager.GetBestPath(gridID);
 		gridEnd = a[a.Count-1];
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
-<<<<<<< HEAD
-        gameObject.GetComponent<GridVisualizer>().SetPath(path);
-        PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
-=======
 
 		if(debug){
         	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 		}
 		PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
->>>>>>> 7329b82644969bb7330daea13c47d1e6302d8e4e
         
         if (path.Count == 0)
 		{
