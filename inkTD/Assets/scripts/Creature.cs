@@ -147,9 +147,9 @@ public class Creature : InkObject
 			pathUpdateFlag = false;
 			path = Help.GetGridPath(gridID, gridPos, end);
 			pathIndex = 0;
-			if (gameObject.GetComponent<GridVisualizer>().enabled)
+			if (gameObject.GetComponent<PathVisualizer>().enabled)
 			{
-            	gameObject.GetComponent<GridVisualizer>().SetPath(path);
+            	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 			}
 		}
 	}
@@ -180,7 +180,7 @@ public class Creature : InkObject
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
 
 		if(debug){
-        	gameObject.GetComponent<GridVisualizer>().SetPath(path);
+        	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 		}
 		PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
         
