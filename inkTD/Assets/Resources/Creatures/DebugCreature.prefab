@@ -144,17 +144,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1828616832853498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bf78681ea9a3274ca7cee59732293b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b9b8da08ef3b764fadd2f2a1e1530f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 100
   damage: 0
-  speed: 1
-  price: 100
+  speed: 0
+  price: 0
   ownerID: 0
   description: 
   defense: 0
-  inkcomeValue: 10
-  dropInk: 50
+  inkcomeValue: 0
+  dropInk: 0
   gridID: 0
   animationHeight: 2
   debug: 0
