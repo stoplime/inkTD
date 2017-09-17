@@ -126,6 +126,7 @@ public class Grid : MonoBehaviour {
 		}
 		return false;
 	}
+
 	public int OffsetX;
 	public int OffsetY;
 

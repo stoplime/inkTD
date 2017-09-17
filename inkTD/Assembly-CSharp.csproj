@@ -61,7 +61,9 @@
      <Compile Include="Assets\scripts\Grid.cs" />
      <Compile Include="Assets\scripts\GridVisualizer.cs" />
      <Compile Include="Assets\scripts\Help.cs" />
+     <Compile Include="Assets\scripts\InfoPanel.cs" />
      <Compile Include="Assets\scripts\InkObject.cs" />
+     <Compile Include="Assets\scripts\MenuButton.cs" />
      <Compile Include="Assets\scripts\Modifier.cs" />
      <Compile Include="Assets\scripts\PathTraverser.cs" />
      <Compile Include="Assets\scripts\PathVisualizer.cs" />
@@ -73,8 +75,11 @@
      <Compile Include="Assets\scripts\TimerDisplayer.cs" />
      <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
      <Compile Include="Assets\scripts\Tower.cs" />
+     <Compile Include="Assets\scripts\TowerCamera.cs" />
      <Compile Include="Assets\scripts\TowerSpawner.cs" />
      <Compile Include="Assets\scripts\UI_Tracker.cs" />
+     <None Include="Assets\Plugins\GitHub\Editor\CREDITS.txt" />
+     <None Include="Assets\Plugins\GitHub\Editor\EULA.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
