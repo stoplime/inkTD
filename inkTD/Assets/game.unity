@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465809, g: 0.49641508, b: 0.5748199, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657993, g: 0.49641442, b: 0.5748189, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -317,7 +317,6 @@ GameObject:
   - component: {fileID: 308510876}
   - component: {fileID: 308510875}
   - component: {fileID: 308510874}
-  - component: {fileID: 308510873}
   m_Layer: 0
   m_Name: TowerCamera
   m_TagString: Untagged
@@ -325,13 +324,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &308510873
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 308510872}
-  m_Enabled: 1
 --- !u!92 &308510874
 Behaviour:
   m_ObjectHideFlags: 0
@@ -648,6 +640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417071231}
   - component: {fileID: 417071230}
+  - component: {fileID: 417071234}
   - component: {fileID: 417071232}
   - component: {fileID: 417071233}
   m_Layer: 0
@@ -718,6 +711,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlight: {fileID: 1771114354878494, guid: 5d88aaf6cb0c2064782036aa260f6f69, type: 2}
+--- !u!114 &417071234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 417071229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d6c19244b71504789585f09c6526c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 1}
+  gridID: 0
 --- !u!1 &567702853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,7 +1608,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4228976383411612, guid: 90bd956bf78e0444691913571286c291, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90bd956bf78e0444691913571286c291, type: 2}
@@ -2267,7 +2273,7 @@ RectTransform:
   - {fileID: 1360994008}
   - {fileID: 891716447}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2559,7 +2565,7 @@ RectTransform:
   m_Children:
   - {fileID: 361278077}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

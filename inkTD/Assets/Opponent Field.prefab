@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4228976383411612}
   - component: {fileID: 114339638304396966}
+  - component: {fileID: 114667962777709122}
   - component: {fileID: 114911090750988830}
   - component: {fileID: 114807826792572166}
   m_Layer: 0
@@ -62,6 +63,19 @@ MonoBehaviour:
   grid_height: 14
   OffsetX: 27
   OffsetY: 0
+--- !u!114 &114667962777709122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037117091681898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d6c19244b71504789585f09c6526c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+  gridID: 1
 --- !u!114 &114807826792572166
 MonoBehaviour:
   m_ObjectHideFlags: 1
