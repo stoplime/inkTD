@@ -100,6 +100,7 @@
     <Compile Include="Assets\scripts\InkObject.cs" />
     <Compile Include="Assets\scripts\Modifier.cs" />
     <Compile Include="Assets\scripts\PathTraverser.cs" />
+    <Compile Include="Assets\scripts\PathVisualizer.cs" />
     <Compile Include="Assets\scripts\PlayerManager.cs" />
     <Compile Include="Assets\scripts\Projectile_Controller.cs" />
     <Compile Include="Assets\scripts\Tab_Handler.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Assets\scripts\TimerDisplayer.cs" />
     <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
     <Compile Include="Assets\scripts\Tower.cs" />
+    <Compile Include="Assets\scripts\TowerSpawner.cs" />
     <Compile Include="Assets\scripts\UI_Tracker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
