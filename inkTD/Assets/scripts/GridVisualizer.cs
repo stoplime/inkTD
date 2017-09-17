@@ -23,7 +23,7 @@ public class GridVisualizer : MonoBehaviour
 
     void OnValidate()
     {
-        if (prevID != gridID)
+        if (prevID != gridID && gridID < PlayerManager.GridCount && gridID >= 0)
         {
             grid = PlayerManager.GetGrid(gridID);
         }
