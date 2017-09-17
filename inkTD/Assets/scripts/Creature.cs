@@ -95,7 +95,7 @@ public class Creature : InkObject
 		{
 			time -= 1;
 			pathIndex++;
-			if(pathIndex == path.Count){
+			if(pathIndex >= path.Count){
 				Destroy(gameObject);
 			}
 			else{
@@ -163,16 +163,18 @@ public class Creature : InkObject
 		{
 			pathUpdateFlag = true;
 		}
-	}
-
-	public int initX;
-	public int initY;
+	} 
 
 	// Use this for initialization
 	void Start () {
-		gridPos = new IntVector2(initX, initY);
+		Grid grid = PlayerManager.GetGrid(gridID);
+		gridPos = grid.StartPosition;
 		pos = Grid.gridToPos(gridPos);
-		PlayerManager.AddCreature(ownerID, gridID, this);
+
+		if(debug){
+			PlayerManager.AddCreature(ownerID, gridID, this);
+		}
+		
 		var a = PlayerManager.GetBestPath(gridID);
 		gridEnd = a[a.Count-1];
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
