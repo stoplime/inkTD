@@ -31,8 +31,8 @@ public class TowerSpawner : MonoBehaviour {
 							target.y = 0;
 							GameObject newTower = Instantiate(Resources.Load("Towers/Arrow/" + towerPrefab), target, hit.collider.transform.rotation) as GameObject;
 							Tower ntScript = newTower.GetComponent<Tower>();
-							ntScript.SetTowerPosition(gridPos);
 							ntScript.ownerID = parentGrid.ID;
+							ntScript.SetTowerPosition(gridPos);
                             parentGrid.setGridObject(gridPos, newTower);
 						}
 					}
