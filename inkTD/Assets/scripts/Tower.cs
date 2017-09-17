@@ -94,6 +94,7 @@ public class Tower : InkObject
     private float height;
 
     private float creatureDist = 0f;
+    private int rangeRounded;
 
     /// <summary>
     /// A list of targets a tower can target.
@@ -146,6 +147,8 @@ public class Tower : InkObject
             radiusVisualizer.range = range;
         }
 
+        rangeRounded = (int)(range + 0.5f);
+
         //TEST ONLY:
         Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
@@ -181,6 +184,8 @@ public class Tower : InkObject
             if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
                 radiusVisualizer.gameObject.SetActive(visualizeRadius);
         }
+
+        rangeRounded = (int)(range + 0.5f);
 
         VisualizeBezier();
     }
@@ -224,54 +229,115 @@ public class Tower : InkObject
         targetRenderer = target.GetComponent<MeshRenderer>();
     }
 
-    private void Timer_Elapsed(object sender, System.EventArgs e)
+    private void FindTarget()
     {
-        Vector3 curveStart;
-        Quaternion rotation = Quaternion.identity;
-        GameObject projectile = Instantiate(projectileObject, spawnPos, rotation) as GameObject;
-        Projectile_Controller controller = projectile.GetComponent<Projectile_Controller>();
-        controller.SetCreator(this);
-        controller.Life = projectileLife;
-        controller.Target = target;
-
-        if (targetRenderer == null)
+        if (creatures.Count > 0)
         {
-            controller.TargetPosition = target.transform.position;
-        }
-        else
-        {
-            controller.TargetPosition = targetRenderer.bounds.center;
-        }
+            target = null;
 
-        //Computing the 'rough' estimate for the projectile's arc using the spawn position
-        Vector3 curveEnd = target.transform.position;
-        Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, height, (spawnPos.z + curveEnd.z) / 2);
-        controller.SetCurvePoints(spawnPos, curveMid, curveEnd);
-
-        //Computing the actual projectile arc.
-        curveStart = spawnPos + (projectile.transform.forward * (projectileSize.y * 0.75f));
-        curveMid = new Vector3((curveStart.x + curveEnd.x) / 2, height, (curveStart.z + curveEnd.z) / 2);
-        controller.SetCurvePoints(curveStart, curveMid, curveEnd);
-
-        VisualizeBezier(curveStart, curveMid, curveEnd);
-
-        //Applying the particles based on the modifiers present:
-        string particleName = string.Empty;
-        GameObject particle;
-        foreach (Modifier m in Modifiers)
-        {
-            particleName = Help.GetModifierParticlePrefab(m.type);
-            if (particleName != string.Empty)
+            foreach (Creature c in creatures)
             {
-                particle = Instantiate(Resources.Load("Particles/" + particleName), projectile.transform) as GameObject;
-                particle.transform.localRotation = Quaternion.Euler(-180, 0, 0);
+                if (c.GridPosition.x > gridPositionX - rangeRounded
+                    && c.GridPosition.x < gridPositionX + rangeRounded)
+                {
+                    creatureDist = Vector3.Distance(c.transform.position, transform.position);
+                    if (creatureDist <= range)
+                    {
+                        if (target == null)
+                        {
+                            target = c.gameObject;
+                        }
+                        else
+                        {
+                            switch (priorityTarget)
+                            {
+                                case TargetTypes.First:
+                                    if (creatureDist < Vector3.Distance(target.transform.position, transform.position))
+                                    {
+                                        SetTarget(c);
+                                    }
+                                    break;
+                                case TargetTypes.HighestLife:
+                                    if (targetCreature.health < c.health)
+                                    {
+                                        SetTarget(c);
+                                    }
+                                    break;
+                                case TargetTypes.Last:
+                                    if (creatureDist > Vector3.Distance(target.transform.position, transform.position))
+                                    {
+                                        SetTarget(c);
+                                    }
+                                    break;
+                                case TargetTypes.LowestLife:
+                                    if (targetCreature.health > c.health)
+                                    {
+                                        SetTarget(c);
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
 
-        if (audioSource != null && shootSoundEffect != null)
+    private void Timer_Elapsed(object sender, System.EventArgs e)
+    {
+        //Finding the target
+        FindTarget();
+
+        //Firing the projectile
+        if (target != null)
         {
-            //audioSource.PlayOneShot(shootSoundEffect, Help.TowerSoundEffectVolume);
-            audioSource.PlayOneShot(shootSoundEffect);
+            Vector3 curveStart;
+            Quaternion rotation = Quaternion.identity;
+            GameObject projectile = Instantiate(projectileObject, spawnPos, rotation) as GameObject;
+            Projectile_Controller controller = projectile.GetComponent<Projectile_Controller>();
+            controller.SetCreator(this);
+            controller.Life = projectileLife;
+            controller.Target = target;
+
+            if (targetRenderer == null)
+            {
+                controller.TargetPosition = target.transform.position;
+            }
+            else
+            {
+                controller.TargetPosition = targetRenderer.bounds.center;
+            }
+
+            //Computing the 'rough' estimate for the projectile's arc using the spawn position
+            Vector3 curveEnd = target.transform.position;
+            Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, height, (spawnPos.z + curveEnd.z) / 2);
+            controller.SetCurvePoints(spawnPos, curveMid, curveEnd);
+
+            //Computing the actual projectile arc.
+            curveStart = spawnPos + (projectile.transform.forward * (projectileSize.y * 0.75f));
+            curveMid = new Vector3((curveStart.x + curveEnd.x) / 2, height, (curveStart.z + curveEnd.z) / 2);
+            controller.SetCurvePoints(curveStart, curveMid, curveEnd);
+
+            VisualizeBezier(curveStart, curveMid, curveEnd);
+
+            //Applying the particles based on the modifiers present:
+            string particleName = string.Empty;
+            GameObject particle;
+            foreach (Modifier m in Modifiers)
+            {
+                particleName = Help.GetModifierParticlePrefab(m.type);
+                if (particleName != string.Empty)
+                {
+                    particle = Instantiate(Resources.Load("Particles/" + particleName), projectile.transform) as GameObject;
+                    particle.transform.localRotation = Quaternion.Euler(-180, 0, 0);
+                }
+            }
+
+            if (audioSource != null && shootSoundEffect != null)
+            {
+                //audioSource.PlayOneShot(shootSoundEffect, Help.TowerSoundEffectVolume);
+                audioSource.PlayOneShot(shootSoundEffect);
+            }
         }
     }
 
@@ -287,6 +353,8 @@ public class Tower : InkObject
         transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = x;
         gridPositionY = y;
+        initialGridPositionX = x;
+        initialGridPositionY = y;
         //fill the grid position at x, y
         PlayerManager.SetGameObject(ownerID, gameObject, x, y);
     }
@@ -302,6 +370,8 @@ public class Tower : InkObject
         transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = xy.x;
         gridPositionY = xy.y;
+        initialGridPositionX = xy.x;
+        initialGridPositionY = xy.y;
         //fill the grid position at x, y
         PlayerManager.SetGameObject(ownerID, gameObject, xy.x, xy.y);
     }
@@ -319,62 +389,6 @@ public class Tower : InkObject
     // Update is called once per frame
     void Update ()
     {
-        //DEBUG ONLY
-        //if (Application.isEditor && target == null)
-        //{
-        //    SetTarget(GameObject.FindGameObjectWithTag("Debug"));
-        //}
-        //end
-        if (creatures.Count > 0)
-        {
-            target = null;
-
-            for (int i = 0; i < creatures.Count; i++)
-            {
-                creatureDist = Vector3.Distance(creatures[i].transform.position, transform.position);
-                if (creatureDist <= range)
-                {
-                    if (target == null)
-                    {
-                        target = creatures[i].gameObject;
-                    }
-                    else
-                    {
-                        switch (priorityTarget)
-                        {
-                            case TargetTypes.First:
-                                if (creatureDist < Vector3.Distance(target.transform.position, transform.position))
-                                {
-                                    SetTarget(creatures[i]);
-                                }
-                                break;
-                            case TargetTypes.HighestLife:
-                                if (targetCreature.health < creatures[i].health)
-                                {
-                                    SetTarget(creatures[i]);
-                                }
-                                break;
-                            case TargetTypes.Last:
-                                if (creatureDist > Vector3.Distance(target.transform.position, transform.position))
-                                {
-                                    SetTarget(creatures[i]);
-                                }
-                                break;
-                            case TargetTypes.LowestLife:
-                                if (targetCreature.health > creatures[i].health)
-                                {
-                                    SetTarget(creatures[i]);
-                                }
-                                break;
-                        }
-                    }
-                }
-            }
-        }
-
-		if (target != null)
-        {
-            timer.Update();
-        }
+        timer.Update();
 	}
 }

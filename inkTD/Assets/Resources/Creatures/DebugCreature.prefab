@@ -150,7 +150,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 100
   damage: 0
-  speed: 0
+  speed: 1
   price: 0
   ownerID: 0
   description: 

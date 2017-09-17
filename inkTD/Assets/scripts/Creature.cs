@@ -212,7 +212,7 @@ public class Creature : InkObject
     void OnDestroy()
     {
         PlayerManager.GetGrid(gridID).OnGridChange -= OnGridChange;
-        List<Creature> creatures = PlayerManager.GetCreatures(ownerID);
+        List<Creature> creatures = PlayerManager.GetCreatures(gridID);
         for (int i = creatures.Count - 1; i >= 0; i --)
         {
             if (creatures[i].uniqueID == uniqueID)

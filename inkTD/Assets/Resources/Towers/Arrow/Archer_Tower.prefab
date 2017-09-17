@@ -262,7 +262,7 @@ MonoBehaviour:
   faces: 20
   range: 17
   color: {r: 0, g: 0.83448315, b: 1, a: 1}
-  drawViaGizmos: 0
+  drawViaGizmos: 1
 --- !u!114 &114853321877459830
 MonoBehaviour:
   m_ObjectHideFlags: 1
