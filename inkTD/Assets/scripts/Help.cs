@@ -347,6 +347,62 @@ namespace helper
         }
 
         /// <summary>
+        /// Creates a circular mesh.
+        /// </summary>
+        /// <param name="faces">The number of outter faces (edges).</param>
+        /// <param name="range">The range of the mesh, the distance the circle extends outward.</param>
+        /// <returns></returns>
+        public static Mesh CreateCircularMesh(int faces, float range)
+        {
+            Mesh m = new Mesh();
+            List<Vector3> vertices = new List<Vector3>(faces * 3);
+            List<Vector3> normals = new List<Vector3>(vertices.Count);
+            float angle = Mathf.PI * 2;
+            float step = angle / faces;
+            Vector3 B;
+            Vector3 C;
+            Vector3 crossProduct;
+            for (int i = 0; i < faces; i++)
+            {
+                vertices.Add(Vector3.zero);
+
+                B = Vector3.zero;
+                B.x = range * Mathf.Cos(angle);
+                B.z = range * Mathf.Sin(angle);
+                vertices.Add(B);
+
+                if (i == faces - 1)
+                {
+                    angle = 0f;
+                }
+                else
+                {
+                    angle -= step;
+                }
+                C = Vector3.zero;
+                C.x = range * Mathf.Cos(angle);
+                C.z = range * Mathf.Sin(angle);
+                vertices.Add(C);
+
+                crossProduct = Vector3.Cross(B, C);
+                normals.Add(crossProduct);
+                normals.Add(crossProduct);
+                normals.Add(crossProduct);
+            }
+            m.SetVertices(vertices);
+
+            int[] triangleArray = new int[vertices.Count];
+            for (int i = 0; i < vertices.Count; i++)
+                triangleArray[i] = i;
+
+            m.SetTriangles(triangleArray, 0);
+            m.SetNormals(normals);
+
+            m.name = "Circle {" + faces + "} R " + range ;
+            return m;
+        }
+
+        /// <summary>
         /// Gets the partcile prefab name of the given modifier type. Returns an empty string if no prefab exists.
         /// </summary>
         /// <param name="type">The type of modifier whose particle prefab name will be returned.</param>

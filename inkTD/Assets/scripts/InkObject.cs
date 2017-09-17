@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using helper;
 
-public abstract class InkObject : MonoBehaviour
+public class InkObject : MonoBehaviour
 {
+    [Tooltip("The maximum health the creature can have.")]
+    public float maxHealth;
+
+    [Tooltip("The health of the tower or creature.")]
+    public float health;
 
     /// <summary>
     /// Creatures have increased damage done to th tower-castle 
@@ -25,7 +30,7 @@ public abstract class InkObject : MonoBehaviour
     /// </summary>
     [Tooltip("The cost to purchase this tower. Example 50")]
     public int price;
-    
+
     /// <summary>
     /// ID for the grid parent.
     /// For towers, the id represent which grid it's on.
@@ -51,16 +56,29 @@ public abstract class InkObject : MonoBehaviour
     /// </summary>
     [Tooltip("The list of modifiers applied to the tower or creature.")]
     private List<Modifier> modifiers = new List<Modifier>();
-
-    protected int maxHealth;
-    protected int health;
     
     protected IntVector2 gridPos;
     protected Vector3 pos = Vector3.zero;
 
     // global rotation along the y-axis
     protected float rotation;
-    
-    
 
+    private int prevID = 0;
+
+    public virtual void OnValidate()
+    {
+        if (prevID != ownerID)
+        {
+            OnOwnerChange();
+        }
+        prevID = ownerID;
+    }
+
+    /// <summary>
+    /// A method that runs when the owner of the ink object changes.
+    /// </summary>
+    protected virtual void OnOwnerChange()
+    {
+
+    }
 }

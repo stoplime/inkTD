@@ -40,6 +40,11 @@ public class Tower : InkObject
     [Tooltip("If true the bezier curve representing the firing arc of the tower will be shown. This requires a BezierVisualizer script attached.")]
     public bool visualizeBezier = false;
 
+    [Tooltip("If true the cicle of the tower will be visualized and rendered.")]
+    public bool visualizeRadius = false;
+
+    public CircleMeshCreator radiusVisualizer;
+
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
     /// </summary>
@@ -68,8 +73,11 @@ public class Tower : InkObject
     }
 
     private GameObject target = null;
+    private Creature targetCreature = null;
     private MeshRenderer targetRenderer = null;
     //TODO: Cache the creature script component of the target object, to check when health is gone the target is returned to null.
+
+    private List<Creature> creatures;
 
     private TaylorTimer timer;
     private MeshRenderer meshRenderer;
@@ -84,6 +92,8 @@ public class Tower : InkObject
     private int gridPositionY;
 
     private float height;
+
+    private float creatureDist = 0f;
 
     /// <summary>
     /// A list of targets a tower can target.
@@ -129,6 +139,13 @@ public class Tower : InkObject
 
         height = meshRenderer.bounds.max.y;
 
+        creatures = PlayerManager.GetCreatures(ownerID);
+
+        if (radiusVisualizer != null)
+        {
+            radiusVisualizer.range = range;
+        }
+
         //TEST ONLY:
         Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
@@ -142,8 +159,10 @@ public class Tower : InkObject
         spawnPos.y += projectileSpawnHeight;
     }
 
-    void OnValidate()
+    public override void OnValidate()
     {
+        base.OnValidate();
+
         if (Application.isPlaying && timer != null && (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001))
             timer.TargetTime = 60000 / speed;
 
@@ -154,7 +173,27 @@ public class Tower : InkObject
             SetSpawnPos();
         }
 
+        if (radiusVisualizer != null)
+        {
+            radiusVisualizer.range = range;
+            radiusVisualizer.OnValidate();
+
+            if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
+                radiusVisualizer.gameObject.SetActive(visualizeRadius);
+        }
+
         VisualizeBezier();
+    }
+
+    void OnDrawGizmos()
+    { 
+    }
+
+    protected override void OnOwnerChange()
+    {
+        base.OnOwnerChange();
+
+        creatures = PlayerManager.GetCreatures(ownerID);
     }
 
     private void VisualizeBezier()
@@ -267,15 +306,71 @@ public class Tower : InkObject
         PlayerManager.SetGameObject(ownerID, gameObject, xy.x, xy.y);
     }
 
+    private void SetTarget(Creature target)
+    {
+        this.targetCreature = target;
+
+        if (target == null)
+            this.target = null;
+        else
+            this.target = target.gameObject;
+    }
+
     // Update is called once per frame
     void Update ()
     {
         //DEBUG ONLY
-        if (Application.isEditor && target == null)
-        {
-            SetTarget(GameObject.FindGameObjectWithTag("Debug"));
-        }
+        //if (Application.isEditor && target == null)
+        //{
+        //    SetTarget(GameObject.FindGameObjectWithTag("Debug"));
+        //}
         //end
+        if (creatures.Count > 0)
+        {
+            target = null;
+
+            for (int i = 0; i < creatures.Count; i++)
+            {
+                creatureDist = Vector3.Distance(creatures[i].transform.position, transform.position);
+                if (creatureDist <= range)
+                {
+                    if (target == null)
+                    {
+                        target = creatures[i].gameObject;
+                    }
+                    else
+                    {
+                        switch (priorityTarget)
+                        {
+                            case TargetTypes.First:
+                                if (creatureDist < Vector3.Distance(target.transform.position, transform.position))
+                                {
+                                    SetTarget(creatures[i]);
+                                }
+                                break;
+                            case TargetTypes.HighestLife:
+                                if (targetCreature.health < creatures[i].health)
+                                {
+                                    SetTarget(creatures[i]);
+                                }
+                                break;
+                            case TargetTypes.Last:
+                                if (creatureDist > Vector3.Distance(target.transform.position, transform.position))
+                                {
+                                    SetTarget(creatures[i]);
+                                }
+                                break;
+                            case TargetTypes.LowestLife:
+                                if (targetCreature.health > creatures[i].health)
+                                {
+                                    SetTarget(creatures[i]);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
 
 		if (target != null)
         {
