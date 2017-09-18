@@ -188,6 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
   damage: 10
   speed: 30
   price: 100
@@ -203,3 +205,5 @@ MonoBehaviour:
   projectileSpawnHeight: 0.8
   shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
   visualizeBezier: 0
+  visualizeRadius: 1
+  radiusVisualizer: {fileID: 0}
