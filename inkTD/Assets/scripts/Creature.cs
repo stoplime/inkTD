@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using helper;
+using System;
 
 public class Creature : InkObject
 {
@@ -27,14 +28,23 @@ public class Creature : InkObject
 
 	public bool debug = false;
 
+    /// <summary>
+    /// Gets the unique identifier for this creature.
+    /// </summary>
+    public Guid UniqueID
+    {
+        get { return uniqueID; }
+    }
+
 	private IntVector2 gridEnd;
 
 	private Vector3 animatePos;
+    Vector3[] animatePoints = new Vector3[3];
 
-	/// <summary>
-	/// the current best path for a specific instance of a creature.
-	/// </summary>
-	private List<IntVector2> path;
+    /// <summary>
+    /// the current best path for a specific instance of a creature.
+    /// </summary>
+    private List<IntVector2> path;
 	/// <summary>
 	/// the current index of the path. If the path updates, index needs to reset to 0.
 	/// </summary>
@@ -47,6 +57,8 @@ public class Creature : InkObject
 
 	private float time = 0;
 	private float animateTime = 0;
+
+    private Guid uniqueID = Guid.NewGuid();
 
 	private Vector3[] getGridCurve(IntVector2 previous, IntVector2 current, IntVector2 next)
 	{
@@ -120,17 +132,17 @@ public class Creature : InkObject
 			}
 		}
 	}
-
-	private void animate(float animationSpeed)
+    
+    private void animate(float animationSpeed)
 	{
 		animateTime += Time.deltaTime * animationSpeed;
 		if(animateTime > 1){
 			animateTime -= 1;
 		}
-
-		Vector3[] animatePoints = {Vector3.zero, new Vector3(0, animationHeight, 0), Vector3.zero};
-
-		animatePos = Help.ComputeBezier(animateTime, animatePoints);
+        
+        animatePoints[1] = new Vector3(0, animationHeight, 0);
+        
+        animatePos = Help.ComputeBezier(animateTime, animatePoints);
 
 		Vector3 lookAtTarget = new Vector3(pos.x, transform.position.y, pos.z);
 		transform.LookAt(lookAtTarget);
@@ -183,7 +195,10 @@ public class Creature : InkObject
         	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 		}
 		PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
-        
+
+        animatePoints[0] = Vector3.zero;
+        animatePoints[2] = Vector3.zero;
+
         if (path.Count == 0)
 		{
 			throw new System.ArgumentException("Best path does not exist", "pathing");
@@ -197,6 +212,16 @@ public class Creature : InkObject
     void OnDestroy()
     {
         PlayerManager.GetGrid(gridID).OnGridChange -= OnGridChange;
+        List<Creature> creatures = PlayerManager.GetCreatures(gridID);
+        for (int i = creatures.Count - 1; i >= 0; i --)
+        {
+            if (creatures[i].uniqueID == uniqueID)
+            {
+                creatures.RemoveAt(i);
+                break;
+            }
+        }
+        
     }
 	
 	// Update is called once per frame

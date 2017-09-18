@@ -52,6 +52,11 @@ public class InkObject : MonoBehaviour
     public List<Modifier> Modifiers { get { return modifiers; } }
 
     /// <summary>
+    /// Gets the position of the creature ot tower on the grid.
+    /// </summary>
+    public IntVector2 GridPosition { get { return gridPos; } }
+
+    /// <summary>
     /// The list of currently active modifiers on the tower or creature.
     /// </summary>
     [Tooltip("The list of modifiers applied to the tower or creature.")]

@@ -23,14 +23,14 @@ public class Camera_Controller : MonoBehaviour
     {
         cameraTransform = GetComponent<Transform>();
         position = cameraTransform.position;
-        //bezierPoints = new Vector3[4];
+        bezierPoints = new Vector3[] { new Vector3(0, -3, 2), new Vector3(0, -3, 4), new Vector3(0, -3, 6), new Vector3(0, -3, 8)};
         defaultAngle = 37.59f;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
+		//Arrow keys for X and Z movement
         if (Input.GetKey(KeyCode.UpArrow))
         {
             position.z += speed * Time.timeScale;
@@ -53,8 +53,9 @@ public class Camera_Controller : MonoBehaviour
             cameraTransform.position = position;
         }
 
+        //Mouse Wheel for Y and Z motion
         zoom = Input.GetAxis("Mouse ScrollWheel");
-
+        
         if(transform.position.y >= 15)
         {
             transform.rotation = Quaternion.Euler(defaultAngle, 0, 0);
@@ -80,7 +81,6 @@ public class Camera_Controller : MonoBehaviour
                     position += target;
                     transform.Rotate(Vector3.right, -9.25f);
                     cameraTransform.position = position;
-                    //Debug.Log(i);
                 }
                 else if (zoom < 0f)
                 {
@@ -89,7 +89,6 @@ public class Camera_Controller : MonoBehaviour
                     position -= target;
                     transform.Rotate(Vector3.right, 9.25f);
                     cameraTransform.position = position;
-                    //Debug.Log(i);
                 }
 
             }
