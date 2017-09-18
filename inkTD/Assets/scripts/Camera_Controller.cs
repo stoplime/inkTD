@@ -1,30 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using helper;
 
 public class Camera_Controller : MonoBehaviour
 {
-
-    public float speed = 1;
+    public float panSpeed = 20;
+    public float zoomSpeed = 50;
 
     private Transform cameraTransform;
     private Vector3 position;
+    private Vector3 zoomPosition;
 
-    private float zoom;
+    private float totalZoom;
 
     private float defaultAngle;
 
     public Vector3[] bezierPoints;
 
-    private float i = 0.0f;
+    private bool isOnCurve = false;
+
+    private BezierVisualizer bVisualizer;
 
     // Use this for initialization
     void Start ()
     {
+        totalZoom = -0.2f;
         cameraTransform = GetComponent<Transform>();
         position = cameraTransform.position;
-        bezierPoints = new Vector3[] { new Vector3(0, -3, 2), new Vector3(0, -3, 4), new Vector3(0, -3, 6), new Vector3(0, -3, 8)};
-        defaultAngle = 37.59f;
+        bezierPoints = new Vector3[] { new Vector3(0, 0, 0), transform.rotation * Vector3.forward * 6, new Vector3(0, -12, 14), new Vector3(0, -12, 20)};
+        defaultAngle = transform.eulerAngles.x;
+        bVisualizer = GetComponent<BezierVisualizer>();
+        if (bVisualizer != null)
+        {
+            bVisualizer.points = bezierPoints;
+        }
+
     }
 	
 	// Update is called once per frame
@@ -33,74 +44,61 @@ public class Camera_Controller : MonoBehaviour
 		//Arrow keys for X and Z movement
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            position.z += speed * Time.timeScale;
+            position.z += panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            position.z -= speed * Time.timeScale;
+            position.z -= panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            position.x -= speed * Time.timeScale;
+            position.x -= panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            position.x += speed * Time.timeScale;
+            position.x += panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
 
         //Mouse Wheel for Y and Z motion
-        zoom = Input.GetAxis("Mouse ScrollWheel");
-        
-        if(transform.position.y >= 15)
+        totalZoom += Time.deltaTime * zoomSpeed * Input.GetAxis("Mouse ScrollWheel");
+
+        if (totalZoom > 1)
         {
-            transform.rotation = Quaternion.Euler(defaultAngle, 0, 0);
-            if (zoom > 0f)
-            {
-                transform.Translate(Vector3.forward * Time.timeScale * 5);
-                position = cameraTransform.position;
-            }
-            else if (zoom < 0f)
-            {
-                transform.Translate(-Vector3.forward * Time.timeScale * 5);
-                position = cameraTransform.position;
-            }
+            totalZoom = 1;
         }
+
+        if (isOnCurve)
+        {
+            //do on curve stuff
+            float smallDelta = 0.00001f;
+            Vector3 target = Help.ComputeBezier(totalZoom, bezierPoints);
+            Vector3 targetLook = Help.ComputeBezier(totalZoom+smallDelta, bezierPoints);
+            target.x = 0;
+            cameraTransform.position = position + target;
+            transform.LookAt(targetLook + position);
+
+            if (totalZoom <= 0)
+            {
+                isOnCurve = false;
+                transform.rotation = Quaternion.Euler(defaultAngle, 0, 0);
+                //etc
+            }
+        } 
         else
         {
-            if (i <= 1f && i >= 0f)
-            {
-                if (zoom > 0f)
-                {
-                    i += 0.25f;
-                    Vector3 target = new Vector3(0, ComputeBezierCurve(i).y, ComputeBezierCurve(i).z);
-                    position += target;
-                    transform.Rotate(Vector3.right, -9.25f);
-                    cameraTransform.position = position;
-                }
-                else if (zoom < 0f)
-                {
-                    i -= 0.25f;
-                    Vector3 target = new Vector3(0, ComputeBezierCurve(i).y, ComputeBezierCurve(i).z);
-                    position -= target;
-                    transform.Rotate(Vector3.right, 9.25f);
-                    cameraTransform.position = position;
-                }
+            //Do off curve stuff
+            zoomPosition = transform.forward * totalZoom * zoomSpeed;
+            transform.position = position + zoomPosition;
 
-            }
-
-            if (i > 1)
+            if (totalZoom > 0)
             {
-                i = 1;
-            }
-
-            if (i < 0)
-            {
-                i = 0;
+                isOnCurve = true;
+                //etc
             }
 
         }

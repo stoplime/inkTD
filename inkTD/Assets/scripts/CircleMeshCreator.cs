@@ -37,10 +37,15 @@ public class CircleMeshCreator : MonoBehaviour
     {
         filter = GetComponent<MeshFilter>();
         mesh = Help.CreateCircularMesh(faces, range);
-
-        if (!drawViaGizmos)
+        
+        Renderer rend = GetComponent<Renderer>();
+        if (rend != null)
         {
-            if (filter != null)
+            rend.enabled = !drawViaGizmos;            
+        }
+        if (filter != null)
+        {
+            if (!drawViaGizmos)
             {
                 filter.sharedMesh = mesh;
             }

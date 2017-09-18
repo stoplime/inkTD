@@ -94,14 +94,24 @@ public class Creature : InkObject
 		return bezier;
 	}
 
+	public Vector3 PredictPos(float time)
+	{
+		// rounding
+		int deltaIndex = (int)((time/speed)+0.5f);
+		if (pathIndex+deltaIndex >= path.Count)
+		{
+			return Grid.gridToPos(path[path.Count-1]);
+		}
+		return Grid.gridToPos(path[pathIndex + deltaIndex]);
+	}
+
 	/// <summary>
 	/// Handles the movement of the creatures.
 	/// </summary>
-	/// <param name="gridSpeed"></param>
 	/// <param name="animationSpeed"></param>
-	private void move(float gridSpeed)
+	private void move()
 	{
-		time += Time.deltaTime * gridSpeed;
+		time += Time.deltaTime * speed;
 		// print(time);
 		if (time > 1)
 		{
@@ -226,7 +236,7 @@ public class Creature : InkObject
 	
 	// Update is called once per frame
 	void Update () {
-		move(speed);
+		move();
 		animate(2*speed);
 		updatePath(gridEnd);
 	}

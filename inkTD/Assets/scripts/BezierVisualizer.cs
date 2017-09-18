@@ -30,16 +30,6 @@ public class BezierVisualizer : MonoBehaviour
         }
     }
 
-    void OnValidate()
-    {
-        
-    }
-
-    private void AlignPoints()
-    {
-
-    }
-
     void OnDrawGizmos()
     {
         if (points != null && points.Length > 2)
