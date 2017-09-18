@@ -154,6 +154,8 @@ public class Tower : InkObject
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
 
+        OnValidate();
+
     }
 
     private void SetSpawnPos()

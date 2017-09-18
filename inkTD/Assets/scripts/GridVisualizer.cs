@@ -19,6 +19,7 @@ public class GridVisualizer : MonoBehaviour
     {
         offset = new Vector3(Grid.gridSize / 2, 0, Grid.gridSize / 2);
         grid = PlayerManager.GetGrid(gridID);
+        OnValidate();
     }
 
     void OnValidate()

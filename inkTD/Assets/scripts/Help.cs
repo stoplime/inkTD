@@ -284,6 +284,14 @@ namespace helper
 
         private static LinkedList<Node> AStart(IntVector2 start, IntVector2 end, int playerID, float eps)
         {
+            // if (!PlayerManager.GetGrid(playerID).inArena(start))
+            // {
+                MonoBehaviour.print("start x " + start.x.ToString());
+                MonoBehaviour.print("start y " + start.y.ToString());
+                MonoBehaviour.print("grid id " + playerID.ToString());
+                MonoBehaviour.print("grid bl x" + PlayerManager.GetGrid(playerID).gridOffset.x.ToString());
+                MonoBehaviour.print("grid bl y" + PlayerManager.GetGrid(playerID).gridOffset.y.ToString());
+            // }
             if (!PlayerManager.GetGrid(playerID).isGridEmpty(start))
                 return new LinkedList<Node>();
 

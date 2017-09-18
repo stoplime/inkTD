@@ -145,7 +145,7 @@ public class Grid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		OnValidate();
 	}
 
 	// Update is called once per frame
