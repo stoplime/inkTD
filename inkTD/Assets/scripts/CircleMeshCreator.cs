@@ -28,11 +28,16 @@ public class CircleMeshCreator : MonoBehaviour
         filter.mesh = mesh;
 	}
 
-    public void OnValidate()
+    void OnValidate()
+    {
+        GenerateMesh();
+    }
+
+    public void GenerateMesh()
     {
         filter = GetComponent<MeshFilter>();
         mesh = Help.CreateCircularMesh(faces, range);
-        
+
         if (!drawViaGizmos)
         {
             if (filter != null)

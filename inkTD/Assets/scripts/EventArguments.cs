@@ -15,14 +15,24 @@ public delegate void OnGridChangeEventHandler(Grid sender, OnGridChangeEventArgs
 public class OnGridChangeEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the x coordinate that was changed within the grid.
+    /// Gets the x coordinate that was changed within the grid's local space (IE: 0 is the left).
     /// </summary>
-    public int XChanged { get; private set; }
+    public int XLocalChanged { get; private set; }
 
     /// <summary>
-    /// Gets the y coordinate that was changed within the grid.
+    /// Gets the y coordinate that was changed within the grid's local space (IE: 0 is the bottom.)
     /// </summary>
-    public int YChanged { get; private set; }
+    public int YLocalChanged { get; private set; }
+
+    /// <summary>
+    /// Gets the x coordinate that was changed within the grid world space (IE: the left of the grid is it's offset x).
+    /// </summary>
+    public int XWorldChanged { get; private set; }
+
+    /// <summary>
+    /// Gets the x coordinate that was changed within the grid world space (IE: the bottom of the grid is it's offset y).
+    /// </summary>
+    public int YWorldChanged { get; private set; }
 
     /// <summary>
     /// Gets the player ID that was assigned to the grid that was changed.
@@ -35,10 +45,12 @@ public class OnGridChangeEventArgs : EventArgs
     /// <param name="playerID">The player ID of the grid that changed.</param>
     /// <param name="x">The x coordinate in the grid that changed.</param>
     /// <param name="y">The y coordinate in the grid that changed.</param>
-    public OnGridChangeEventArgs(int playerID, int x, int y)
+    public OnGridChangeEventArgs(int playerID, int worldX, int worldY, int localX, int localY)
     {
-        XChanged = x;
-        YChanged = y;
+        XLocalChanged = localX;
+        YLocalChanged = localY;
+        XWorldChanged = worldX;
+        YWorldChanged = worldY;
         PlayerID = playerID;
     }
 }

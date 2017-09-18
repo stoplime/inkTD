@@ -19,10 +19,10 @@ public class GridVisualizer : MonoBehaviour
     {
         offset = new Vector3(Grid.gridSize / 2, 0, Grid.gridSize / 2);
         grid = PlayerManager.GetGrid(gridID);
-        updateGrid();
+        UpdateGrid();
     }
 
-    private void updateGrid()
+    private void UpdateGrid()
     {
         if (prevID != gridID && gridID < PlayerManager.GridCount && gridID >= 0)
         {
@@ -36,7 +36,7 @@ public class GridVisualizer : MonoBehaviour
 
     void OnValidate()
     {
-        updateGrid();
+        UpdateGrid();
     }
 
     void OnDrawGizmos()

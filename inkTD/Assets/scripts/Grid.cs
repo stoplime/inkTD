@@ -105,6 +105,27 @@ public class Grid : MonoBehaviour {
         return Grid.gridToPos(x + gridOffset.x, y + gridOffset.y);
     }
 
+    /// <summary>
+    /// Returns the bottom left boundry of the grid in grid coordinates.
+    /// </summary>
+    /// <returns></returns>
+    public IntVector2 GetBottomLeftBoundry()
+    {
+        return gridOffset;
+    }
+
+    /// <summary>
+    /// Returns the top right boundry of the grid in grid coordinates.
+    /// </summary>
+    /// <returns></returns>
+    public IntVector2 GetTopRightBoundry()
+    {
+        IntVector2 result = gridOffset;
+        result.x += grid_width;
+        result.y += grid_height;
+        return result;
+    }
+
 	/// <summery>
 	/// checks if grid pos is currently occupide with a tower
 	/// </summery>
@@ -127,8 +148,8 @@ public class Grid : MonoBehaviour {
 		return false;
 	}
 
-	public int OffsetX;
-	public int OffsetY;
+	public int OffsetX = 0;
+	public int OffsetY = 0;
 
     private RaycastHit hit;
 
@@ -163,7 +184,7 @@ public class Grid : MonoBehaviour {
     /// </summary>
     private void RunOnGridChange(int x, int y) {
         if (OnGridChange != null)
-            OnGridChange(this, new OnGridChangeEventArgs(ID, x, y));
+            OnGridChange(this, new OnGridChangeEventArgs(ID,x ,y, x - gridOffset.x, y - gridOffset.y));
     }
 
     //Properties:

@@ -47,9 +47,9 @@ public class PathVisualizer : MonoBehaviour {
         if (path.Count == 0)
         {
             path = PlayerManager.GetBestPath(gridID);
-            VisualizePath();
         }
-	}
+        VisualizePath();
+    }
 
     void OnDestroy()
     {

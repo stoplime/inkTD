@@ -156,7 +156,7 @@ public static class PlayerManager
     /// <param name="grid">The grid to associate with the given player id.</param>
 	public static void AddGrid(int playerID, Grid grid){
 		grids.Add(playerID, grid);
-        creatures[playerID] = new List<Creature>(25);
+        creatures[playerID] = new List<Creature>(30);
         balance[playerID] = 0;
         income[playerID] = 50;
 
@@ -179,7 +179,7 @@ public static class PlayerManager
             List<IntVector2> bestPath = bestPaths[e.PlayerID];
             for (int i = 0; i < bestPath.Count; i++)
             {
-                if (bestPath[i].x == e.XChanged && bestPath[i].y == e.YChanged)
+                if (bestPath[i].x == e.XWorldChanged && bestPath[i].y == e.YWorldChanged)
                 {
                     bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, grid.StartPosition, grid.EndPosition);
                     return;
@@ -226,7 +226,21 @@ public static class PlayerManager
     public static void SetGameObject(int playerID, GameObject obj, int x, int y)
     {
         if (grids.ContainsKey(playerID))
+        {
+            IntVector2 boundryLower = grids[playerID].GetBottomLeftBoundry();
+            IntVector2 boundryUpper = grids[playerID].GetTopRightBoundry();
+            //Boundry checking.
+            if (x < boundryLower.x)
+                x = boundryLower.x;
+            if (x > boundryUpper.x)
+                x = boundryUpper.x;
+            if (y < boundryLower.y)
+                y = boundryLower.y;
+            if (y > boundryUpper.y)
+                y = boundryUpper.y;
+
             grids[playerID].setGridObject(x, y, obj);
+        }
     }
 
     /// <summary>

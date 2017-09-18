@@ -153,7 +153,6 @@ public class Tower : InkObject
         Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
-
     }
 
     private void SetSpawnPos()
@@ -177,7 +176,7 @@ public class Tower : InkObject
         if (radiusVisualizer != null)
         {
             radiusVisualizer.range = range;
-            radiusVisualizer.OnValidate();
+            radiusVisualizer.GenerateMesh();
 
             if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
                 radiusVisualizer.gameObject.SetActive(visualizeRadius);
