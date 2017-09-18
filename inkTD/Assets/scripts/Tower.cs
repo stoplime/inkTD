@@ -154,8 +154,6 @@ public class Tower : InkObject
         Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
         Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
 
-        OnValidate();
-
     }
 
     private void SetSpawnPos()
@@ -164,10 +162,8 @@ public class Tower : InkObject
         spawnPos.y += projectileSpawnHeight;
     }
 
-    public override void OnValidate()
+    private void ValidateUpdate()
     {
-        base.OnValidate();
-
         if (Application.isPlaying && timer != null && (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001))
             timer.TargetTime = 60000 / speed;
 
@@ -190,6 +186,13 @@ public class Tower : InkObject
         rangeRounded = (int)(range + 0.5f);
 
         VisualizeBezier();
+    }
+
+    public override void OnValidate()
+    {
+        base.OnValidate();
+
+        ValidateUpdate();
     }
 
     void OnDrawGizmos()

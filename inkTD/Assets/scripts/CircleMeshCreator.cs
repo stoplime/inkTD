@@ -26,7 +26,6 @@ public class CircleMeshCreator : MonoBehaviour
         filter = GetComponent<MeshFilter>();
         mesh = Help.CreateCircularMesh(faces, range);
         filter.mesh = mesh;
-        OnValidate();
 	}
 
     public void OnValidate()

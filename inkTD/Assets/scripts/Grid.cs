@@ -132,10 +132,15 @@ public class Grid : MonoBehaviour {
 
     private RaycastHit hit;
 
-	void OnValidate()
+	private void offsetEnds()
 	{
 		StartPosition = new IntVector2(startX, startY) + new IntVector2(OffsetX, OffsetY);
 		EndPosition = new IntVector2(endX, endY) + new IntVector2(OffsetX, OffsetY);
+	}
+
+	void OnValidate()
+	{
+		offsetEnds();
 	}
 
     void Awake() {
@@ -145,7 +150,7 @@ public class Grid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		OnValidate();
+		offsetEnds();
 	}
 
 	// Update is called once per frame
