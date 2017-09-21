@@ -1,0 +1,239 @@
+fileFormatVersion: 2
+guid: 17a81e3496ddc68448eddf83c83bcc2c
+timeCreated: 1505957827
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Leaf_002
+    100002: Leaf_003
+    100004: Leaf_004
+    100006: Leaf_005
+    100008: Leaf_006
+    100010: Leaf_007
+    100012: Leaf_008
+    100014: Leaf_009
+    100016: Leaf_010
+    100018: Leaf_011
+    100020: Leaf_012
+    100022: Leaf_013
+    100024: Leaf_014
+    100026: Leaf_015
+    100028: Leaf_016
+    100030: Leaf_017
+    100032: Leaf_018
+    100034: Leaf_019
+    100036: Leaf_020
+    100038: Leaf_021
+    100040: Leaf_022
+    100042: Leaf_023
+    100044: Leaf_024
+    100046: Leaf_025
+    100048: Leaf_026
+    100050: Leaf_027
+    100052: Leaf_028
+    100054: Leaf_029
+    100056: Leaf_030
+    100058: Leaf_1
+    100060: pCylinder1
+    100062: //RootNode
+    400000: Leaf_002
+    400002: Leaf_003
+    400004: Leaf_004
+    400006: Leaf_005
+    400008: Leaf_006
+    400010: Leaf_007
+    400012: Leaf_008
+    400014: Leaf_009
+    400016: Leaf_010
+    400018: Leaf_011
+    400020: Leaf_012
+    400022: Leaf_013
+    400024: Leaf_014
+    400026: Leaf_015
+    400028: Leaf_016
+    400030: Leaf_017
+    400032: Leaf_018
+    400034: Leaf_019
+    400036: Leaf_020
+    400038: Leaf_021
+    400040: Leaf_022
+    400042: Leaf_023
+    400044: Leaf_024
+    400046: Leaf_025
+    400048: Leaf_026
+    400050: Leaf_027
+    400052: Leaf_028
+    400054: Leaf_029
+    400056: Leaf_030
+    400058: Leaf_1
+    400060: pCylinder1
+    400062: //RootNode
+    2300000: Leaf_002
+    2300002: Leaf_003
+    2300004: Leaf_004
+    2300006: Leaf_005
+    2300008: Leaf_006
+    2300010: Leaf_007
+    2300012: Leaf_008
+    2300014: Leaf_009
+    2300016: Leaf_010
+    2300018: Leaf_011
+    2300020: Leaf_012
+    2300022: Leaf_013
+    2300024: Leaf_014
+    2300026: Leaf_015
+    2300028: Leaf_016
+    2300030: Leaf_017
+    2300032: Leaf_018
+    2300034: Leaf_019
+    2300036: Leaf_020
+    2300038: Leaf_021
+    2300040: Leaf_022
+    2300042: Leaf_023
+    2300044: Leaf_024
+    2300046: Leaf_025
+    2300048: Leaf_026
+    2300050: Leaf_027
+    2300052: Leaf_028
+    2300054: Leaf_029
+    2300056: Leaf_030
+    2300058: Leaf_1
+    2300060: pCylinder1
+    3300000: Leaf_002
+    3300002: Leaf_003
+    3300004: Leaf_004
+    3300006: Leaf_005
+    3300008: Leaf_006
+    3300010: Leaf_007
+    3300012: Leaf_008
+    3300014: Leaf_009
+    3300016: Leaf_010
+    3300018: Leaf_011
+    3300020: Leaf_012
+    3300022: Leaf_013
+    3300024: Leaf_014
+    3300026: Leaf_015
+    3300028: Leaf_016
+    3300030: Leaf_017
+    3300032: Leaf_018
+    3300034: Leaf_019
+    3300036: Leaf_020
+    3300038: Leaf_021
+    3300040: Leaf_022
+    3300042: Leaf_023
+    3300044: Leaf_024
+    3300046: Leaf_025
+    3300048: Leaf_026
+    3300050: Leaf_027
+    3300052: Leaf_028
+    3300054: Leaf_029
+    3300056: Leaf_030
+    3300058: Leaf_1
+    3300060: pCylinder1
+    4300000: pCylinder1
+    4300002: Leaf_1
+    4300004: Leaf_002
+    4300006: Leaf_003
+    4300008: Leaf_004
+    4300010: Leaf_005
+    4300012: Leaf_006
+    4300014: Leaf_007
+    4300016: Leaf_008
+    4300018: Leaf_009
+    4300020: Leaf_010
+    4300022: Leaf_011
+    4300024: Leaf_012
+    4300026: Leaf_013
+    4300028: Leaf_014
+    4300030: Leaf_015
+    4300032: Leaf_016
+    4300034: Leaf_017
+    4300036: Leaf_018
+    4300038: Leaf_019
+    4300040: Leaf_020
+    4300042: Leaf_021
+    4300044: Leaf_022
+    4300046: Leaf_023
+    4300048: Leaf_024
+    4300050: Leaf_025
+    4300052: Leaf_026
+    4300054: Leaf_027
+    4300056: Leaf_028
+    4300058: Leaf_029
+    4300060: Leaf_030
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
