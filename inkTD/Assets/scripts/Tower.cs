@@ -116,6 +116,7 @@ public class Tower : InkObject
 	// Use this for initialization
 	void Start ()
     {
+        // TODO: Add a random offset so the towers wont fire in sync cause it's loud as hell.
         timer = new TaylorTimer(60000 / speed);
         timer.Elapsed += Timer_Elapsed;
 
@@ -397,4 +398,13 @@ public class Tower : InkObject
     {
         timer.Update();
 	}
+
+    // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
+    /// <summary>
+    /// When the towers are selected, the range sould display and the tower menu should pop up.
+    /// </summary>
+    public void OnSelect()
+    {
+        visualizeRadius = true;
+    }
 }

@@ -5,13 +5,16 @@ using helper;
 
 public class TowerSpawner : MonoBehaviour {
 
+	public int OwnerID;
+
 	public GameObject highlight;
 	private GameObject existingHighlight = null;
 
 	private Grid parentGrid;
 
-
     private RaycastHit hit;
+
+	private bool isPlaceable;
 
 	public void PlaceTower(string towerPrefab)
 	{
@@ -53,10 +56,14 @@ public class TowerSpawner : MonoBehaviour {
 	void Start () {
 		parentGrid = gameObject.GetComponentInParent<Grid>();
 		highlight.transform.localScale = new Vector3(Grid.gridSize, 0.1f, Grid.gridSize);
+		isPlaceable = OwnerID == parentGrid.ID;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		PlaceTower("Archer_Tower");
+		if (isPlaceable)
+		{
+			PlaceTower("Archer_Tower");
+		}
 	}
 }
