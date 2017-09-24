@@ -348,7 +348,7 @@ namespace helper
         /// <param name="playerID">The player's id who controls the grid which the path will be determined.</param>
         /// <param name="start">The starting point in the grid.</param>
         /// <param name="end">The end point in the grid.</param>
-        /// <returns></returns>
+        /// <returns> If path does not exist, returns a null </returns>
         public static List<IntVector2> GetGridPath(int playerID, IntVector2 start, IntVector2 end)
         {
             LinkedList<Node> nodes = AStart(start, end, playerID);

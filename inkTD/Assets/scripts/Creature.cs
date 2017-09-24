@@ -45,6 +45,14 @@ public class Creature : InkObject
     /// the current best path for a specific instance of a creature.
     /// </summary>
     private List<IntVector2> path;
+
+	public bool PathExists
+	{
+		get{
+			return path != null;
+		}
+	}
+
 	/// <summary>
 	/// the current index of the path. If the path updates, index needs to reset to 0.
 	/// </summary>

@@ -16,7 +16,19 @@ public class TowerSpawner : MonoBehaviour {
 
 	private bool isPlaceable;
 
-	public void PlaceTower(string towerPrefab)
+	public void PlaceTower(string towerPrefab, IntVector2 gridPos, Quaternion orientation)
+	{
+		// Check if gridPos is a valid location for a tower to be placed
+		
+		Vector3 location = Grid.gridToPos(gridPos);
+		GameObject newTower = Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject;
+		Tower ntScript = newTower.GetComponent<Tower>();
+		ntScript.ownerID = parentGrid.ID;
+		ntScript.SetTowerPosition(gridPos);
+		parentGrid.setGridObject(gridPos, newTower);
+	}
+
+	public void SelectLocation(string towerPrefab)
 	{
 		if (!Help.MouseOnUI){
 			if (Help.GetObjectInMousePath(out hit)){
@@ -31,12 +43,7 @@ public class TowerSpawner : MonoBehaviour {
 							existingHighlight.transform.position = target;
 						}
 						if (Input.GetButtonDown("Fire1")){
-							target.y = 0;
-							GameObject newTower = Instantiate(Resources.Load("Towers/Arrow/" + towerPrefab), target, hit.collider.transform.rotation) as GameObject;
-							Tower ntScript = newTower.GetComponent<Tower>();
-                            ntScript.ownerID = parentGrid.ID;
-                            ntScript.SetTowerPosition(gridPos);
-                            parentGrid.setGridObject(gridPos, newTower);
+							PlaceTower(towerPrefab, gridPos, hit.collider.transform.rotation);
 						}
 					}
 					else if(existingHighlight != null){
@@ -63,7 +70,7 @@ public class TowerSpawner : MonoBehaviour {
 	void Update () {
 		if (isPlaceable)
 		{
-			PlaceTower("Archer_Tower");
+			SelectLocation("Arrow/Archer_Tower");
 		}
 	}
 }
