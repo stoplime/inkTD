@@ -6,7 +6,7 @@ public class CreatureSpawner : MonoBehaviour {
 
 	public void OnClick()
 	{
-		PlayerManager.CreateCreature(0, "DebugCreature", gameObject);
+		PlayerManager.CreateCreature(0, "Stickman_Creature", gameObject);
 	}
 
 	// Use this for initialization

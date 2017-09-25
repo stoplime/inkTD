@@ -242,7 +242,7 @@ public class Creature : InkObject
         }
 
 		// Add Inkcome Value
-		PlayerManager.AddIncome(ownerID, inkcomeValue);
+		// PlayerManager.AddIncome(ownerID, inkcomeValue);
 	}
 
     void OnDestroy()

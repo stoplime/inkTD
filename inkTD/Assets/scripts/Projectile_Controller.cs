@@ -98,7 +98,14 @@ public class Projectile_Controller : MonoBehaviour
         if (trackingProjectile)
         {
             transform.position = Help.ComputeBezier(currentLife / life, curveStart, curveMid, curveEnd);
-            transform.LookAt(target.transform);
+            if (target != null)
+            {
+                transform.LookAt(target.transform);
+            }
+            else if (currentLife != life)
+            {
+                transform.LookAt(Help.ComputeBezier((currentLife+1) / life, curveStart, curveMid, curveEnd));
+            }
         }
         else
         {
@@ -117,7 +124,10 @@ public class Projectile_Controller : MonoBehaviour
         if (currentLife > life)
         {
             //apply damage to target here.
-            target.GetComponent<Creature>().TakeDamage(Damage);
+            if (target != null)
+            {
+                target.GetComponent<Creature>().TakeDamage(Damage);
+            }
             Destroy(gameObject);
         }
     }
