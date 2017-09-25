@@ -45,7 +45,7 @@ public class TowerSpawner : MonoBehaviour {
 				}
 			}
 		}
-		print(pathFail);
+		// print(pathFail);
 		
 		if (pathFail)
 		{

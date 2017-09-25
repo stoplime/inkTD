@@ -303,6 +303,8 @@ public class Tower : InkObject
             controller.SetCreator(this);
             controller.Life = projectileLife;
             controller.Target = target;
+            controller.Damage = damage;
+            // may want to apply effects like fire here to the controller
 
             //Computing the 'rough' estimate for the projectile's arc using the spawn position
             Vector3 curveEnd = target.GetComponent<Creature>().PredictPos(projectileLife/1000); //target.transform.position;

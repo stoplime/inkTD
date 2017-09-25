@@ -11,6 +11,29 @@ public class InkObject : MonoBehaviour
     [Tooltip("The health of the tower or creature.")]
     public float health;
 
+    public float Health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            if (value > maxHealth)
+            {
+                health = maxHealth;
+            }
+            else if (value < 0)
+            {
+                health = 0;
+            }
+            else
+            {
+                health = value;
+            }
+        }
+    }
+
     /// <summary>
     /// Creatures have increased damage done to th tower-castle 
     /// Towers have increased projectile damage

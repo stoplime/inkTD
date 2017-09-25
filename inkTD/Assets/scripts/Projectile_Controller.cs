@@ -36,6 +36,12 @@ public class Projectile_Controller : MonoBehaviour
         set { life = value / 1000f; }
     }
 
+    public float Damage
+    {
+        get;
+        set;
+    }
+
     /// <summary>
     /// If true the projectile will track the target object.
     /// </summary>
@@ -111,6 +117,7 @@ public class Projectile_Controller : MonoBehaviour
         if (currentLife > life)
         {
             //apply damage to target here.
+            target.GetComponent<Creature>().TakeDamage(Damage);
             Destroy(gameObject);
         }
     }

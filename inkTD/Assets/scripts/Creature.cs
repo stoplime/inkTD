@@ -6,12 +6,6 @@ using System;
 
 public class Creature : InkObject
 {
-	// [Tooltip("max Health.")]
-    // public float maxHealth;
-
-	// [Tooltip("current health.")]
-    // public float health;
-
 	[Tooltip("A percentage taken off of the regular damage.")]
     public float defense;
 
@@ -69,6 +63,11 @@ public class Creature : InkObject
 	private float animateTime = 0;
 
     private Guid uniqueID = Guid.NewGuid();
+
+	public void TakeDamage(float damage)
+	{
+		Health = health - damage;
+	}
 
 	private Vector3[] getGridCurve(IntVector2 previous, IntVector2 current, IntVector2 next)
 	{
@@ -196,7 +195,18 @@ public class Creature : InkObject
 	// 	{
 	// 		// tempPath = Help.GetGridPath(gridID, gridPos, end);
 	// 	}
-	// } 
+	// }
+
+	private void CheckDeath()
+	{
+		if (Health <= 0.00001)
+		{
+			// Check ink
+			PlayerManager.AddBalance(gridID, dropInk);
+
+			Destroy(gameObject);
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -205,6 +215,7 @@ public class Creature : InkObject
 		pos = Grid.gridToPos(gridPos);
 
 		if(debug){
+			// regular creatures should get added in the CreatureSpawner class
 			PlayerManager.AddCreature(ownerID, gridID, this);
 		}
 		
@@ -213,6 +224,7 @@ public class Creature : InkObject
 		path = Help.GetGridPath(gridID, gridPos, gridEnd);
 
 		if(debug){
+			// currently set up for paths only exists if they are in debug
         	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 		}
 		// PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
@@ -228,6 +240,9 @@ public class Creature : InkObject
         {
             transform.position = Grid.gridToPos(path[0]);
         }
+
+		// Add Inkcome Value
+		PlayerManager.AddIncome(ownerID, inkcomeValue);
 	}
 
     void OnDestroy()
@@ -249,5 +264,6 @@ public class Creature : InkObject
 	void Update () {
 		move();
 		animate(2*speed);
+		CheckDeath();
 	}
 }
