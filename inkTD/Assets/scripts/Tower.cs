@@ -304,17 +304,6 @@ public class Tower : InkObject
             controller.Life = projectileLife;
             controller.Target = target;
 
-            //controller.TargetPosition =  // target.transform.position;
-
-            // if (targetRenderer == null)
-            // {
-            //     controller.TargetPosition = targetCreature.PredictPos(projectileLife/1000); // target.transform.position;
-            // }
-            // else
-            // {
-            //     controller.TargetPosition = targetRenderer.bounds.center;
-            // }
-
             //Computing the 'rough' estimate for the projectile's arc using the spawn position
             Vector3 curveEnd = target.GetComponent<Creature>().PredictPos(projectileLife/1000); //target.transform.position;
             Vector3 curveMid = new Vector3((spawnPos.x + curveEnd.x) / 2, height, (spawnPos.z + curveEnd.z) / 2);

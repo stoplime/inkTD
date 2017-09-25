@@ -46,10 +46,12 @@ public class Creature : InkObject
     /// </summary>
     private List<IntVector2> path;
 
-	public bool PathExists
+    private List<IntVector2> tempPath;
+
+	public bool tempPathExists
 	{
 		get{
-			return path != null;
+			return tempPath.Count > 0;
 		}
 	}
 
@@ -170,30 +172,31 @@ public class Creature : InkObject
 	/// <summary>
 	/// recalculates the path if pathUpdateFlag is true.
 	/// </summary>
-	private void updatePath(IntVector2 end)
+	public void updatePath()
 	{
-		if(pathUpdateFlag)
+		path = Help.GetGridPath(gridID, gridPos, gridEnd);
+		pathIndex = 0;
+		if (gameObject.GetComponent<PathVisualizer>().enabled)
 		{
-			pathUpdateFlag = false;
-			path = Help.GetGridPath(gridID, gridPos, end);
-			pathIndex = 0;
-			if (gameObject.GetComponent<PathVisualizer>().enabled)
-			{
-            	gameObject.GetComponent<PathVisualizer>().SetPath(path);
-			}
+			gameObject.GetComponent<PathVisualizer>().SetPath(path);
 		}
 	}
 
-	/// <summary>
-	/// If a given gridID has changed, then all creatures in that grid will run this function.
-	/// </summary>
-	public void OnGridChange(Grid grid, OnGridChangeEventArgs e)
+	public void updateTempPath()
 	{
-		if (grid.ID == gridID)
-		{
-			pathUpdateFlag = true;
-		}
-	} 
+		tempPath = Help.GetGridPath(gridID, gridPos, gridEnd);
+	}
+
+	// /// <summary>
+	// /// If a given gridID has changed, then all creatures in that grid will run this function.
+	// /// </summary>
+	// public void OnGridChange(Grid grid, OnGridChangeEventArgs e)
+	// {
+	// 	if (grid.ID == gridID)
+	// 	{
+	// 		// tempPath = Help.GetGridPath(gridID, gridPos, end);
+	// 	}
+	// } 
 
 	// Use this for initialization
 	void Start () {
@@ -212,7 +215,7 @@ public class Creature : InkObject
 		if(debug){
         	gameObject.GetComponent<PathVisualizer>().SetPath(path);
 		}
-		PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
+		// PlayerManager.GetGrid(gridID).OnGridChange += OnGridChange;
 
         animatePoints[0] = Vector3.zero;
         animatePoints[2] = Vector3.zero;
@@ -229,7 +232,7 @@ public class Creature : InkObject
 
     void OnDestroy()
     {
-        PlayerManager.GetGrid(gridID).OnGridChange -= OnGridChange;
+        // PlayerManager.GetGrid(gridID).OnGridChange -= OnGridChange;
         List<Creature> creatures = PlayerManager.GetCreatures(gridID);
         for (int i = creatures.Count - 1; i >= 0; i --)
         {
@@ -246,6 +249,5 @@ public class Creature : InkObject
 	void Update () {
 		move();
 		animate(2*speed);
-		updatePath(gridEnd);
 	}
 }

@@ -185,6 +185,7 @@ public static class PlayerManager
                     return;
                 }
             }
+            bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, grid.StartPosition, grid.EndPosition);
         }
         else
         {

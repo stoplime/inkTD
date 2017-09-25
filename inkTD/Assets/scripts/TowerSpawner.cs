@@ -18,14 +18,47 @@ public class TowerSpawner : MonoBehaviour {
 
 	public void PlaceTower(string towerPrefab, IntVector2 gridPos, Quaternion orientation)
 	{
-		// Check if gridPos is a valid location for a tower to be placed
-		
 		Vector3 location = Grid.gridToPos(gridPos);
 		GameObject newTower = Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject;
 		Tower ntScript = newTower.GetComponent<Tower>();
 		ntScript.ownerID = parentGrid.ID;
 		ntScript.SetTowerPosition(gridPos);
 		parentGrid.setGridObject(gridPos, newTower);
+
+		// Check if gridPos is a valid location for a tower to be placed
+		bool pathFail = false;
+		List<Creature> creatures = PlayerManager.GetCreatures(OwnerID);
+		
+		if (PlayerManager.GetBestPath(OwnerID).Count == 0)
+		{
+			pathFail = true;
+		}
+		else
+		{
+			for (int i = 0; i < creatures.Count; i++)
+			{
+				creatures[i].updateTempPath();
+				if (!creatures[i].tempPathExists)
+				{
+					pathFail = true;
+					break;
+				}
+			}
+		}
+		print(pathFail);
+		
+		if (pathFail)
+		{
+			parentGrid.setGridObject(gridPos, null);
+			Destroy(newTower);
+		}
+		else
+		{
+			for (int i = 0; i < creatures.Count; i++)
+			{
+				creatures[i].updatePath();
+			}
+		}
 	}
 
 	public void SelectLocation(string towerPrefab)
@@ -63,7 +96,7 @@ public class TowerSpawner : MonoBehaviour {
 	void Start () {
 		parentGrid = gameObject.GetComponentInParent<Grid>();
 		highlight.transform.localScale = new Vector3(Grid.gridSize, 0.1f, Grid.gridSize);
-		isPlaceable = OwnerID == parentGrid.ID;
+		isPlaceable = (OwnerID == parentGrid.ID);
 	}
 	
 	// Update is called once per frame
