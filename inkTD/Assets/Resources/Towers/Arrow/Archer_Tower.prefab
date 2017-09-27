@@ -199,7 +199,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 348c382f8d3d4bf44ac0b13ff483825b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.257
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   health: 1000
   damage: 10
   speed: 30
-  price: 100
+  price: 10
   ownerID: 0
   description: 
   range: 7.8

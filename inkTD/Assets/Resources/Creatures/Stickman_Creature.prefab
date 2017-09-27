@@ -393,7 +393,7 @@ MonoBehaviour:
   ownerID: 0
   description: The Basic Stickman. Kinda boring really.
   defense: 0
-  inkcomeValue: 1
+  inkcomeValue: 5
   dropInk: 5
   gridID: 0
   animationHeight: 2

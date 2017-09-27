@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114009871559683078}
   - component: {fileID: 114058624071127566}
   - component: {fileID: 114106906075643962}
+  - component: {fileID: 114606168453583172}
   m_Layer: 0
   m_Name: Opponent Field
   m_TagString: Grid
@@ -83,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d99a784410af94468650dd1419b4145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OwnerID: 1
   highlight: {fileID: 1771114354878494, guid: 5d88aaf6cb0c2064782036aa260f6f69, type: 2}
 --- !u!114 &114176738827556994
 MonoBehaviour:
@@ -104,3 +106,17 @@ MonoBehaviour:
   grid_height: 14
   OffsetX: 27
   OffsetY: 0
+--- !u!114 &114606168453583172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1882514128560644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5531c0d18df8644938fdf79a32ecd298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 1
+  StartInk: 100
+  StartInkcome: 10

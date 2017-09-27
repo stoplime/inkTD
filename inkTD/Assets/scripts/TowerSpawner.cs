@@ -46,6 +46,14 @@ public class TowerSpawner : MonoBehaviour {
 			}
 		}
 		// print(pathFail);
+		if (!pathFail && PlayerManager.GetBalance(OwnerID) >= ntScript.price)
+		{
+			PlayerManager.AddBalance(OwnerID, -ntScript.price);
+		}
+		else
+		{
+			pathFail = true;
+		}
 		
 		if (pathFail)
 		{

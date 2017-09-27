@@ -7,6 +7,8 @@ public class CreatureSpawner : MonoBehaviour {
 	public void OnClick()
 	{
 		PlayerManager.CreateCreature(0, "Stickman_Creature", gameObject);
+		// add inkcome value here instead?
+		
 	}
 
 	// Use this for initialization

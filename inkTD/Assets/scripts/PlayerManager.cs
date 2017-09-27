@@ -268,12 +268,16 @@ public static class PlayerManager
 
     public static void CreateCreature(int playerID, string creaturePrefab, GameObject spawner)
 	{
+        GameObject prefab = Resources.Load("Creatures/" + creaturePrefab, typeof(GameObject)) as GameObject;
+        Creature clone = prefab.GetComponent<Creature>();
+        GameObject creature;
+        AddIncome(playerID, clone.inkcomeValue);
 		foreach (KeyValuePair<int, List<Creature> > v in creatures)
 		{
 			// if (playerID != v.Key)
 			// {
-				GameObject creature = MonoBehaviour.Instantiate(Resources.Load("Creatures/" + creaturePrefab)) as GameObject;
-                Creature clone = creature.GetComponent<Creature>();
+				creature = MonoBehaviour.Instantiate(prefab) as GameObject;
+                clone = creature.GetComponent<Creature>();
                 clone.gridID = v.Key;
                 clone.ownerID = playerID;
 			    AddCreature(playerID, v.Key, clone);

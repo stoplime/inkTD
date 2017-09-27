@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour {
 
-	public int enemyID;
+	public int ID;
 
 	// Use this for initialization
 	void Start () {

@@ -107,11 +107,15 @@ public class Creature : InkObject
 	{
 		// rounding
 		int deltaIndex = (int)((time/speed)+0.5f);
-		if (pathIndex+deltaIndex >= path.Count)
+		if (path != null)
 		{
-			return Grid.gridToPos(path[path.Count-1]);
+			if (pathIndex+deltaIndex >= path.Count)
+			{
+				return Grid.gridToPos(path[path.Count-1]);
+			}
+			return Grid.gridToPos(path[pathIndex + deltaIndex]);
 		}
-		return Grid.gridToPos(path[pathIndex + deltaIndex]);
+		return Grid.gridToPos(gridPos);
 	}
 
 	/// <summary>
