@@ -12,7 +12,7 @@ public class Camera_Controller : MonoBehaviour
     private Vector3 position;
     private Vector3 zoomPosition;
 
-    private float totalZoom;
+    public float totalZoom;
 
     private float defaultAngle;
 
@@ -42,23 +42,23 @@ public class Camera_Controller : MonoBehaviour
 	void Update ()
     {
 		//Arrow keys for X and Z movement
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             position.z += panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             position.z -= panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             position.x -= panSpeed * Time.deltaTime;
             cameraTransform.position = position;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             position.x += panSpeed * Time.deltaTime;
             cameraTransform.position = position;
@@ -70,6 +70,10 @@ public class Camera_Controller : MonoBehaviour
         if (totalZoom > 1)
         {
             totalZoom = 1;
+        }
+        else if (totalZoom < -3)
+        {
+            totalZoom = -3;
         }
 
         if (isOnCurve)
