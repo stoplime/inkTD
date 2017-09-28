@@ -94,6 +94,7 @@ public class InfoPanel : MonoBehaviour
         {
             healthText.text = "";
         }
+
     }
 	
 	// Update is called once per frame
