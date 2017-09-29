@@ -10,33 +10,81 @@ public class CircleMeshCreator : MonoBehaviour
 
     public float range = 2;
 
+    public float yOffset = 0.1f;
+
     public Color color = Color.cyan;
 
     public bool drawViaGizmos = false;
 
-    //public Vector3 center;
+    /// <summary>
+    /// Gets or sets the range of the circle.
+    /// </summary>
+    public float Range
+    {
+        get { return range; }
+        set
+        {
+            range = value;
+            transform.localScale = new Vector3(range, 1, range);
+        }
+    }
 
+    /// <summary>
+    /// Gets or sets the position y offset.
+    /// </summary>
+    public float YOffset
+    {
+        get { return yOffset; }
+        set
+        {
+            yOffset = value;
+            transform.position = new Vector3(transform.position.x, yOffset, transform.position.z);
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of outer edges the circle mesh will be generated with.
+    /// </summary>
+    public int Faces
+    {
+        get { return faces; }
+        set
+        {
+            faces = value;
+
+            if (previousFaceCount != faces)
+            {
+                GenerateMesh();
+                previousFaceCount = faces;
+            }
+        }
+    }
+    
     private Mesh mesh;
-
     private MeshFilter filter;
+
+    private int previousFaceCount;
 
 	// Use this for initialization
 	void Start ()
     {
+        previousFaceCount = faces;
         filter = GetComponent<MeshFilter>();
-        mesh = Help.CreateCircularMesh(faces, range);
+        GenerateMesh();
         filter.mesh = mesh;
 	}
 
     void OnValidate()
     {
-        GenerateMesh();
+        Range = range;
+        YOffset = yOffset;
+        Faces = faces;
     }
 
-    public void GenerateMesh()
+    private void GenerateMesh()
     {
         filter = GetComponent<MeshFilter>();
-        mesh = Help.CreateCircularMesh(faces, range);
+        mesh = Help.CreateCircularMesh(faces, 1);
         
         Renderer rend = GetComponent<Renderer>();
         if (rend != null)

@@ -24,7 +24,7 @@ public class Tower : InkObject
     [Tooltip("The target the tower will attempt to fire at.")]
     public TargetTypes priorityTarget = TargetTypes.First;
 
-    // might not want to use this, I'd rather have the projectiles themselves calculate whether they have collided or not.
+    // might not want to use this, I'd rather have the projectiles themselves calculate whether they have collided or not. <- Too expensive if there's a bunch of projectiles (>1000)
     [Tooltip("The total lifetime in milliseconds the projectile will live.")]
     public float projectileLife = 1000;
 
@@ -83,6 +83,13 @@ public class Tower : InkObject
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
 
+    /// <summary>
+    /// The area/radius collider the tower uses to gather targets.
+    /// </summary>
+    private SphereCollider towerTargetArea;
+
+    private List<Creature> nearbyCreatures = new List<Creature>(8);
+
     private BezierVisualizer visualizer;
 
     private Vector3 spawnPos;
@@ -117,7 +124,7 @@ public class Tower : InkObject
 	void Start ()
     {
         // TODO: Add a random offset so the towers wont fire in sync cause it's loud as hell.
-        timer = new TaylorTimer(60000 / speed);
+        timer = new TaylorTimer((60000 + Random.Range(0, 80)) / speed);
         timer.Elapsed += Timer_Elapsed;
 
         meshRenderer = GetComponent<MeshRenderer>();
@@ -145,8 +152,10 @@ public class Tower : InkObject
 
         if (radiusVisualizer != null)
         {
-            radiusVisualizer.range = range;
+            radiusVisualizer.Range = range;
         }
+
+        towerTargetArea = GetComponent<SphereCollider>();
 
         rangeRounded = (int)(range + 0.5f);
 
@@ -176,16 +185,45 @@ public class Tower : InkObject
 
         if (radiusVisualizer != null)
         {
-            radiusVisualizer.range = range;
-            radiusVisualizer.GenerateMesh();
-
+            radiusVisualizer.Range = transform.InverseTransformPoint(range, 0, 0).x;
             if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
                 radiusVisualizer.gameObject.SetActive(visualizeRadius);
         }
 
         rangeRounded = (int)(range + 0.5f);
 
+        if (towerTargetArea == null)
+        {
+            towerTargetArea = GetComponent<SphereCollider>();
+        } 
+        towerTargetArea.radius = transform.InverseTransformPoint(range, 0, 0).x * 0.70f; //A+ code
+
         VisualizeBezier();
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        Creature creature = col.gameObject.GetComponent<Creature>();
+        if (creature != null)
+        {
+            nearbyCreatures.Add(creature);
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        Creature creature = col.gameObject.GetComponent<Creature>();
+        if (creature != null)
+        {
+            for (int i = nearbyCreatures.Count - 1; i >= 0; i--)
+            {
+                if (nearbyCreatures[i].UniqueID == creature.UniqueID)
+                {
+                    nearbyCreatures.RemoveAt(i);
+                    break;
+                }
+            }
+        }
     }
 
     public override void OnValidate()
@@ -240,7 +278,13 @@ public class Tower : InkObject
         {
             target = null;
 
-            foreach (Creature c in creatures)
+            for (int i = nearbyCreatures.Count - 1; i >= 0; i--)
+            {
+                if (nearbyCreatures[i] == null)
+                    nearbyCreatures.RemoveAt(i);
+            }
+
+            foreach (Creature c in nearbyCreatures)
             {
                 if (c.GridPosition.x > gridPositionX - rangeRounded
                     && c.GridPosition.x < gridPositionX + rangeRounded)
