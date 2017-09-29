@@ -185,7 +185,7 @@ public class Tower : InkObject
 
         if (radiusVisualizer != null)
         {
-            radiusVisualizer.Range = transform.InverseTransformPoint(range, 0, 0).x;
+            radiusVisualizer.Range = range / transform.lossyScale.x;
             if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
                 radiusVisualizer.gameObject.SetActive(visualizeRadius);
         }
@@ -196,7 +196,7 @@ public class Tower : InkObject
         {
             towerTargetArea = GetComponent<SphereCollider>();
         } 
-        towerTargetArea.radius = transform.InverseTransformPoint(range, 0, 0).x * 0.70f; //A+ code
+        towerTargetArea.radius = (range / transform.lossyScale.x) * 0.70f; //A+ code
 
         VisualizeBezier();
     }
@@ -235,6 +235,14 @@ public class Tower : InkObject
 
     void OnDrawGizmos()
     { 
+    }
+
+    void OnDestroy()
+    {
+        if (PlayerManager.GetGrid(ownerID).getGridObject(gridPositionX, gridPositionY) == gameObject)
+        {
+            PlayerManager.SetGameObject(ownerID, null, gridPositionX, gridPositionY);
+        }
     }
 
     protected override void OnOwnerChange()
@@ -377,7 +385,6 @@ public class Tower : InkObject
 
             if (audioSource != null && shootSoundEffect != null)
             {
-                //audioSource.PlayOneShot(shootSoundEffect, Help.TowerSoundEffectVolume);
                 audioSource.PlayOneShot(shootSoundEffect);
             }
         }

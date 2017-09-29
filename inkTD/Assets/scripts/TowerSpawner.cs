@@ -8,6 +8,13 @@ public class TowerSpawner : MonoBehaviour {
 	public int OwnerID;
 
 	public GameObject highlight;
+
+    public GameObject notEnoughInkObject;
+
+    public string notEnoughInkText = "Not Enough Ink";
+
+    public int textLife = 6000;
+
 	private GameObject existingHighlight = null;
 
 	private Grid parentGrid;
@@ -16,18 +23,18 @@ public class TowerSpawner : MonoBehaviour {
 
 	private bool isPlaceable;
 
-	public void PlaceTower(string towerPrefab, IntVector2 gridPos, Quaternion orientation)
+    private List<Creature> creatures;
+
+    public void PlaceTower(string towerPrefab, IntVector2 gridPos, Quaternion orientation)
 	{
 		Vector3 location = Grid.gridToPos(gridPos);
-		GameObject newTower = Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject;
-		Tower ntScript = newTower.GetComponent<Tower>();
-		ntScript.ownerID = parentGrid.ID;
-		ntScript.SetTowerPosition(gridPos);
-		parentGrid.setGridObject(gridPos, newTower);
+        GameObject newTower = Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject;
+        Tower ntScript = newTower.GetComponent<Tower>();
+        ntScript.ownerID = parentGrid.ID;
+        ntScript.SetTowerPosition(gridPos);
 
-		// Check if gridPos is a valid location for a tower to be placed
-		bool pathFail = false;
-		List<Creature> creatures = PlayerManager.GetCreatures(OwnerID);
+        // Check if gridPos is a valid location for a tower to be placed
+        bool pathFail = false;
 		
 		if (PlayerManager.GetBestPath(OwnerID).Count == 0)
 		{
@@ -46,27 +53,36 @@ public class TowerSpawner : MonoBehaviour {
 			}
 		}
 		// print(pathFail);
-		if (!pathFail && PlayerManager.GetBalance(OwnerID) >= ntScript.price)
+		if (!pathFail)
 		{
-			PlayerManager.AddBalance(OwnerID, -ntScript.price);
+            if (PlayerManager.GetBalance(OwnerID) >= ntScript.price)
+            {
+                PlayerManager.AddBalance(OwnerID, -ntScript.price);
+
+                for (int i = 0; i < creatures.Count; i++)
+                {
+                    creatures[i].updatePath();
+                }
+            }
+            else //else... there wasn't enough ink.
+            {
+                pathFail = true;
+
+                if (notEnoughInkObject != null)
+                {
+                    GameObject worldText = Instantiate(notEnoughInkObject, location, orientation) as GameObject;
+                    WorldText text = worldText.GetComponent<WorldText>();
+                    text.Text = notEnoughInkText;
+                    text.Life = textLife;
+                    text.cameraToFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+                }
+            }
 		}
-		else
-		{
-			pathFail = true;
-		}
-		
-		if (pathFail)
-		{
-			parentGrid.setGridObject(gridPos, null);
-			Destroy(newTower);
-		}
-		else
-		{
-			for (int i = 0; i < creatures.Count; i++)
-			{
-				creatures[i].updatePath();
-			}
-		}
+
+        if (pathFail)
+        {
+            Destroy(newTower);
+        }
 	}
 
 	public void SelectLocation(string towerPrefab)
@@ -105,7 +121,9 @@ public class TowerSpawner : MonoBehaviour {
 		parentGrid = gameObject.GetComponentInParent<Grid>();
 		highlight.transform.localScale = new Vector3(Grid.gridSize, 0.1f, Grid.gridSize);
 		isPlaceable = (OwnerID == parentGrid.ID);
-	}
+
+        creatures = PlayerManager.GetCreatures(OwnerID);
+    }
 	
 	// Update is called once per frame
 	void Update () {

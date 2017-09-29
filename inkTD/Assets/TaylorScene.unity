@@ -3833,6 +3833,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114371296364637212, guid: 427de868207ef425aad42430ace7ad00,
+        type: 2}
+      propertyPath: notEnoughInkObject
+      value: 
+      objectReference: {fileID: 1990371839637170, guid: 7ea5426c748de26418f29342fb348b71,
+        type: 2}
+    - target: {fileID: 114371296364637212, guid: 427de868207ef425aad42430ace7ad00,
+        type: 2}
+      propertyPath: textLife
+      value: 3000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 427de868207ef425aad42430ace7ad00, type: 2}
   m_IsPrefabParent: 0
@@ -10675,6 +10686,17 @@ Prefab:
     - target: {fileID: 4629768774910592, guid: b9a87e8c1587c4c189b6ffeeabaabb50, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114909326936466496, guid: b9a87e8c1587c4c189b6ffeeabaabb50,
+        type: 2}
+      propertyPath: notEnoughInkObject
+      value: 
+      objectReference: {fileID: 1990371839637170, guid: 7ea5426c748de26418f29342fb348b71,
+        type: 2}
+    - target: {fileID: 114909326936466496, guid: b9a87e8c1587c4c189b6ffeeabaabb50,
+        type: 2}
+      propertyPath: textLife
+      value: 3000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9a87e8c1587c4c189b6ffeeabaabb50, type: 2}
