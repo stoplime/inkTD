@@ -83,6 +83,7 @@
      <Compile Include="Assets\scripts\UI_Tracker.cs" />
      <Compile Include="Assets\WorldText.cs" />
      <None Include="Assets\FixedColor.shader" />
+     <None Include="Assets\Texture.shader" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/opt/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
  </Reference>
