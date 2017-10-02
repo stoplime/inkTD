@@ -24,6 +24,9 @@ public class Tower : InkObject
     [Tooltip("The target the tower will attempt to fire at.")]
     public TargetTypes priorityTarget = TargetTypes.First;
 
+    [Tooltip("The area of effect radius of the project when it collides with a target.")]
+    public float projectileAreaRadius = 5;
+
     // might not want to use this, I'd rather have the projectiles themselves calculate whether they have collided or not. <- Too expensive if there's a bunch of projectiles (>1000)
     [Tooltip("The total lifetime in milliseconds the projectile will live.")]
     public float projectileLife = 1000;
@@ -356,6 +359,7 @@ public class Tower : InkObject
             controller.Life = projectileLife;
             controller.Target = target;
             controller.Damage = damage;
+            controller.AOERadius = projectileAreaRadius;
             // may want to apply effects like fire here to the controller
 
             //Computing the 'rough' estimate for the projectile's arc using the spawn position

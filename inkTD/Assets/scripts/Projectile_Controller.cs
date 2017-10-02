@@ -43,6 +43,19 @@ public class Projectile_Controller : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets or sets the area of effect of the projectile. 0 denotes no AOE.
+    /// </summary>
+    public float AOERadius
+    {
+        get { return areaEffectRadius; }
+        set
+        {
+            areaEffectRadius = value;
+            CorrectColliderRadius();
+        }
+    }
+
+    /// <summary>
     /// If true the projectile will track the target object.
     /// </summary>
     [Tooltip("IF true, the projectile will track the target object.")]
@@ -53,6 +66,7 @@ public class Projectile_Controller : MonoBehaviour
     private Vector3 targetPosition;
     private float life = 1;
     private float currentLife;
+    private float areaEffectRadius = 0f;
 
     private Tower creator;
     
@@ -61,11 +75,25 @@ public class Projectile_Controller : MonoBehaviour
     public Vector3 curveEnd;
     private Vector3 currentBezierCurve;
 
+    private SphereCollider collider;
+
     // Use this for initialization
     void Start ()
     {
         currentBezierCurve = Help.ComputeBezier((currentLife + Time.deltaTime) / life, curveStart, curveMid, curveEnd);
         transform.LookAt(currentBezierCurve);
+        
+        CorrectColliderRadius();
+    }
+
+    private void CorrectColliderRadius()
+    {
+        if (collider == null)
+        {
+            collider = GetComponent<SphereCollider>();
+        }
+
+        collider.radius = (areaEffectRadius / ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3)) * 0.80f; //For some reason sphere collider radii are off by 20%.
     }
 
     /// <summary>
@@ -126,7 +154,26 @@ public class Projectile_Controller : MonoBehaviour
             //apply damage to target here.
             if (target != null)
             {
-                target.GetComponent<Creature>().TakeDamage(Damage);
+                if (AOERadius != 0f)
+                {
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, areaEffectRadius);
+
+                    foreach (Collider c in colliders)
+                    {
+                        if (c.attachedRigidbody != null)
+                        {
+                            Creature creature = c.attachedRigidbody.gameObject.GetComponent<Creature>();
+                            if (creature != null)
+                            {
+                                creature.TakeDamage(Damage);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    target.GetComponent<Creature>().TakeDamage(Damage);
+                }
             }
             Destroy(gameObject);
         }
