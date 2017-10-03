@@ -158,6 +158,160 @@ namespace helper
             return Physics.Raycast(ray, out hit);
         }
 
+        /// <summary>
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// </summary>
+        /// <param name="x">The horizontal position on the grid that will be checked.</param>
+        /// <param name="y">The vertical position on the grid that will be checked.</param>
+        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
+        /// <returns>Returns true if the position is valid.</returns>
+        public static bool ValidPosition(int x, int y, int playerID)
+        {
+            return ValidPosition(x, y, playerID, PlayerManager.GetCreatures(playerID));
+        }
+
+        /// <summary>
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// </summary>
+        /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
+        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
+        /// <returns>Returns true if the position is valid.</returns>
+        public static bool ValidPosition(IntVector2 position, int playerID)
+        {
+            return ValidPosition(position.x, position.y, playerID, PlayerManager.GetCreatures(playerID));
+        }
+
+        /// <summary>
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// </summary>
+        /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
+        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
+        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
+        /// <returns>Returns true if the position is valid.</returns>
+        public static bool ValidPosition(IntVector2 position, int playerID, List<Creature> creatures)
+        {
+            return ValidPosition(position.x, position.y, playerID, creatures);
+        }
+
+        /// <summary>
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// </summary>
+        /// <param name="x">The horizontal position on the grid that will be checked.</param>
+        /// <param name="y">The vertical position on the grid that will be checked.</param>
+        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
+        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
+        /// <returns>Returns true if the position is valid.</returns>
+        public static bool ValidPosition(int x, int y, int playerID, List<Creature> creatures)
+        {
+            return ValidPosition(x, y, playerID, creatures, PlayerManager.GetGrid(playerID));
+        }
+
+        /// <summary>
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// </summary>
+        /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
+        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
+        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
+        /// <param name="grid">The grid of the player.</param>
+        /// <returns>Returns true if the position is valid.</returns>
+        public static bool ValidPosition(IntVector2 position, int playerID, List<Creature> creatures, Grid grid)
+        {
+            return ValidPosition(position.x, position.y, playerID, creatures, grid);
+        }
+
+        /// <summary>
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// </summary>
+        /// <param name="x">The horizontal position on the grid that will be checked.</param>
+        /// <param name="y">The vertical position on the grid that will be checked.</param>
+        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
+        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
+        /// <param name="grid">The grid of the player.</param>
+        /// <returns>Returns true if the position is valid.</returns>
+        public static bool ValidPosition(int x, int y, int playerID, List<Creature> creatures, Grid grid)
+        {
+            //Determine if the coordinates are within the grid's bounds and an object is not already in the position.
+            if (!grid.inArena(x, y) && grid.getGridObject(x, y) != null)
+                return false;
+
+            //empty game object used to generate a best path after filling the position's location on the grid.
+            GameObject empty = new GameObject();
+
+            //Filling the position's location on the grid.
+            grid.setGridObject(x, y, empty);
+
+            //Does the new best path exist? Pathfail is used to determine if the new paths generated from the position fail the validity tests.
+            bool pathFail = PlayerManager.GetBestPath(playerID).Count == 0;
+
+            if (!pathFail)
+            {
+                for (int i = 0; i < creatures.Count; i++)
+                {
+                    creatures[i].updateTempPath();
+                    if (!creatures[i].tempPathExists)
+                    {
+                        pathFail = true;
+                        break;
+                    }
+                }
+            }
+
+            //Reseting the state of the grid and its creatures:
+            grid.setGridObject(x, y, null);
+            GameObject.Destroy(empty);
+            for (int i = 0; i < creatures.Count; i++)
+            {
+                creatures[i].updateTempPath();
+            }
+
+            return !pathFail;
+        }
+
+        /// <summary>
+        /// Gets a list of adjacent positions to the given position.
+        /// </summary>
+        /// <param name="playerGrid">The grid to get the adjacent positions.</param>
+        /// <param name="position">The position whose adjacent positions will be returned.</param>
+        /// <returns></returns>
+        public static List<IntVector2> GetAdjacentNodes(Grid playerGrid, IntVector2 position)
+        {
+            List<IntVector2> result = new List<IntVector2>();
+
+            //X + 1
+            IntVector2 currentPos = position;
+            currentPos.x += 1;
+            if (playerGrid.inArena(currentPos) && playerGrid.isGridEmpty(currentPos))
+            {
+                result.Add(currentPos);
+            }
+
+            //X - 1
+            currentPos = position;
+            currentPos.x -= 1;
+            if (playerGrid.inArena(currentPos) && playerGrid.isGridEmpty(currentPos))
+            {
+                result.Add(currentPos);
+            }
+
+            //Y + 1
+            currentPos = position;
+            currentPos.y += 1;
+            if (playerGrid.inArena(currentPos) && playerGrid.isGridEmpty(currentPos))
+            {
+                result.Add(currentPos);
+            }
+
+            //Y - 1
+            currentPos = position;
+            currentPos.y -= 1;
+            if (playerGrid.inArena(currentPos) && playerGrid.isGridEmpty(currentPos))
+            {
+                result.Add(currentPos);
+            }
+
+            return result;
+        }
+
         /// <summery>
         /// creates a list of adjacent nodes from a current node
         /// </summery>
@@ -224,18 +378,6 @@ namespace helper
 
                 if (!exists)
                 {
-                    //for (LinkedListNode<Node> availIt = availableNodes.First; availIt != null; availIt = availIt.Next)
-                    //{
-                    //    if (availIt.Value.Location.Equals(newIt.Value.Location))
-                    //    {
-                    //        exists = true;
-                    //        if (newIt.Value.F < availIt.Value.F)
-                    //        {
-                    //            availIt.Value = newIt.Value;
-                    //        }
-                    //        break;
-                    //    }
-                    //}
                     if (currentNode == 2)
                     {
                         exists = true;
@@ -298,7 +440,13 @@ namespace helper
             Grid grid = PlayerManager.GetGrid(playerID);
             int height = grid.grid_height;
             int width = grid.grid_width;
-            byte[,] nodeArray = new byte[width,height];
+
+            //NOTE: if this is an int array instead, we could use -1 to denote a node being in the pathMap, and numbers >= 0 being in the availableNodes,
+            //Then we can store the index within the available nodes the item is at by doing value = x + nodeArray.UpperBound(1) * y, then retrieve those
+            //coordinates using x = value % upperbound and y = value / upperbound. This requires our availableNodes to be stored in a fashion that does not
+            //change positions, and can have random or semi-random access. Ideally this may be a hashtable. This will prevent having to loop through the
+            //availableNodes list during merges.
+            byte[,] nodeArray = new byte[width,height]; 
 
             Node startNode = new Node();
             startNode.Location = start;

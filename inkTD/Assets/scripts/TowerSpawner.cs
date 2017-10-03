@@ -27,62 +27,7 @@ public class TowerSpawner : MonoBehaviour {
 
     public void PlaceTower(string towerPrefab, IntVector2 gridPos, Quaternion orientation)
 	{
-		Vector3 location = Grid.gridToPos(gridPos);
-        GameObject newTower = Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject;
-        Tower ntScript = newTower.GetComponent<Tower>();
-        ntScript.ownerID = parentGrid.ID;
-        ntScript.SetTowerPosition(gridPos);
-
-        // Check if gridPos is a valid location for a tower to be placed
-        bool pathFail = false;
-		
-		if (PlayerManager.GetBestPath(OwnerID).Count == 0)
-		{
-			pathFail = true;
-		}
-		else
-		{
-			for (int i = 0; i < creatures.Count; i++)
-			{
-				creatures[i].updateTempPath();
-				if (!creatures[i].tempPathExists)
-				{
-					pathFail = true;
-					break;
-				}
-			}
-		}
-		// print(pathFail);
-		if (!pathFail)
-		{
-            if (PlayerManager.GetBalance(OwnerID) >= ntScript.price)
-            {
-                PlayerManager.AddBalance(OwnerID, -ntScript.price);
-
-                for (int i = 0; i < creatures.Count; i++)
-                {
-                    creatures[i].updatePath();
-                }
-            }
-            else //else... there wasn't enough ink.
-            {
-                pathFail = true;
-
-                if (notEnoughInkObject != null)
-                {
-                    GameObject worldText = Instantiate(notEnoughInkObject, location, orientation) as GameObject;
-                    WorldText text = worldText.GetComponent<WorldText>();
-                    text.Text = notEnoughInkText;
-                    text.Life = textLife;
-                    text.cameraToFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-                }
-            }
-		}
-
-        if (pathFail)
-        {
-            Destroy(newTower);
-        }
+        PlayerManager.PlaceTower(OwnerID, OwnerID, gridPos, orientation, towerPrefab, notEnoughInkObject, notEnoughInkText, textLife);
 	}
 
 	public void SelectLocation(string towerPrefab)

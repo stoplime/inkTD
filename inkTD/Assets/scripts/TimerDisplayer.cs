@@ -88,7 +88,8 @@ public class TimerDisplayer : MonoBehaviour
         {
             currentValue = value;
             FixText();
-            PlayerManager.ApplyIncome(PlayerManager.CurrentPlayer);
+            //PlayerManager.ApplyIncome(PlayerManager.CurrentPlayer);
+            PlayerManager.ApplyIncomeToAll();
         }
         else
         {
