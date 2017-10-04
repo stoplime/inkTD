@@ -259,10 +259,10 @@ namespace helper
             //Reseting the state of the grid and its creatures:
             grid.setGridObject(x, y, null);
             GameObject.Destroy(empty);
-            for (int i = 0; i < creatures.Count; i++)
-            {
-                creatures[i].updateTempPath();
-            }
+            //for (int i = 0; i < creatures.Count; i++)
+            //{
+            //    creatures[i].updateTempPath();
+            //}
 
             return !pathFail;
         }
