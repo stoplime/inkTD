@@ -140,13 +140,33 @@ public class Grid : MonoBehaviour {
 	/// checks if grid pos is within the grid arena
 	/// </summery>
 	public bool inArena(IntVector2 pos){
-		if (pos.x >= gridOffset.x && pos.x < grid_width+gridOffset.x){
-			if (pos.y >= gridOffset.y && pos.y < grid_height+gridOffset.y){
-				return true;
-			}
-		}
-		return false;
-	}
+        if (pos.x >= gridOffset.x && pos.x < grid_width + gridOffset.x)
+        {
+            if (pos.y >= gridOffset.y && pos.y < grid_height + gridOffset.y)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Checks if a given grid position is within the grid's bounds.
+    /// </summary>
+    /// <param name="x">The horizontal x grid position.</param>
+    /// <param name="y">The vertical y grid position.</param>
+    /// <returns></returns>
+    public bool inArena(int x, int y)
+    {
+        if (x >= gridOffset.x && x < grid_width + gridOffset.x)
+        {
+            if (y >= gridOffset.y && y < grid_height + gridOffset.y)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	public int OffsetX = 0;
 	public int OffsetY = 0;

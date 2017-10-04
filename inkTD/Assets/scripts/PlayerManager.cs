@@ -98,6 +98,29 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Adds each player's income to their balance.
+    /// </summary>
+    public static void ApplyIncomeToAll()
+    {
+        int[] keys = new int[balance.Count];
+        int index = 0;
+
+        foreach (KeyValuePair<int, float> b in balance)
+        {
+            keys[index] = b.Key;
+            index++;
+        }
+
+        for (int i = 0; i < keys.Length; i++)
+        {
+            balance[keys[i]] += income[keys[i]];
+
+            if (keys[i] == CurrentPlayer && OnCurrentPlayerBalanceChange != null)
+                OnCurrentPlayerBalanceChange(null, EventArgs.Empty);
+        }
+    }
+
+    /// <summary>
     /// Adds a certain amount to the given player's balance.
     /// </summary>
     /// <param name="playerID">The id of the player whose balance will be modified.</param>
@@ -257,6 +280,112 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Places a tower of the given prefab at the given location if the position is valid, and the player with the ID of playerID has enough ink in their balance.
+    /// </summary>
+    /// <param name="gridID">The ID of the grid where the tower will be placed.</param>
+    /// <param name="playerID">The ID of the player whose ink will decrease for purchasing the tower.</param>
+    /// <param name="gridPos">The position to place the tower.</param>
+    /// <param name="orientation">The angle/rotation orientation of the tower.</param>
+    /// <param name="towerPrefab">The name of the tower prefab.</param>
+    /// <param name="notEnoughInkObject">The gameobject that appears when there is not enough ink.</param>
+    /// <param name="notEnoughInkText">The text that is applied the the notEnoughInkObject.</param>
+    /// <param name="textLife">The time the notEnoughInkObject stick around for (if applicable).</param>
+    /// <returns></returns>
+    public static bool PlaceTower(int gridID, int playerID, IntVector2 gridPos, Quaternion orientation, string towerPrefab, GameObject notEnoughInkObject, string notEnoughInkText, int textLife)
+    {
+        List<Creature> creatures = GetCreatures(playerID);
+        Vector3 location = Grid.gridToPos(gridPos);
+        GameObject newTower = GameObject.Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject; //Note: we can use an empty gameobject until we've confirmed the path is not obstructed.
+        Tower ntScript = newTower.GetComponent<Tower>();
+        ntScript.ownerID = playerID;
+        ntScript.SetTowerPosition(gridPos);
+
+        // Check if gridPos is a valid location for a tower to be placed
+        bool pathFail = false;
+
+        if (GetBestPath(gridID).Count == 0)
+        {
+            pathFail = true;
+        }
+        else
+        {
+            for (int i = 0; i < creatures.Count; i++)
+            {
+                creatures[i].updateTempPath();
+                if (!creatures[i].tempPathExists)
+                {
+                    pathFail = true;
+                    break;
+                }
+            }
+        }
+        // print(pathFail);
+        if (!pathFail)
+        {
+            if (GetBalance(playerID) >= ntScript.price)
+            {
+                AddBalance(playerID, -ntScript.price);
+
+                for (int i = 0; i < creatures.Count; i++)
+                {
+                    creatures[i].updatePath();
+                }
+            }
+            else //else... there wasn't enough ink.
+            {
+                pathFail = true;
+
+                if (notEnoughInkObject != null)
+                {
+                    GameObject worldText = GameObject.Instantiate(notEnoughInkObject, location, orientation) as GameObject;
+                    WorldText text = worldText.GetComponent<WorldText>();
+                    if (text != null)
+                    {
+                        text.Text = notEnoughInkText;
+                        text.Life = textLife;
+                        text.cameraToFollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+                    }
+                }
+            }
+        }
+
+        if (pathFail)
+        {
+            GameObject.Destroy(newTower);
+        }
+
+        return !pathFail;
+    }
+
+    /// <summary>
+    /// Creates a creature at the given player's grid whose id is playerID. Returns true if the creature was succesfully created, false otherwise.
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <param name="creaturePrefab"></param>
+    /// <param name="spawner"></param>
+    /// <returns></returns>
+    public static bool CreateCreature(int playerID, string creaturePrefab, GameObject spawner)
+    {
+        GameObject prefab = Resources.Load("Creatures/" + creaturePrefab, typeof(GameObject)) as GameObject;
+        Creature clone = prefab.GetComponent<Creature>();
+        GameObject creature;
+        AddIncome(playerID, clone.inkcomeValue);
+        foreach (KeyValuePair<int, List<Creature>> v in creatures)
+        {
+            if (playerID != v.Key)
+            {
+                creature = MonoBehaviour.Instantiate(prefab) as GameObject;
+                clone = creature.GetComponent<Creature>();
+                clone.gridID = v.Key;
+                clone.ownerID = playerID;
+                AddCreature(playerID, v.Key, clone);
+            }
+        }
+        return true;
+        //TODO: Determine that the player has enough ink before purchasing, return false if they do not.
+    }
+
+    /// <summary>
     /// An event that runs when the current player's balance of ink changes.
     /// </summary>
     public static event EventHandler OnCurrentPlayerBalanceChange;
@@ -266,24 +395,7 @@ public static class PlayerManager
     /// </summary>
     public static event EventHandler OnCurrentPlayerIncomeChange;
 
-    public static void CreateCreature(int playerID, string creaturePrefab, GameObject spawner)
-	{
-        GameObject prefab = Resources.Load("Creatures/" + creaturePrefab, typeof(GameObject)) as GameObject;
-        Creature clone = prefab.GetComponent<Creature>();
-        GameObject creature;
-        AddIncome(playerID, clone.inkcomeValue);
-		foreach (KeyValuePair<int, List<Creature> > v in creatures)
-		{
-			// if (playerID != v.Key)
-			// {
-				creature = MonoBehaviour.Instantiate(prefab) as GameObject;
-                clone = creature.GetComponent<Creature>();
-                clone.gridID = v.Key;
-                clone.ownerID = playerID;
-			    AddCreature(playerID, v.Key, clone);
-			// }
-		}
-	}
+    
 
     // public static bool 
 }
