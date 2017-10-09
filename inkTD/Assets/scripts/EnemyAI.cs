@@ -124,7 +124,7 @@ public class EnemyAI : MonoBehaviour {
             return;
 
         //Spawn dem stick men
-        PlayerManager.CreateCreature(playerID, "Stickman_Creature", gameObject);
+        PlayerManager.CreateCreature(playerID, "Creature_Stickman", gameObject);
     }
 
     private void ComputeTowerPlacement()

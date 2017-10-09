@@ -3892,7 +3892,7 @@ Prefab:
     - target: {fileID: 114195557843980244, guid: 427de868207ef425aad42430ace7ad00,
         type: 2}
       propertyPath: StartInk
-      value: 100
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 114195557843980244, guid: 427de868207ef425aad42430ace7ad00,
         type: 2}
