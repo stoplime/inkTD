@@ -155,7 +155,8 @@ MonoBehaviour:
   gridID: 0
   animationHeight: 2
   debug: 0
-  OffsetRotation: {x: -270, y: 180, z: 0}
+  OffsetTranslation: {x: 0, y: 1, z: 0}
+  OffsetRotation: {x: -270, y: 0, z: 0}
 --- !u!135 &135145236880808438
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -22,7 +22,9 @@ public class Creature : InkObject
 
 	public bool debug = false;
 
-	public Vector3 OffsetRotation;
+	public Vector3 OffsetTranslation = new Vector3(0, 1, 0);
+
+	public Vector3 OffsetRotation = new Vector3(-270, 0, 0);
 
     /// <summary>
     /// Gets the unique identifier for this creature.
@@ -171,7 +173,7 @@ public class Creature : InkObject
 
 		Vector3 lookAtTarget = new Vector3(pos.x, transform.position.y, pos.z);
 		transform.LookAt(lookAtTarget);
-		transform.position = animatePos+pos;
+		transform.position = animatePos+pos+OffsetTranslation;
 		transform.rotation *= Quaternion.Euler(OffsetRotation);
 	}
 

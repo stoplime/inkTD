@@ -4,7 +4,8 @@ Shader "InkTD/CreatureShader" {
     Properties {
         _Diffusecolor ("Diffuse color", Color) = (1,1,1,1)
         _MainTex ("Diffuse Map (Spec A)", 2D) = "white" {}
-		[HDR] _EmissionColor ("Emission Color", Color) = (0,0,0)
+        // Apply an Emission color
+		_EmissionColor ("Emission Color", Color) = (0,0,0)
         _Speccolor ("Spec color", Color) = (1,1,1,1)
         _SpecIntensity ("Spec Intensity", Range(0, 2)) = 0.2
         _Glossiness ("Glossiness", Range(0, 1)) = 0.5
@@ -73,6 +74,9 @@ Shader "InkTD/CreatureShader" {
                 #endif
             };
             VertexOutput vert (VertexInput v) {
+                // Add Animation
+                v.vertex.y += sin(v.vertex.x*0.6)*sin(_Time*125)*0.5;
+
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
                 o.uv1 = v.texcoord1;
@@ -91,7 +95,7 @@ Shader "InkTD/CreatureShader" {
                 float3 lightColor = _LightColor0.rgb;
                 o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
-                TRANSFER_VERTEX_TO_FRAGMENT(o)
+                TRANSFER_VERTEX_TO_FRAGMENT(o);
                 return o;
             }
             float4 frag(VertexOutput i, float facing : VFACE) : COLOR {
