@@ -100,6 +100,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OwnerID: 0
   highlight: {fileID: 1771114354878494, guid: 5d88aaf6cb0c2064782036aa260f6f69, type: 2}
+  notEnoughInkObject: {fileID: 1990371839637170, guid: 7ea5426c748de26418f29342fb348b71,
+    type: 2}
+  notEnoughInkText: Not Enough Ink
+  textLife: 6000
 --- !u!114 &114979945726824648
 MonoBehaviour:
   m_ObjectHideFlags: 1
