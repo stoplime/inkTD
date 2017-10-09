@@ -82,8 +82,14 @@
      <Compile Include="Assets\scripts\TowerSpawner.cs" />
      <Compile Include="Assets\scripts\UI_Tracker.cs" />
      <Compile Include="Assets\WorldText.cs" />
+     <None Include="Assets\Shaders\CreatureShader.shader" />
+     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
+     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
+     <None Include="Assets\sclicer.shader" />
      <None Include="Assets\FixedColor.shader" />
      <None Include="Assets\Texture.shader" />
+     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
+     <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/opt/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
  </Reference>

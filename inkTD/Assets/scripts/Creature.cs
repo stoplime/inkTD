@@ -22,6 +22,8 @@ public class Creature : InkObject
 
 	public bool debug = false;
 
+	public Vector3 OffsetRotation;
+
     /// <summary>
     /// Gets the unique identifier for this creature.
     /// </summary>
@@ -170,6 +172,7 @@ public class Creature : InkObject
 		Vector3 lookAtTarget = new Vector3(pos.x, transform.position.y, pos.z);
 		transform.LookAt(lookAtTarget);
 		transform.position = animatePos+pos;
+		transform.rotation *= Quaternion.Euler(OffsetRotation);
 	}
 
 	/// <summary>
@@ -247,6 +250,7 @@ public class Creature : InkObject
 
 		// Add Inkcome Value
 		// PlayerManager.AddIncome(ownerID, inkcomeValue);
+		transform.rotation = Quaternion.Euler(OffsetRotation);
 	}
 
     void OnDestroy()

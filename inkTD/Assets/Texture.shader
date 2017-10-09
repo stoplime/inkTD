@@ -3,7 +3,7 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_color ("Main Color", Color) = (1,1,1,1)
+		_Color ("Main Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -41,9 +41,9 @@
 			
 			fixed4 frag (v2f i) : COLOR
 			{
-				float4 color = _Color;
+				fixed4 color = _Color;
 				float4 textColor = tex2D(_MainTex, i.texcoord);
-				return textColor;
+				return color*textColor;
 			}
 			ENDCG
 		}
