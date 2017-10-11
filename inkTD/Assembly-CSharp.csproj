@@ -88,8 +88,10 @@
      <None Include="Assets\Shaders\sclicer.shader" />
      <None Include="Assets\Shaders\FixedColor.shader" />
      <None Include="Assets\Shaders\Texture.shader" />
+     <None Include="Assets\Shaders\WindyGrass.shader" />
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
+     <None Include="Assets\Shaders\waves.cginc" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/opt/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
  </Reference>

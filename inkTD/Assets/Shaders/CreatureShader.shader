@@ -2,6 +2,9 @@
 
 Shader "InkTD/CreatureShader" {
     Properties {
+        _WalkConfidence ("Confidence of Walk", float) = 0.2
+        _WalkFlamboient ("Flamboientess of Walk", float) = 800
+        _WalkSpeed ("Speed of Walk", float) = 125
         _Diffusecolor ("Diffuse color", Color) = (1,1,1,1)
         _MainTex ("Diffuse Map (Spec A)", 2D) = "white" {}
         // Apply an Emission color
@@ -50,6 +53,9 @@ Shader "InkTD/CreatureShader" {
             uniform float4 _Speccolor;
             uniform float _SpecIntensity;
             uniform float _Glossiness;
+            uniform float _WalkConfidence;
+            uniform float _WalkFlamboient;
+            uniform float _WalkSpeed;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -74,8 +80,10 @@ Shader "InkTD/CreatureShader" {
                 #endif
             };
             VertexOutput vert (VertexInput v) {
+
                 // Add Animation
-                v.vertex.y += sin(v.vertex.x*0.6)*sin(_Time*125)*0.5;
+                // v.texcoord0.y += sin((v.texcoord0.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence; //
+                v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence; //
 
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
