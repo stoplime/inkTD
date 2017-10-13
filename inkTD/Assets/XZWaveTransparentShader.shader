@@ -1,48 +1,106 @@
-﻿Shader "Custom/XZWaveTransparentShader" {
-	Properties {
-		_Color ("Color", Color) = (1,1,1,1)
-		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
+Shader "Custom/XZWaveOpaqueShader"
+{
+	Properties
+	{
+		_Color("Primary Color", Color) = (1,1,1,1)
+		_Color2("Secondary Color", Color) = (1,1,1,1)
+		_Value("Value", float) = 0
+		_WaveLength("Wave Length", float) = 0.1
+		_Speed("Speed", float) = 8
+		_Amplitude("Amplitude", float) = 0.001
+		_MainTex("Color (RGB) Alpha (A)", 2D) = "white"
+		//_MainTex("Texture", 2D) = "white" {}
 	}
-	SubShader {
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		
+		SubShader
+	{ 
+		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
+		Tags{ "LightMode" = "ForwardBase" }
+		LOD 100
+
+		ZWrite Off
+		Blend SrcAlpha OneMinusSrcAlpha
+
+		Pass
+	{
 		CGPROGRAM
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
+#pragma vertex vert
+#pragma fragment frag
 
-		// Use shader model 3.0 target, to get nicer looking lighting
-		#pragma target 3.0
+#include "UnityCG.cginc"
+#include "UnityLightingCommon.cginc"
 
-		sampler2D _MainTex;
+		struct appdata
+	{
+		float4 vertex : POSITION;
+		float2 texcoord : TEXCOORD0;
+	};
 
-		struct Input {
-			float2 uv_MainTex;
-		};
+	struct v2f
+	{
+		float4 pos : SV_POSITION;
+		fixed4 diffuse : COLOR0; //For diffuse lighting
+		float2 texcoord : TEXCOORD0;
+	};
 
-		half _Glossiness;
-		half _Metallic;
-		fixed4 _Color;
+	sampler2D _MainTex;
+	float4 _MainTex_ST;
+	fixed4 _Color;
+	fixed4 _Color2;
+	float _Value;
+	float _Speed;
+	float _WaveLength;
+	float _Amplitude;
 
-		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-		// #pragma instancing_options assumeuniformscaling
-		UNITY_INSTANCING_CBUFFER_START(Props)
-			// put more per-instance properties here
-		UNITY_INSTANCING_CBUFFER_END
+	v2f vert(appdata_base  v)
+	{
+		v2f o;
+		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+		v.vertex.x += sin((_Time * _Speed + v.vertex.y + (worldPos.x + worldPos.z)) * (1 / _WaveLength)) / (1 / _Amplitude);
+		v.vertex.z += sin((_Time * _Speed - v.vertex.y * 2 + (worldPos.x + worldPos.z)) * (1 / _WaveLength)) / (1 / _Amplitude);
 
-		void surf (Input IN, inout SurfaceOutputStandard o) {
-			// Albedo comes from a texture tinted by color
-			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			o.Albedo = c.rgb;
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
-			o.Alpha = c.a;
+		o.pos = UnityObjectToClipPos(v.vertex);
+		o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+
+		//Getting the vertex normal in world space
+		half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+		half nl = max(0, dot(worldNormal, _WorldSpaceLightPos0.xyz));
+		o.diffuse = nl * _LightColor0; //Applying light color
+
+									   //Adding illumination from ambient/light probes:
+		o.diffuse.rgb += ShadeSH9(half4(worldNormal, 1));
+
+		//o.Alpha = tex2D(_MainTex, v.texcoord).a;
+
+		return o;
+	}
+
+	fixed4 frag(v2f i) : SV_Target
+	{
+		float4 textColor;
+
+		if (i.texcoord.y > _Value)
+		{
+			textColor = tex2D(_MainTex, i.texcoord) * _Color;
 		}
+		else
+		{
+			textColor = tex2D(_MainTex, i.texcoord) * _Color2;
+		}
+
+		textColor = textColor * i.diffuse;
+
+		textColor.a = tex2D(_MainTex, IN.uv_MainTex).a;
+
+		return textColor;
+	}
 		ENDCG
 	}
-	FallBack "Diffuse"
+
+
+
+		UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"
+		//PAsses go here
+	}
 }
