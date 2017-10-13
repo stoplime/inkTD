@@ -207,7 +207,7 @@ public class Tower : InkObject
     void OnTriggerEnter(Collider col)
     {
         Creature creature = col.gameObject.GetComponent<Creature>();
-        if (creature != null)
+        if (creature != null && creature.gridID == ownerID) //Ensure this tower only ever attacks creatures with a gridID that matches its owner id.
         {
             nearbyCreatures.Add(creature);
         }
