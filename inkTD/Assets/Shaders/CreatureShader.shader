@@ -18,6 +18,7 @@ Shader "InkTD/CreatureShader" {
     SubShader {
         Tags {
             "RenderType"="Opaque"
+            "DisableBatching"="True"
         }
         Pass {
             Name "FORWARD"
@@ -28,16 +29,19 @@ Shader "InkTD/CreatureShader" {
             
             
             CGPROGRAM
-            #pragma vertex vert
+            #pragma vertex vert addshadow
             #pragma fragment frag
+
             #define UNITY_PASS_FORWARDBASE
             #define SHOULD_SAMPLE_SH ( defined (LIGHTMAP_OFF) && defined(DYNAMICLIGHTMAP_OFF) )
             #define _GLOSSYENV 1
+
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
             #include "UnityPBSLighting.cginc"
             #include "UnityStandardBRDF.cginc"
+
             #pragma multi_compile_fwdbase_fullshadows
             #pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
@@ -45,6 +49,7 @@ Shader "InkTD/CreatureShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal d3d11_9x xboxone ps4 psp2 n3ds wiiu 
             #pragma target 3.0
+
             uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
             uniform float4 _Diffusecolor;
 			uniform float4 _EmissionColor;
@@ -53,9 +58,11 @@ Shader "InkTD/CreatureShader" {
             uniform float4 _Speccolor;
             uniform float _SpecIntensity;
             uniform float _Glossiness;
+
             uniform float _WalkConfidence;
             uniform float _WalkFlamboient;
             uniform float _WalkSpeed;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -64,6 +71,7 @@ Shader "InkTD/CreatureShader" {
                 float2 texcoord1 : TEXCOORD1;
                 float2 texcoord2 : TEXCOORD2;
             };
+
             struct VertexOutput {
                 float4 pos : SV_POSITION;
                 float2 uv0 : TEXCOORD0;
@@ -79,11 +87,10 @@ Shader "InkTD/CreatureShader" {
                     float4 ambientOrLightmapUV : TEXCOORD10;
                 #endif
             };
+
             VertexOutput vert (VertexInput v) {
 
-                // Add Animation
-                // v.texcoord0.y += sin((v.texcoord0.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence; //
-                v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence; //
+                v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
 
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
@@ -106,6 +113,7 @@ Shader "InkTD/CreatureShader" {
                 TRANSFER_VERTEX_TO_FRAGMENT(o);
                 return o;
             }
+
             float4 frag(VertexOutput i, float facing : VFACE) : COLOR {
                 float isFrontFace = ( facing >= 0 ? 1 : 0 );
                 float faceSign = ( facing >= 0 ? 1 : -1 );
@@ -120,15 +128,15 @@ Shader "InkTD/CreatureShader" {
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 lightColor = _LightColor0.rgb;
                 float3 halfDirection = normalize(viewDirection+lightDirection);
-////// Lighting:
+                ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
                 float3 attenColor = attenuation * _LightColor0.xyz;
                 float Pi = 3.141592654;
                 float InvPi = 0.31830988618;
-///////// Gloss:
+                ///////// Gloss:
                 float gloss = _Glossiness;
                 float specPow = exp2( gloss * 10.0+1.0);
-/////// GI Data:
+                /////// GI Data:
                 UnityLight light;
                 #ifdef LIGHTMAP_OFF
                     light.color = lightColor;
@@ -168,7 +176,7 @@ Shader "InkTD/CreatureShader" {
                 UnityGI gi = UnityGlobalIllumination(d, 1, normalDirection, ugls_en_data );
                 lightDirection = gi.light.dir;
                 lightColor = gi.light.color;
-////// Specular:
+                ////// Specular:
                 float NdotL = saturate(dot( normalDirection, lightDirection ));
                 float4 _MainTex_var = tex2D(_MainTex,TRANSFORM_TEX(i.uv0, _MainTex));
                 float3 specularColor = ((_MainTex_var.a*_SpecIntensity)*_Speccolor.rgb);
@@ -177,7 +185,7 @@ Shader "InkTD/CreatureShader" {
                 float3 directSpecular = attenColor * pow(max(0,dot(halfDirection,normalDirection)),specPow)*normTerm*specularColor;
                 float3 indirectSpecular = (gi.indirect.specular)*specularColor;
                 float3 specular = (directSpecular + indirectSpecular);
-/////// Diffuse:
+                /////// Diffuse:
                 NdotL = max(0.0,dot( normalDirection, lightDirection ));
                 float3 directDiffuse = max( 0.0, NdotL) * attenColor;
                 float3 indirectDiffuse = float3(0,0,0);
@@ -185,7 +193,7 @@ Shader "InkTD/CreatureShader" {
                 float3 diffuseColor = (_MainTex_var.rgb*_Diffusecolor.rgb);
                 diffuseColor *= 1-specularMonochrome;
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
-/// Final Color:
+                /// Final Color:
                 float3 finalColor = diffuse + specular + _EmissionColor;
                 fixed4 finalRGBA = fixed4(finalColor,1);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
@@ -205,14 +213,17 @@ Shader "InkTD/CreatureShader" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
             #define UNITY_PASS_FORWARDADD
             #define SHOULD_SAMPLE_SH ( defined (LIGHTMAP_OFF) && defined(DYNAMICLIGHTMAP_OFF) )
             #define _GLOSSYENV 1
+
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
             #include "UnityPBSLighting.cginc"
             #include "UnityStandardBRDF.cginc"
+
             #pragma multi_compile_fwdadd_fullshadows
             #pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
             #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
@@ -220,6 +231,7 @@ Shader "InkTD/CreatureShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal d3d11_9x xboxone ps4 psp2 n3ds wiiu 
             #pragma target 3.0
+
             uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
             uniform float4 _Diffusecolor;
             uniform sampler2D _BumpMap; uniform float4 _BumpMap_ST;
@@ -227,6 +239,7 @@ Shader "InkTD/CreatureShader" {
             uniform float4 _Speccolor;
             uniform float _SpecIntensity;
             uniform float _Glossiness;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -235,6 +248,7 @@ Shader "InkTD/CreatureShader" {
                 float2 texcoord1 : TEXCOORD1;
                 float2 texcoord2 : TEXCOORD2;
             };
+
             struct VertexOutput {
                 float4 pos : SV_POSITION;
                 float2 uv0 : TEXCOORD0;
@@ -247,6 +261,7 @@ Shader "InkTD/CreatureShader" {
                 LIGHTING_COORDS(7,8)
                 UNITY_FOG_COORDS(9)
             };
+
             VertexOutput vert (VertexInput v) {
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
@@ -262,6 +277,7 @@ Shader "InkTD/CreatureShader" {
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
             }
+
             float4 frag(VertexOutput i, float facing : VFACE) : COLOR {
                 float isFrontFace = ( facing >= 0 ? 1 : 0 );
                 float faceSign = ( facing >= 0 ? 1 : -1 );
@@ -275,15 +291,15 @@ Shader "InkTD/CreatureShader" {
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 lightColor = _LightColor0.rgb;
                 float3 halfDirection = normalize(viewDirection+lightDirection);
-////// Lighting:
+                ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
                 float3 attenColor = attenuation * _LightColor0.xyz;
                 float Pi = 3.141592654;
                 float InvPi = 0.31830988618;
-///////// Gloss:
+                ///////// Gloss:
                 float gloss = _Glossiness;
                 float specPow = exp2( gloss * 10.0+1.0);
-////// Specular:
+                ////// Specular:
                 float NdotL = saturate(dot( normalDirection, lightDirection ));
                 float4 _MainTex_var = tex2D(_MainTex,TRANSFORM_TEX(i.uv0, _MainTex));
                 float3 specularColor = ((_MainTex_var.a*_SpecIntensity)*_Speccolor.rgb);
@@ -291,13 +307,13 @@ Shader "InkTD/CreatureShader" {
                 float normTerm = (specPow + 8.0 ) / (8.0 * Pi);
                 float3 directSpecular = attenColor * pow(max(0,dot(halfDirection,normalDirection)),specPow)*normTerm*specularColor;
                 float3 specular = directSpecular;
-/////// Diffuse:
+                /////// Diffuse:
                 NdotL = max(0.0,dot( normalDirection, lightDirection ));
                 float3 directDiffuse = max( 0.0, NdotL) * attenColor;
                 float3 diffuseColor = (_MainTex_var.rgb*_Diffusecolor.rgb);
                 diffuseColor *= 1-specularMonochrome;
                 float3 diffuse = directDiffuse * diffuseColor;
-/// Final Color:
+                /// Final Color:
                 float3 finalColor = diffuse + specular;
                 fixed4 finalRGBA = fixed4(finalColor * 1,0);
                 UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
@@ -316,13 +332,16 @@ Shader "InkTD/CreatureShader" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
             #define UNITY_PASS_SHADOWCASTER
             #define SHOULD_SAMPLE_SH ( defined (LIGHTMAP_OFF) && defined(DYNAMICLIGHTMAP_OFF) )
             #define _GLOSSYENV 1
+
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
             #include "UnityPBSLighting.cginc"
             #include "UnityStandardBRDF.cginc"
+
             #pragma fragmentoption ARB_precision_hint_fastest
             #pragma multi_compile_shadowcaster
             #pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
@@ -331,6 +350,7 @@ Shader "InkTD/CreatureShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal d3d11_9x xboxone ps4 psp2 n3ds wiiu 
             #pragma target 3.0
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord1 : TEXCOORD1;
@@ -369,14 +389,17 @@ Shader "InkTD/CreatureShader" {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
             #define UNITY_PASS_META 1
             #define SHOULD_SAMPLE_SH ( defined (LIGHTMAP_OFF) && defined(DYNAMICLIGHTMAP_OFF) )
             #define _GLOSSYENV 1
+
             #include "UnityCG.cginc"
             #include "Lighting.cginc"
             #include "UnityPBSLighting.cginc"
             #include "UnityStandardBRDF.cginc"
             #include "UnityMetaPass.cginc"
+
             #pragma fragmentoption ARB_precision_hint_fastest
             #pragma multi_compile_shadowcaster
             #pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
@@ -385,11 +408,13 @@ Shader "InkTD/CreatureShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal d3d11_9x xboxone ps4 psp2 n3ds wiiu 
             #pragma target 3.0
+
             uniform sampler2D _MainTex; uniform float4 _MainTex_ST;
             uniform float4 _Diffusecolor;
             uniform float4 _Speccolor;
             uniform float _SpecIntensity;
             uniform float _Glossiness;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord0 : TEXCOORD0;
@@ -432,5 +457,12 @@ Shader "InkTD/CreatureShader" {
             ENDCG
         }
     }
+
+    // void animate(inout VertexInput v) {
+    //     // Add Animation
+    //     // v.texcoord0.y += sin((v.texcoord0.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
+    //     // v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
+    //     v.vertex.z += sin(_Time.y * _WalkSpeed + v.vertex.y * _WalkFlamboient) * _WalkConfidence;
+    // }
     FallBack "Diffuse"
 }
