@@ -120,8 +120,17 @@
     <Compile Include="Assets\WorldText.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
+    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
     <None Include="Assets\FixedColor.shader" />
+    <None Include="Assets\Shaders\CreatureShader.shader" />
     <None Include="Assets\Texture.shader" />
+    <None Include="Assets\WaterShader3.shader" />
+    <None Include="Assets\XZWaveOpaqueShader.shader" />
+    <None Include="Assets\XZWaveTransparentShader.shader" />
+    <None Include="Assets\sclicer.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
