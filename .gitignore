@@ -36,3 +36,4 @@ sysinfo.txt
 *.unitypackage
 inkTD/Library/CurrentLayout.dwlt
 inkTD/Library/InspectorExpandedItems.asset
+inkTD/Assets/game/*
