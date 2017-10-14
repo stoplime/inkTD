@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-Shader "Custom/XZWaveOpaqueShader"
+Shader "Custom/XZWaveTransparentShader"
 {
 	Properties
 	{
@@ -56,9 +56,12 @@ Shader "Custom/XZWaveOpaqueShader"
 	v2f vert(appdata_base  v)
 	{
 		v2f o;
-		float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+		/*float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 		v.vertex.x += sin((_Time * _Speed + v.vertex.y + (worldPos.x + worldPos.z)) * (1 / _WaveLength)) / (1 / _Amplitude);
-		v.vertex.z += sin((_Time * _Speed - v.vertex.y * 2 + (worldPos.x + worldPos.z)) * (1 / _WaveLength)) / (1 / _Amplitude);
+		v.vertex.z += sin((_Time * _Speed - v.vertex.y * 2 + (worldPos.x + worldPos.z)) * (1 / _WaveLength)) / (1 / _Amplitude);*/
+
+		v.vertex.x += sin((_Time * _Speed + v.vertex.y) * (1 / _WaveLength)) / (1 / _Amplitude);
+		v.vertex.z += sin((_Time * _Speed - v.vertex.y * 2) * (1 / _WaveLength)) / (1 / _Amplitude);
 
 		o.pos = UnityObjectToClipPos(v.vertex);
 		o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
@@ -91,7 +94,7 @@ Shader "Custom/XZWaveOpaqueShader"
 
 		textColor = textColor * i.diffuse;
 
-		textColor.a = tex2D(_MainTex, IN.uv_MainTex).a;
+		//textColor.a = tex2D(_MainTex, IN.uv_MainTex).a;
 
 		return textColor;
 	}
