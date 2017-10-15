@@ -182,7 +182,7 @@ public class Creature : InkObject
 	/// </summary>
 	public void updatePath()
 	{
-		path = Help.GetGridPath(gridID, gridPos, gridEnd);
+		path = tempPath;
 		pathIndex = 0;
 		if (gameObject.GetComponent<PathVisualizer>().enabled)
 		{

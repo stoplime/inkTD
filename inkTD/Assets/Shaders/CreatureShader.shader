@@ -240,6 +240,10 @@ Shader "InkTD/CreatureShader" {
             uniform float _SpecIntensity;
             uniform float _Glossiness;
 
+            uniform float _WalkConfidence;
+            uniform float _WalkFlamboient;
+            uniform float _WalkSpeed;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -263,6 +267,9 @@ Shader "InkTD/CreatureShader" {
             };
 
             VertexOutput vert (VertexInput v) {
+
+                v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
+
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
                 o.uv1 = v.texcoord1;
@@ -351,6 +358,10 @@ Shader "InkTD/CreatureShader" {
             #pragma only_renderers d3d9 d3d11 glcore gles gles3 metal d3d11_9x xboxone ps4 psp2 n3ds wiiu 
             #pragma target 3.0
 
+            uniform float _WalkConfidence;
+            uniform float _WalkFlamboient;
+            uniform float _WalkSpeed;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord1 : TEXCOORD1;
@@ -363,6 +374,9 @@ Shader "InkTD/CreatureShader" {
                 float4 posWorld : TEXCOORD3;
             };
             VertexOutput vert (VertexInput v) {
+
+                v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
+
                 VertexOutput o = (VertexOutput)0;
                 o.uv1 = v.texcoord1;
                 o.uv2 = v.texcoord2;
@@ -415,6 +429,10 @@ Shader "InkTD/CreatureShader" {
             uniform float _SpecIntensity;
             uniform float _Glossiness;
 
+            uniform float _WalkConfidence;
+            uniform float _WalkFlamboient;
+            uniform float _WalkSpeed;
+
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord0 : TEXCOORD0;
@@ -429,6 +447,9 @@ Shader "InkTD/CreatureShader" {
                 float4 posWorld : TEXCOORD3;
             };
             VertexOutput vert (VertexInput v) {
+
+                v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
+
                 VertexOutput o = (VertexOutput)0;
                 o.uv0 = v.texcoord0;
                 o.uv1 = v.texcoord1;
@@ -464,5 +485,5 @@ Shader "InkTD/CreatureShader" {
     //     // v.vertex.z += (v.vertex.y-(0.005))*sin((v.vertex.x+1)*_WalkFlamboient)*sin(_Time*_WalkSpeed)*_WalkConfidence;
     //     v.vertex.z += sin(_Time.y * _WalkSpeed + v.vertex.y * _WalkFlamboient) * _WalkConfidence;
     // }
-    FallBack "Diffuse"
+    FallBack "VertexLit"
 }

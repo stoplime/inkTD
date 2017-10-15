@@ -55,5 +55,4 @@ Contributed by Steffen
 
 The creatures are designed as ink figures on paper. They were given life and are able to move, but it is still restricted by the paper it was drawn in. This effect brings that life to the creatures. Using a vertex shader to ossilate the walking animation makes it look much better.
 
-future:
-The shadows still needs to be refragmented to have the new animation put into place, but professor Rongkai insists that it should be overlooked for now.
+Note how the shadows follow the animation.
