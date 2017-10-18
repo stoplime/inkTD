@@ -368,6 +368,14 @@ public static class PlayerManager
     {
         GameObject prefab = Resources.Load("Creatures/" + creaturePrefab, typeof(GameObject)) as GameObject;
         Creature clone = prefab.GetComponent<Creature>();
+        if (PlayerManager.GetBalance(playerID) >= clone.price)
+		{
+			PlayerManager.AddBalance(playerID, -clone.price);
+		}
+        else
+        {
+            return false;
+        }
         GameObject creature;
         AddIncome(playerID, clone.inkcomeValue);
         foreach (KeyValuePair<int, List<Creature>> v in creatures)
@@ -382,7 +390,6 @@ public static class PlayerManager
             }
         }
         return true;
-        //TODO: Determine that the player has enough ink before purchasing, return false if they do not.
     }
 
     /// <summary>

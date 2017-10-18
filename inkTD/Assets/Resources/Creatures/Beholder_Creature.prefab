@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114402697239558004}
   - component: {fileID: 114623264650094164}
   m_Layer: 0
-  m_Name: Beholder
+  m_Name: Beholder_Creature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -124,7 +126,7 @@ MonoBehaviour:
   animationHeight: 2
   debug: 0
   OffsetTranslation: {x: 0, y: 1, z: 0}
-  OffsetRotation: {x: -270, y: 0, z: 0}
+  OffsetRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &114623264650094164
 MonoBehaviour:
   m_ObjectHideFlags: 1

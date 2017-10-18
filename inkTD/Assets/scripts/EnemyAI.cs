@@ -65,6 +65,8 @@ public class EnemyAI : MonoBehaviour {
 
     private int towersInPlay = 0;
 
+    private CreatureSpawner creatureSpawner;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -79,6 +81,8 @@ public class EnemyAI : MonoBehaviour {
 
         timer1000ms = new TaylorTimer(1000);
         timer1000ms.Elapsed += Timer1000ms_Elapsed;
+
+        creatureSpawner = GetComponentsInParent<CreatureSpawner>()[0];
 	}
 
     private void Timer1000ms_Elapsed(object sender, System.EventArgs e)
@@ -123,8 +127,8 @@ public class EnemyAI : MonoBehaviour {
         if (state != AIStates.SpawningCreatures)
             return;
 
-        //Spawn dem stick men
-        PlayerManager.CreateCreature(playerID, "Creature_Stickman", gameObject);
+        // PlayerManager.CreateCreature(playerID, "Creature_Stickman", gameObject);
+        creatureSpawner.OnClick(playerID);
     }
 
     private void ComputeTowerPlacement()

@@ -9,56 +9,57 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1674532512223996}
+  m_RootGameObject: {fileID: 1685568515728632}
   m_IsPrefabParent: 1
---- !u!1 &1674532512223996
+--- !u!1 &1685568515728632
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4956376285335674}
-  - component: {fileID: 33399007110659186}
-  - component: {fileID: 23958980988942338}
-  - component: {fileID: 135568888615650048}
-  - component: {fileID: 54988006675684500}
-  - component: {fileID: 114893211084082524}
-  - component: {fileID: 114498003343159814}
+  - component: {fileID: 4226609054206554}
+  - component: {fileID: 33449879484642404}
+  - component: {fileID: 23956316673524838}
+  - component: {fileID: 135657606814289750}
+  - component: {fileID: 54517664492462002}
+  - component: {fileID: 114807738104174526}
+  - component: {fileID: 114002106128022330}
   m_Layer: 0
-  m_Name: Troll
+  m_Name: Frog_Creature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4956376285335674
+--- !u!4 &4226609054206554
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 0, z: 0}
-  m_LocalScale: {x: 155, y: 266, z: 1}
+  m_LocalPosition: {x: -4.57, y: 0, z: 1.07}
+  m_LocalScale: {x: 266, y: 112, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23958980988942338
+--- !u!23 &23956316673524838
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 73bebad58cdcf3e4395e252a5ec99d0b, type: 2}
+  - {fileID: 2100000, guid: 25b9e840d72b59b4193fb07bb0ee7bd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -77,19 +79,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33399007110659186
+--- !u!33 &33449879484642404
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   m_Mesh: {fileID: 4300000, guid: 0850ccd24644148e9b018b3f5f9ba949, type: 3}
---- !u!54 &54988006675684500
+--- !u!54 &54517664492462002
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -99,12 +101,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114498003343159814
+--- !u!114 &114002106128022330
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63543c372708d78419de84e4a07e28a2, type: 3}
@@ -114,38 +116,39 @@ MonoBehaviour:
   startColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   endColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   visualizerObject: {fileID: 0}
---- !u!114 &114893211084082524
+--- !u!114 &114807738104174526
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9b8da08ef3b764fadd2f2a1e1530f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 160
-  health: 160
-  damage: 7
-  speed: 1
-  price: 17
+  maxHealth: 150
+  health: 150
+  damage: 9
+  speed: 2
+  price: 25
   ownerID: 0
-  description: A large, hairy ape-like creature. Synonymous with Bigfoot.
+  description: A giant amphibian with powerful legs to help it jump and swim incredibly
+    fast.
   defense: 0
-  inkcomeValue: 8
-  dropInk: 8
+  inkcomeValue: 12
+  dropInk: 12
   gridID: 0
   animationHeight: 2
   debug: 0
   OffsetTranslation: {x: 0, y: 1, z: 0}
-  OffsetRotation: {x: -270, y: 0, z: 0}
---- !u!135 &135568888615650048
+  OffsetRotation: {x: 0, y: 0, z: 0}
+--- !u!135 &135657606814289750
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674532512223996}
+  m_GameObject: {fileID: 1685568515728632}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
