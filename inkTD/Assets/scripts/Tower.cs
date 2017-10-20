@@ -124,8 +124,9 @@ public class Tower : InkObject
     }
     
 	// Use this for initialization
-	void Start ()
+	public override void Start ()
     {
+        base.Start();
         // TODO: Add a random offset so the towers wont fire in sync cause it's loud as hell.
         timer = new TaylorTimer((60000 + Random.Range(0, 80)) / speed);
         timer.Elapsed += Timer_Elapsed;
@@ -198,8 +199,8 @@ public class Tower : InkObject
         if (towerTargetArea == null)
         {
             towerTargetArea = GetComponent<SphereCollider>();
-        } 
-        towerTargetArea.radius = (range / transform.lossyScale.x) * 0.70f; //A+ code
+        }
+        towerTargetArea.radius = range / Mathf.Max(transform.lossyScale.x, Mathf.Max(transform.lossyScale.z, transform.lossyScale.y));//((transform.lossyScale.x + transform.lossyScale.y + transform.lossyScale.z) / 3f); //range * 0.015f;//(range / transform.lossyScale.x) * 0.70f; //A+ code
 
         VisualizeBezier();
     }

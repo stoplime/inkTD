@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: aca13f2b1e598044ba9ed750147ac053
+timeCreated: 1508527985
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Castle Main Tower
+    100002: Castle Mini Tower
+    100004: Castle Mini Tower Side
+    100006: pasted__group
+    100008: pasted__group4
+    100010: pasted__pasted__group1
+    100012: Seperated Wall
+    100014: Tower 1
+    100016: Tower Base (Stand)
+    100018: Tower Ground
+    100020: Tower_06_Cannonball1_group1
+    100022: //RootNode
+    100024: Tower_Castle_LP_V2_group
+    100026: Tower_Castle_LP_V2_group10
+    100028: Tower_Castle_LP_V2_group5
+    100030: Tower_Castle_LP_V2_group6
+    100032: Tower_Castle_LP_V2_group7
+    100034: Walkway 1 (BAD UV)
+    100036: Walkway 2 (BAD UV)
+    100038: Walls & Ramparts (BAD UV)
+    400000: Castle Main Tower
+    400002: Castle Mini Tower
+    400004: Castle Mini Tower Side
+    400006: pasted__group
+    400008: pasted__group4
+    400010: pasted__pasted__group1
+    400012: Seperated Wall
+    400014: Tower 1
+    400016: Tower Base (Stand)
+    400018: Tower Ground
+    400020: Tower_06_Cannonball1_group1
+    400022: //RootNode
+    400024: Tower_Castle_LP_V2_group
+    400026: Tower_Castle_LP_V2_group10
+    400028: Tower_Castle_LP_V2_group5
+    400030: Tower_Castle_LP_V2_group6
+    400032: Tower_Castle_LP_V2_group7
+    400034: Walkway 1 (BAD UV)
+    400036: Walkway 2 (BAD UV)
+    400038: Walls & Ramparts (BAD UV)
+    2300000: Castle Main Tower
+    2300002: Castle Mini Tower
+    2300004: Castle Mini Tower Side
+    2300006: Seperated Wall
+    2300008: Tower 1
+    2300010: Tower Base (Stand)
+    2300012: Tower Ground
+    2300014: Walkway 1 (BAD UV)
+    2300016: Walkway 2 (BAD UV)
+    2300018: Walls & Ramparts (BAD UV)
+    3300000: Castle Main Tower
+    3300002: Castle Mini Tower
+    3300004: Castle Mini Tower Side
+    3300006: Seperated Wall
+    3300008: Tower 1
+    3300010: Tower Base (Stand)
+    3300012: Tower Ground
+    3300014: Walkway 1 (BAD UV)
+    3300016: Walkway 2 (BAD UV)
+    3300018: Walls & Ramparts (BAD UV)
+    4300000: Walkway 1 (BAD UV)
+    4300002: Castle Mini Tower Side
+    4300004: Walkway 2 (BAD UV)
+    4300006: Castle Main Tower
+    4300008: Castle Mini Tower
+    4300010: Tower 1
+    4300012: Seperated Wall
+    4300014: Tower Base (Stand)
+    4300016: Tower Ground
+    4300018: Walls & Ramparts (BAD UV)
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
