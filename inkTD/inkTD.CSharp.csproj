@@ -127,12 +127,13 @@
     <None Include="Assets\Shaders\CreatureShader.shader" />
     <None Include="Assets\Shaders\FixedColor.shader" />
     <None Include="Assets\Shaders\Texture.shader" />
+    <None Include="Assets\Shaders\WaterShader3.shader" />
     <None Include="Assets\Shaders\WindyGrass.shader" />
+    <None Include="Assets\Shaders\XZWaveOpaqueShader.shader" />
+    <None Include="Assets\Shaders\XZWaveTransparentShader.shader" />
     <None Include="Assets\Shaders\sclicer.shader" />
     <None Include="Assets\Shaders\waves.cginc" />
     <None Include="Assets\WaterShader3.shader" />
-    <None Include="Assets\XZWaveOpaqueShader.shader" />
-    <None Include="Assets\XZWaveTransparentShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

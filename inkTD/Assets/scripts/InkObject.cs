@@ -66,7 +66,8 @@ public class InkObject : MonoBehaviour
     /// <summary>
     /// The description for the tower or creature.
     /// </summary>
-    [Tooltip("The short description of the tower or creature.")]
+    [TextArea(3, 10)]
+    [Tooltip("The short description of the tower or creature. Use a tag to replace it with the variable desired upon start. Tags include: [p] for price, [s] for speed, [d] for damage, and [h] for health.")]
     public string description = "";
 
     /// <summary>
@@ -92,6 +93,14 @@ public class InkObject : MonoBehaviour
     protected float rotation;
 
     private int prevID = 0;
+
+    public virtual void Start()
+    {
+        description = description.Replace("[p]", price.ToString());
+        description = description.Replace("[s]", speed.ToString());
+        description = description.Replace("[d]", damage.ToString());
+        description = description.Replace("[h]", health.ToString());
+    }
 
     public virtual void OnValidate()
     {

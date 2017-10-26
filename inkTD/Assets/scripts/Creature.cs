@@ -218,7 +218,9 @@ public class Creature : InkObject
 	}
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
+        base.Start();
+
 		Grid grid = PlayerManager.GetGrid(gridID);
 		gridPos = grid.StartPosition;
 		pos = Grid.gridToPos(gridPos);
