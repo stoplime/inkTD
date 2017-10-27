@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 114341970952743836}
   - component: {fileID: 114888175955869086}
   m_Layer: 9
-  m_Name: Cannonball Tower
+  m_Name: Cannonball_Tower
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

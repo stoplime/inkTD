@@ -10,6 +10,11 @@ using UnityEngine;
 public static class PlayerManager
 {
     /// <summary>
+    /// Switches between allowing the player to spawn a tower and selecting a tower
+    /// </summary>
+    public static bool PlayerSpawnTowerMode = false;
+
+    /// <summary>
     /// Gets the number of grids within the player manager.
     /// </summary>
     public static int GridCount { get { return grids.Count; } }
