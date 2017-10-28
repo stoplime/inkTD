@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Tree node which holds the path string for the tower prefab
+/// </summary>
 public class TowerData
 {
     private string path;
@@ -45,6 +48,9 @@ public class TowerData
     }
 }
 
+/// <summary>
+/// Tree structure which holds the upgrade tree of the towers
+/// </summary>
 public class TowerNode<T> where T : TowerData
 {
     private T data;
