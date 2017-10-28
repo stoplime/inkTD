@@ -43,6 +43,7 @@ public class PathVisualizer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        visualizerObject.transform.localScale = new Vector3(Grid.gridSize, visualizerObject.transform.localScale.y, Grid.gridSize);
         PlayerManager.GetGrid(gridID).OnGridChange += GridVisualizer_OnGridChange;
         if (path.Count == 0)
         {

@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 155
   health: 155
-  damage: 10
+  damage: 100
   speed: 2
   price: 25
   ownerID: 0

@@ -8,7 +8,7 @@ public class CreatureSpawner : MonoBehaviour {
 
 	public void OnClick(int id)
 	{
-		PlayerManager.CreateCreature(id, creatures[Random.Range(0, creatures.Count)], gameObject);
+		PlayerManager.CreateCreature(id, creatures[Random.Range(0, creatures.Count)]);
 		
 	}
 
