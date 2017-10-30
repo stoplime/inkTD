@@ -52,6 +52,10 @@ public class Tower : InkObject
     [Tooltip("If true, the tower can change available positions in the grid. If false it will have no affect to the grid it is placed within.")]
     public bool existsInGrid = true;
 
+    public static bool isSelected;
+    private Ray ray;
+    private RaycastHit hit;
+
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
     /// </summary>
@@ -470,7 +474,7 @@ public class Tower : InkObject
     void Update ()
     {
         timer.Update();
-	}
+    }
 
     // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
     /// <summary>

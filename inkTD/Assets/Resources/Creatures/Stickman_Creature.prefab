@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9b8da08ef3b764fadd2f2a1e1530f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Stickman
   maxHealth: 100
   health: 100
   damage: 50
