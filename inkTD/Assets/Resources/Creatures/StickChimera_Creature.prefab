@@ -110,9 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9b8da08ef3b764fadd2f2a1e1530f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Stick Chimera
   maxHealth: 155
   health: 155
-  damage: 10
+  damage: 100
   speed: 2
   price: 25
   ownerID: 0

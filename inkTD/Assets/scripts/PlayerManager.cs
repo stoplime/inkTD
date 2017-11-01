@@ -9,6 +9,14 @@ using UnityEngine;
 /// </summary>
 public static class PlayerManager
 {
+
+    private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose_Menu";
+
+    /// <summary>
+    /// Switches between allowing the player to spawn a tower and selecting a tower
+    /// </summary>
+    public static bool PlayerSpawnTowerMode = false;
+
     /// <summary>
     /// Gets the number of grids within the player manager.
     /// </summary>
@@ -38,6 +46,8 @@ public static class PlayerManager
     /// The list of creatures in a grid of the given player id. IE: the key is the playerID of the grid where the creatures are located.
     /// </summary>
     private static Dictionary<int, List<Creature> > creatures = new Dictionary<int, List<Creature> >();
+
+    private static List<int> deadPlayers = new List<int>();
 
     /// <summary>
     /// The current player's playerID.
@@ -217,6 +227,54 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Sets the given playerID as dead for the game.
+    /// </summary>
+    /// <param name="playerID">The ID of the player that died.</param>
+    public static void SetPlayerDead(int playerID)
+    {
+        if (!deadPlayers.Contains(playerID))
+        {
+            deadPlayers.Add(playerID);
+
+            if (deadPlayers.Contains(CurrentPlayer))
+            {
+                GameObject canvas = GameObject.Instantiate(Resources.Load<GameObject>(WinLoseMenuPrefabPath));
+                WinLoseHandler winLoseScript = canvas.GetComponent<WinLoseHandler>();
+                winLoseScript.TitleText = "You Lost!";
+                winLoseScript.TitleColor = Color.red;
+
+                //Game is lost:
+                if (OnGameLose != null)
+                {
+                    OnGameLose(null, EventArgs.Empty);
+                }
+            }
+            else if (deadPlayers.Count >= GridCount - 1)
+            {
+                GameObject canvas = GameObject.Instantiate(Resources.Load<GameObject>(WinLoseMenuPrefabPath));
+                WinLoseHandler winLoseScript = canvas.GetComponent<WinLoseHandler>();
+                winLoseScript.TitleText = "You Won!";
+                winLoseScript.TitleColor = Color.green;
+
+                //Game is won:
+                if (OnGameWin != null)
+                {
+                    OnGameWin(null, EventArgs.Empty);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Removes the player from being dead.
+    /// </summary>
+    /// <param name="playerID">The Id of the player that will no longer be dead.</param>
+    public static void RemovePlayerDead(int playerID)
+    {
+        deadPlayers.Remove(playerID);
+    }
+
+    /// <summary>
     /// Gets the best path for the given player's grid.
     /// </summary>
     /// <param name="playerID">The id to determine whose grid's best path will be returned.</param>
@@ -358,13 +416,13 @@ public static class PlayerManager
     }
 
     /// <summary>
-    /// Creates a creature at the given player's grid whose id is playerID. Returns true if the creature was succesfully created, false otherwise.
+    /// Creates a creature at every grid except the one that is spawning the creatures. Returns true if the creature was succesfully created, false otherwise.
     /// </summary>
-    /// <param name="playerID"></param>
-    /// <param name="creaturePrefab"></param>
+    /// <param name="playerID">The ID of the player spawning this creautre.</param>
+    /// <param name="creaturePrefab">The name of the creature that will be spawned.</param>
     /// <param name="spawner"></param>
     /// <returns></returns>
-    public static bool CreateCreature(int playerID, string creaturePrefab, GameObject spawner)
+    public static bool CreateCreature(int playerID, string creaturePrefab)
     {
         GameObject prefab = Resources.Load("Creatures/" + creaturePrefab, typeof(GameObject)) as GameObject;
         Creature clone = prefab.GetComponent<Creature>();
@@ -380,7 +438,7 @@ public static class PlayerManager
         AddIncome(playerID, clone.inkcomeValue);
         foreach (KeyValuePair<int, List<Creature>> v in creatures)
         {
-            if (playerID != v.Key)
+            if (playerID != v.Key && !grids[v.Key].TowerCastleDead)
             {
                 creature = MonoBehaviour.Instantiate(prefab) as GameObject;
                 clone = creature.GetComponent<Creature>();
@@ -402,7 +460,14 @@ public static class PlayerManager
     /// </summary>
     public static event EventHandler OnCurrentPlayerIncomeChange;
 
-    
+    /// <summary>
+    /// Event that runs when the game is won by the player.
+    /// </summary>
+    public static event EventHandler OnGameWin;
 
-    // public static bool 
+    /// <summary>
+    /// Event that runs when the game is lost by the player.
+    /// </summary>
+    public static event EventHandler OnGameLose;
+    
 }

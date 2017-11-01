@@ -87,6 +87,7 @@ MonoBehaviour:
   ID: 0
   StartInk: 100
   StartInkcome: 10
+  towerCastlePrefabName: Tower_Castle
 --- !u!114 &114909326936466496
 MonoBehaviour:
   m_ObjectHideFlags: 1

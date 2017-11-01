@@ -115,8 +115,11 @@
     <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
     <Compile Include="Assets\scripts\Tower.cs" />
     <Compile Include="Assets\scripts\TowerCamera.cs" />
+    <Compile Include="Assets\scripts\TowerSelect.cs" />
     <Compile Include="Assets\scripts\TowerSpawner.cs" />
+    <Compile Include="Assets\scripts\TowerStructure.cs" />
     <Compile Include="Assets\scripts\UI_Tracker.cs" />
+    <Compile Include="Assets\scripts\WinLoseHandler.cs" />
     <Compile Include="Assets\scripts\WorldText.cs" />
   </ItemGroup>
   <ItemGroup>

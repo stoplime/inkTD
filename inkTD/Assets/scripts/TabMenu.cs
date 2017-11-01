@@ -23,6 +23,8 @@ public class TabMenu : MonoBehaviour
     [Tooltip("If true the menu will be hidden the moment the game is loaded.")]
     public bool hideMenuOnStart = true;
 
+    public TabMenu otherMenu;
+
     /// <summary>
     /// Gets or sets the menu face the screen is attached to.
     /// </summary>
@@ -150,6 +152,7 @@ public class TabMenu : MonoBehaviour
 
     public virtual void OnClick()
     {
+        otherMenu.HideMenu();
         if (!transitioning)
         {
             transitioning = true;
@@ -199,6 +202,12 @@ public class TabMenu : MonoBehaviour
         }
 
         visible = false;
+    }
+
+    void CheckOtherMenus()
+    {
+        //List<GameObject> menus = GameObject.Find();
+
     }
 
     // Update is called once per frame

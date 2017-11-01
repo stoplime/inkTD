@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Archer Tower
   maxHealth: 1000
   health: 1000
   damage: 10
@@ -377,6 +378,7 @@ MonoBehaviour:
   visualizeBezier: 0
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114592614270107694}
+  existsInGrid: 1
 --- !u!135 &135672102620814420
 SphereCollider:
   m_ObjectHideFlags: 1

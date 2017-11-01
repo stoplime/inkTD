@@ -27,7 +27,10 @@ public class Grid : MonoBehaviour {
 	/// For code, use EndPosition instead.
 	/// </summary>
     public int endY = 1;
-
+    
+    /// <summary>
+    /// The size of the individual grid tiles.
+    /// </summary>
 	public static float gridSize = 3;
 
 	/// <summary>
@@ -67,6 +70,21 @@ public class Grid : MonoBehaviour {
     /// array containing the towers of the playing field
     /// </summary>
     private GameObject[,] grid;
+
+    /// <summary>
+    /// The tower castle assigned to this grid. Null if no tower castle exists for this grid.
+    /// </summary>
+    private GameObject towerCastle;
+
+    /// <summary>
+    /// The tower script associated with the tower castle.
+    /// </summary>
+    private Tower towerCastleScript;
+
+    /// <summary>
+    /// If the grid's tower castle has died.
+    /// </summary>
+    private bool isDead = false;
 
 	public void setGridObject(IntVector2 xy, GameObject obj){
 		grid[xy.x - gridOffset.x, xy.y - gridOffset.y] = obj;
@@ -168,6 +186,30 @@ public class Grid : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Damages the tower castle associated with this grid.
+    /// </summary>
+    /// <param name="damage">The amount being subtracted from the tower castle.</param>
+    public void DamageTowerCastle(float damage)
+    {
+        if (towerCastleScript != null)
+        {
+            towerCastleScript.Health -= damage;
+
+            //Tower castle died:
+            if (towerCastleScript.Health <= 0 && !isDead)
+            {
+                isDead = true;
+                if (OnTowerCastleDeath != null)
+                {
+                    OnTowerCastleDeath(this, EventArgs.Empty);
+                }
+
+                PlayerManager.SetPlayerDead(ID);
+            }
+        }
+    }
+
 	public int OffsetX = 0;
 	public int OffsetY = 0;
 
@@ -219,7 +261,29 @@ public class Grid : MonoBehaviour {
     /// </summary>
     public IntVector2 EndPosition { get; private set; }
 
+    /// <summary>
+    /// Gets or sets the tower castle assigned to this grid. Note: This does not instantiate the tower castle, but it does force the tower castle's position to the end of the grid's path.
+    /// </summary>
+    public GameObject TowerCastle
+    {
+        get { return towerCastle; }
+        set
+        {
+            towerCastle = value;
+            towerCastleScript = towerCastle.GetComponent<Tower>();
+            towerCastleScript.ownerID = ID;
+            towerCastleScript.SetTowerPosition(endX + OffsetX, endY + OffsetY);
+        }
+    }
+
+    /// <summary>
+    /// Gets whether the tower castle in this grid is dead.
+    /// </summary>
+    public bool TowerCastleDead { get { return towerCastleScript.Health <= 0; } }
+
     //Events:
 
     public event OnGridChangeEventHandler OnGridChange;
+
+    public event EventHandler OnTowerCastleDeath;
 }

@@ -5,11 +5,19 @@ using UnityEngine;
 public class CreatureSpawner : MonoBehaviour {
 
 	public List<string> creatures;
+    public static string path;
 
 	public void OnClick(int id)
 	{
-		PlayerManager.CreateCreature(id, creatures[Random.Range(0, creatures.Count)], gameObject);
-		
+		//PlayerManager.CreateCreature(id, creatures[Random.Range(0, creatures.Count)]);
+        if(id == 0)
+        {
+            PlayerManager.CreateCreature(id, path);
+        }
+        else
+        {
+            PlayerManager.CreateCreature(id, creatures[Random.Range(0, creatures.Count)]);
+        }
 	}
 
 	// Use this for initialization
