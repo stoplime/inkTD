@@ -15,4 +15,9 @@ public class TowerCamera : MonoBehaviour
     {
 		
 	}
+
+    public void MoveCamera(Tower focus)
+    {
+        transform.position = new Vector3(focus.gameObject.transform.position.x - 5, focus.gameObject.transform.position.y + 5, focus.gameObject.transform.position.z);
+    }
 }

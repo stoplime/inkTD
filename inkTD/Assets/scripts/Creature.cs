@@ -135,6 +135,9 @@ public class Creature : InkObject
 			time -= 1;
 			pathIndex++;
 			if(pathIndex >= path.Count){
+                //Reached the end of the path and succeeded...
+                PlayerManager.GetGrid(gridID).DamageTowerCastle(damage);
+
 				Destroy(gameObject);
 			}
 			else{

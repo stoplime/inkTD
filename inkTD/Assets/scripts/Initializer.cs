@@ -11,9 +11,18 @@ public class Initializer : MonoBehaviour {
 
 	public float StartInkcome = 10;
 
+    public string towerCastlePrefabName = "Tower_Castle";
+
+    private GameObject towerCastleObject;
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		PlayerManager.SetBalance(ID, StartInk);
 		PlayerManager.SetIncome(ID, StartInkcome);
+
+        //Instantiating and setting the tower castle:
+        towerCastleObject = Instantiate(Resources.Load<GameObject>("Towers/" + towerCastlePrefabName));
+        PlayerManager.GetGrid(ID).TowerCastle = towerCastleObject;
 	}
 }

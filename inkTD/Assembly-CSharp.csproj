@@ -83,6 +83,7 @@
      <Compile Include="Assets\scripts\TowerSpawner.cs" />
      <Compile Include="Assets\scripts\TowerStructure.cs" />
      <Compile Include="Assets\scripts\UI_Tracker.cs" />
+     <Compile Include="Assets\scripts\WinLoseHandler.cs" />
      <Compile Include="Assets\scripts\WorldText.cs" />
      <None Include="Assets\Shaders\CreatureShader.shader" />
      <None Include="Assets\Shaders\XZWaveOpaqueShader.shader" />

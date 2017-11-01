@@ -10,17 +10,21 @@ public class InfoPanel : MonoBehaviour
     public Image image;
     public Text nameText;
     public Text costText;
-    public Text rateOfFireText;
+    public Text rangeText;
     public Text damageText;
     public Text descriptionText;
     public Text healthText;
+    public Text modifiersText;
+    public Text speedText;
     public Button buyButton;
+    private string towerPath;
+    public Camera towerCam;
+
 
     public string objName, description;
-    public float cost, health, rateOfFire, damage;
+    public string[] modifiers;
+    public float cost, health, rateOfFire, damage, range, speed;
 
-
-    // Use this for initialization
     void Start ()
     {
         ClearMenu();
@@ -33,16 +37,29 @@ public class InfoPanel : MonoBehaviour
     /// <param name="description"></param>
     /// <param name="cost"></param>
     /// <param name="damage"></param>
-    /// <param name="rateOfFire"></param>
+    /// <param name="range"></param>
     /// <param name="image"></param>
-    public void RecieveTowerInfo(string towerName, string description, float cost, float damage, float rateOfFire, Sprite image)
+    public void RecieveTowerInfo(string towerName, string description, float cost, float damage, float range, Sprite image, string towerPath)
     {
         objName = towerName;
         this.description = description;
         this.cost = cost;
         this.damage = damage;
-        this.rateOfFire = rateOfFire;
-        this.image.overrideSprite = image;
+        this.rateOfFire = range;
+        //this.image.overrideSprite = image;
+        TowerSpawner.selectedTowerPath = towerPath;
+    }
+
+    public void RecieveTowerInfo(Tower i, string towerPath)
+    {
+        objName = i.objName;
+        this.description = i.description;
+        this.cost = i.price;
+        this.damage = i.damage;
+        this.range = i.range;
+        //this.image.overrideSprite = image;
+        TowerSpawner.selectedTowerPath = towerPath;
+        towerCam.GetComponent<TowerCamera>().MoveCamera(i);
     }
 
     /// <summary>
@@ -54,14 +71,16 @@ public class InfoPanel : MonoBehaviour
     /// <param name="cost"></param>
     /// <param name="damage"></param>
     /// <param name="image"></param>
-    public void RecieveCreatureInfo(string creatureName, string description, float health, float cost, float damage, Sprite image)
+    public void RecieveCreatureInfo(string creatureName, string description, float health, float cost, float damage, float speed, string path, Sprite image)
     {
         objName = creatureName;
         this.description = description;
         this.health = health;
         this.cost = cost;
         this.damage = damage;
+        this.speed = speed;
         this.image.overrideSprite = image;
+        CreatureSpawner.path = path;
     }
 
     /// <summary>
@@ -85,14 +104,19 @@ public class InfoPanel : MonoBehaviour
         costText.text = "";
         damageText.text = "";
         
-        if (rateOfFireText != null)
+        if (rangeText != null)
         {
-            rateOfFireText.text = "";
+            rangeText.text = "";
         }
 
         if (healthText != null)
         {
             healthText.text = "";
+        }
+
+        if (speedText != null)
+        {
+            speedText.text = "";
         }
 
     }
@@ -105,14 +129,21 @@ public class InfoPanel : MonoBehaviour
         costText.text = "Cost: " + Convert.ToString(cost);
         damageText.text = "Damage: " + Convert.ToString(damage);
 
-        if (rateOfFireText != null)
+        if (rangeText != null)
         {
-            rateOfFireText.text = "Rate of Fire: " + Convert.ToString(rateOfFire);
+            rangeText.text = "Range: " + Convert.ToString(range);
         }
 
         if (healthText != null)
         {
             healthText.text = "Health: " + Convert.ToString(health);
         }
+
+        if (speedText != null)
+        {
+            speedText.text = "Speed: " + Convert.ToString(speed);
+        }
+
+        
     }
 }

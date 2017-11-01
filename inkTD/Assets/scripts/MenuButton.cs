@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class MenuButton : MonoBehaviour
 {
-    public string objName, description;
-    public float health, cost, damage, rateOfFire;
+    public string objName, description, path;
+    public float health, cost, damage, rateOfFire, speed;
     public Sprite image;
+
+    public Tower attachedTower;
+    public Creature attachedCreature;
+    public Modifier attachedModifier;
 
     public enum ButtonType { Tower, Creature, Modifier };
 
@@ -29,21 +33,21 @@ public class MenuButton : MonoBehaviour
         switch(type)
         {
             case ButtonType.Tower:
-                infoPanel.RecieveTowerInfo(objName, description, cost, damage, rateOfFire, image);
+                //infoPanel.RecieveTowerInfo(objName, description, cost, damage, rateOfFire, image, path);
+                infoPanel.RecieveTowerInfo(attachedTower, path);
                 Debug.Log("Ok");
                 break;
 
             case ButtonType.Creature:
-                infoPanel.RecieveCreatureInfo(objName, description, health, cost, damage, image);
+                infoPanel.RecieveCreatureInfo(objName, description, health, cost, damage, speed, path, image);
+                Debug.Log("Ok");
                 break;
 
             case ButtonType.Modifier:
                 //InfoPanel.RecieveModifierInfo();
+                Debug.Log("Ok");
                 break;
 
-            default:
-                Debug.Log("No type assigned to this button");
-                break;
         }
     }
 

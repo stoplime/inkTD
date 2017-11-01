@@ -54,7 +54,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -70,7 +69,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -127,9 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9b8da08ef3b764fadd2f2a1e1530f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Battering Ram
   maxHealth: 150
   health: 150
-  damage: 10
+  damage: 100
   speed: 1
   price: 12
   ownerID: 0

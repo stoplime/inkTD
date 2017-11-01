@@ -37,9 +37,9 @@ GameObject:
   - component: {fileID: 4612774711453438}
   - component: {fileID: 33811405417548046}
   - component: {fileID: 23975117397766054}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walls & Ramparts (BAD UV)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,9 +54,9 @@ GameObject:
   - component: {fileID: 4983827378999850}
   - component: {fileID: 33703433802678302}
   - component: {fileID: 23564458460432162}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walkway 1 (BAD UV)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -71,9 +71,9 @@ GameObject:
   - component: {fileID: 4723460734691498}
   - component: {fileID: 33551383692610656}
   - component: {fileID: 23501426205617340}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Castle Mini Tower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,9 +88,9 @@ GameObject:
   - component: {fileID: 4374631956577502}
   - component: {fileID: 33092331254501018}
   - component: {fileID: 23824313361397348}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Castle Mini Tower Side
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,9 +105,9 @@ GameObject:
   - component: {fileID: 4579213620930868}
   - component: {fileID: 33125014467933064}
   - component: {fileID: 23396754102265980}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Castle Main Tower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,9 +122,9 @@ GameObject:
   - component: {fileID: 4047498462728778}
   - component: {fileID: 33104538449090840}
   - component: {fileID: 23292429710071116}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tower Ground
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,9 +139,9 @@ GameObject:
   - component: {fileID: 4095414424440596}
   - component: {fileID: 33025872786590444}
   - component: {fileID: 23764659474902588}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Seperated Wall
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,9 +156,9 @@ GameObject:
   - component: {fileID: 4067062551122310}
   - component: {fileID: 33606891704865034}
   - component: {fileID: 23737870093916814}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tower 1
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,9 +192,9 @@ GameObject:
   - component: {fileID: 4860910433466218}
   - component: {fileID: 33177642311111704}
   - component: {fileID: 23180642550246460}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walkway 2 (BAD UV)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,9 +209,9 @@ GameObject:
   - component: {fileID: 4139112838105250}
   - component: {fileID: 33873053830290952}
   - component: {fileID: 23744821756725658}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tower Base (Stand)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -428,7 +428,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: eaa92a65601996a4e92628772c001eb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -492,7 +492,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: b3a23f3b93d973b4595df05598e2bd3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -524,7 +524,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: eaa92a65601996a4e92628772c001eb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -556,7 +556,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: eaa92a65601996a4e92628772c001eb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -588,7 +588,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: eaa92a65601996a4e92628772c001eb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -620,7 +620,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: b3a23f3b93d973b4595df05598e2bd3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -652,7 +652,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: b3a23f3b93d973b4595df05598e2bd3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -684,7 +684,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: b3a23f3b93d973b4595df05598e2bd3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -716,7 +716,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: eaa92a65601996a4e92628772c001eb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -748,7 +748,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 24ae4b3562c57ef42b5322ce824708cc, type: 2}
+  - {fileID: 2100000, guid: b3a23f3b93d973b4595df05598e2bd3b, type: 2}
   - {fileID: 2100000, guid: 86fec6d0fa6fc4c418f29e55c6013958, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1016,6 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Tower Castle
   maxHealth: 5000
   health: 5000
   damage: 150
@@ -1037,6 +1038,7 @@ MonoBehaviour:
   visualizeBezier: 0
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114420344460630748}
+  existsInGrid: 0
 --- !u!135 &135815339811403946
 SphereCollider:
   m_ObjectHideFlags: 1

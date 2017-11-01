@@ -5,7 +5,7 @@ using helper;
 
 public class Tower : InkObject
 {
-
+    [Header("General Settings")]
     [Tooltip("The distance in all directions around the tower in world coordinates that can be fired upon. Example: 5")]
     public float range;
 
@@ -48,6 +48,14 @@ public class Tower : InkObject
 
     public CircleMeshCreator radiusVisualizer;
 
+    [Header("Special Settings")]
+    [Tooltip("If true, the tower can change available positions in the grid. If false it will have no affect to the grid it is placed within.")]
+    public bool existsInGrid = true;
+
+    public static bool isSelected;
+    private Ray ray;
+    private RaycastHit hit;
+
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
     /// </summary>
@@ -83,8 +91,8 @@ public class Tower : InkObject
     private List<Creature> creatures;
 
     private TaylorTimer timer;
-    private MeshRenderer meshRenderer;
     private AudioSource audioSource;
+    private Bounds towerBounds;
 
     /// <summary>
     /// The area/radius collider the tower uses to gather targets.
@@ -130,9 +138,10 @@ public class Tower : InkObject
         // TODO: Add a random offset so the towers wont fire in sync cause it's loud as hell.
         timer = new TaylorTimer((60000 + Random.Range(0, 80)) / speed);
         timer.Elapsed += Timer_Elapsed;
-
-        meshRenderer = GetComponent<MeshRenderer>();
+        
         audioSource = GetComponent<AudioSource>();
+
+        CalculateBounds();
 
         SetTowerPosition(gridPositionX, gridPositionY);
 
@@ -150,7 +159,7 @@ public class Tower : InkObject
             VisualizeBezier();
         }
 
-        height = meshRenderer.bounds.max.y;
+        height = towerBounds.max.y;
 
         creatures = PlayerManager.GetCreatures(ownerID);
 
@@ -169,9 +178,31 @@ public class Tower : InkObject
         Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
     }
 
+    private void CalculateBounds()
+    {
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            towerBounds = renderer.bounds;
+        }
+        else
+        {
+            towerBounds = new Bounds(transform.position, Vector3.zero);
+            GameObject child;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                child = transform.GetChild(i).gameObject;
+                if (child.tag == "Tower")
+                {
+                    towerBounds.Encapsulate(child.GetComponent<MeshRenderer>().bounds);
+                }
+            }
+        }
+    }
+
     private void SetSpawnPos()
     {
-        spawnPos = meshRenderer.bounds.center;
+        spawnPos = towerBounds.center;
         spawnPos.y += projectileSpawnHeight;
     }
 
@@ -182,10 +213,7 @@ public class Tower : InkObject
 
         SetTowerPosition(initialGridPositionX, initialGridPositionY);
 
-        if (meshRenderer != null)
-        {
-            SetSpawnPos();
-        }
+        SetSpawnPos();
 
         if (radiusVisualizer != null)
         {
@@ -235,10 +263,6 @@ public class Tower : InkObject
         base.OnValidate();
 
         ValidateUpdate();
-    }
-
-    void OnDrawGizmos()
-    { 
     }
 
     void OnDestroy()
@@ -402,7 +426,7 @@ public class Tower : InkObject
     /// <param name="y">The y axis grid block number.</param>
     public void SetTowerPosition(int x, int y)
     {
-        //empty the grid position at gridPositionX, gridPositionY
+        //TODO: empty the grid position at gridPositionX, gridPositionY
         Vector3 realPos = Grid.gridToPos(new IntVector2(x, y));
         transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = x;
@@ -410,7 +434,10 @@ public class Tower : InkObject
         initialGridPositionX = x;
         initialGridPositionY = y;
         //fill the grid position at x, y
-        PlayerManager.SetGameObject(ownerID, gameObject, x, y);
+        if (existsInGrid)
+            PlayerManager.SetGameObject(ownerID, gameObject, x, y);
+
+        CalculateBounds();
     }
 
     /// <summary>
@@ -419,7 +446,7 @@ public class Tower : InkObject
     /// <param name="xy">The IntVector2 grid position.</param>
     public void SetTowerPosition(IntVector2 xy)
     {
-        //empty the grid position at gridPositionX, gridPositionY
+        //TODO: empty the grid position at gridPositionX, gridPositionY
         Vector3 realPos = Grid.gridToPos(xy);
         transform.position = new Vector3(realPos.x, transform.position.y, realPos.z);
         gridPositionX = xy.x;
@@ -427,7 +454,10 @@ public class Tower : InkObject
         initialGridPositionX = xy.x;
         initialGridPositionY = xy.y;
         //fill the grid position at x, y
-        PlayerManager.SetGameObject(ownerID, gameObject, xy.x, xy.y);
+        if (existsInGrid)
+            PlayerManager.SetGameObject(ownerID, gameObject, xy.x, xy.y);
+
+        CalculateBounds();
     }
 
     private void SetTarget(Creature target)
@@ -444,7 +474,7 @@ public class Tower : InkObject
     void Update ()
     {
         timer.Update();
-	}
+    }
 
     // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
     /// <summary>

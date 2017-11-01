@@ -356,6 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Brain Tower
   maxHealth: 1000
   health: 1000
   damage: 80
@@ -378,6 +379,7 @@ MonoBehaviour:
   visualizeBezier: 0
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114566545430561514}
+  existsInGrid: 1
 --- !u!135 &135288819058607528
 SphereCollider:
   m_ObjectHideFlags: 1

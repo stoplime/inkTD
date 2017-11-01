@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Bomb Tower
   maxHealth: 1000
   health: 1000
   damage: 75
@@ -379,6 +380,7 @@ MonoBehaviour:
   visualizeBezier: 0
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114315610146389352}
+  existsInGrid: 1
 --- !u!114 &114315610146389352
 MonoBehaviour:
   m_ObjectHideFlags: 1

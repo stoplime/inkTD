@@ -387,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objName: Arcane Tower
   maxHealth: 1000
   health: 1000
   damage: 40
@@ -408,6 +409,7 @@ MonoBehaviour:
   visualizeBezier: 0
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114332187769857646}
+  existsInGrid: 1
 --- !u!135 &135884495516953562
 SphereCollider:
   m_ObjectHideFlags: 1

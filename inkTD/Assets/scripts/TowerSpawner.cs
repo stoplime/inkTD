@@ -27,6 +27,8 @@ public class TowerSpawner : MonoBehaviour {
 
     private List<Creature> creatures;
 
+    public static string selectedTowerPath;
+
 	/// <summary>
 	/// Constructs the data structure for the Tower types and upgrades.
 	/// </summary>
@@ -127,6 +129,11 @@ public class TowerSpawner : MonoBehaviour {
 		}
 	}
 
+    /*public void SetSelected(string path)
+    {
+        TowerPrefabs = path;
+    }*/
+
 	// Use this for initialization
 	void Start () {
 		InitTowerPrefabs();
@@ -139,9 +146,13 @@ public class TowerSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(selectedTowerPath == null)
+        {
+            selectedTowerPath = "Arrow/Archer_Tower";
+        }
 		if (isPlaceable)
 		{
-			SelectLocation("Arrow/Archer_Tower");
+			SelectLocation(selectedTowerPath);
 		}
 	}
 }

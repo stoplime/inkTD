@@ -5,6 +5,9 @@ using helper;
 
 public class InkObject : MonoBehaviour
 {
+    [Tooltip("The name of the creature.")]
+    public string objName;
+
     [Tooltip("The maximum health the creature can have.")]
     public float maxHealth;
 
@@ -109,6 +112,65 @@ public class InkObject : MonoBehaviour
             OnOwnerChange();
         }
         prevID = ownerID;
+    }
+
+    public string[] GetModifierNames()
+    {
+        string[] names = new string[Modifiers.Count];
+        int i = 0;
+        foreach (Modifier m in Modifiers)
+        {
+            switch (m.type)
+            {
+                case ModiferTypes.None:
+                    names[i] = "None";
+                    break;
+                case ModiferTypes.Fire:
+                    names[i] = "Fire";
+                    break;
+                case ModiferTypes.Ice:
+                    names[i] = "Ice";
+                    break;
+                case ModiferTypes.Acid:
+                    names[i] = "Acid";
+                    break;
+                case ModiferTypes.Lightning:
+                    names[i] = "Lightning";
+                    break;
+                case ModiferTypes.SpeedUp:
+                    names[i] = "Speed Up";
+                    break;
+                case ModiferTypes.DamageUp:
+                    names[i] = "Damage Up";
+                    break;
+                case ModiferTypes.RadiusUp:
+                    names[i] = "Radius Up";
+                    break;
+                case ModiferTypes.Slow:
+                    names[i] = "Slow";
+                    break;
+                case ModiferTypes.Stun:
+                    names[i] = "Stun";
+                    break;
+                case ModiferTypes.Piercing:
+                    names[i] = "Piercing";
+                    break;
+                case ModiferTypes.Chain:
+                    names[i] = "Chain";
+                    break;
+                case ModiferTypes.Flying:
+                    names[i] = "Flying";
+                    break;
+                case ModiferTypes.Ethereal:
+                    names[i] = "Ethereal";
+                    break;
+                case ModiferTypes.Evasion:
+                    names[i] = "Evasion";
+                    break;
+            }
+            i++;
+        }
+        return names;
     }
 
     /// <summary>
