@@ -20,6 +20,8 @@ public class Camera_Controller : MonoBehaviour
 
     private bool isOnCurve = false;
 
+    private bool isOver;
+
     private BezierVisualizer bVisualizer;
 
     // Use this for initialization
@@ -65,7 +67,10 @@ public class Camera_Controller : MonoBehaviour
         }
 
         //Mouse Wheel for Y and Z motion
-        totalZoom += Time.deltaTime * zoomSpeed * Input.GetAxis("Mouse ScrollWheel");
+        if (Help.MouseOnUI == false)
+        {
+            totalZoom += Time.deltaTime * zoomSpeed * Input.GetAxis("Mouse ScrollWheel");
+        }
 
         if (totalZoom > 1)
         {
