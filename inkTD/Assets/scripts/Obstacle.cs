@@ -5,7 +5,7 @@ using helper;
 
 public class Obstacle : InkObject {
 
-	public float Price;
+	public bool Removeable;
 
 	public IntVector2 ObstacleSize;
 
