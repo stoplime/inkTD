@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288869615545966}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5000004, z: 0}
   m_LocalScale: {x: 44, y: 75, z: 44}
   m_Children:
   - {fileID: 4033022771075200}
@@ -119,7 +119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811287783857868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0013333333, z: -9.9344054e-11}
+  m_LocalPosition: {x: 0, y: 0.021333337, z: -0.0000000015895053}
   m_LocalScale: {x: 0.3181818, y: 1, z: 0.3181818}
   m_Children: []
   m_Father: {fileID: 4448827297926788}
@@ -328,6 +328,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -397,6 +411,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114219451049173396}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!135 &135143965412966628
 SphereCollider:
   m_ObjectHideFlags: 1

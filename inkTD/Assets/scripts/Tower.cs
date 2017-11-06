@@ -84,6 +84,22 @@ public class Tower : InkObject, IPointerEnterHandler, IPointerExitHandler
         set { SetTowerPosition(gridPositionX, value); }
     }
 
+    /// <summary>
+    /// Gets the height of the tower.
+    /// </summary>
+    public float Height
+    {
+        get { return towerBounds.max.y; }
+    }
+
+    /// <summary>
+    /// Gets the bounding box of the tower.
+    /// </summary>
+    public Bounds Bounds
+    {
+        get { return towerBounds; }
+    }
+
     private GameObject target = null;
     private Creature targetCreature = null;
     private MeshRenderer targetRenderer = null;
@@ -321,6 +337,7 @@ public class Tower : InkObject, IPointerEnterHandler, IPointerExitHandler
                     nearbyCreatures.RemoveAt(i);
             }
 
+            //TODO: Refactor the code below, or at least clean it up to look nicer.
             foreach (Creature c in nearbyCreatures)
             {
                 if (c.GridPosition.x > gridPositionX - rangeRounded

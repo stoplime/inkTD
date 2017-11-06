@@ -23,6 +23,7 @@ public class Initializer : MonoBehaviour {
 
         //Instantiating and setting the tower castle:
         towerCastleObject = Instantiate(Resources.Load<GameObject>("Towers/" + towerCastlePrefabName));
+        towerCastleObject.name = "Player " + (ID + 1).ToString() + "'s Tower Castle";
         PlayerManager.GetGrid(ID).TowerCastle = towerCastleObject;
 	}
 }
