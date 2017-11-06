@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using helper;
 
-public class Obstacle : MonoBehaviour {
+public class Obstacle : InkObject {
 
 	public float Price;
 
