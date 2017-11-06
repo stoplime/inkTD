@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using helper;
+using UnityEngine.EventSystems;
 
-public class Tower : InkObject
+public class Tower : InkObject, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("General Settings")]
     [Tooltip("The distance in all directions around the tower in world coordinates that can be fired upon. Example: 5")]
@@ -53,8 +54,8 @@ public class Tower : InkObject
     public bool existsInGrid = true;
 
     public static bool isSelected;
-    private Ray ray;
-    private RaycastHit hit;
+
+    public Camera towerCam;
 
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
@@ -476,12 +477,23 @@ public class Tower : InkObject
         timer.Update();
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("Pointer Enter");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Debug.Log("Pointer Exit");
+    }
+
     // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
     /// <summary>
     /// When the towers are selected, the range sould display and the tower menu should pop up.
     /// </summary>
     public void OnSelect()
     {
+        towerCam.GetComponent<TowerCamera>().MoveCamera(this);
         visualizeRadius = true;
     }
 }
