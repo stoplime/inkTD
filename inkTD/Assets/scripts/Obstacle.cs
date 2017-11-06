@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using helper;
 
 public class Obstacle : MonoBehaviour {
 
 	public float Price;
 
-	public Vector2 ObstacleSize;
+	public IntVector2 ObstacleSize;
 
 	public GameObject PlaceHolderObject;
 
@@ -15,9 +16,12 @@ public class Obstacle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		PlaceHolders = new GameObject[ObstacleSize.x, ObstacleSize.y];
-		foreach (GameObject i in PlaceHolders)
+		for (int i = 0; i < PlaceHolders.GetLength(0); i++)
 		{
-			i = PlaceHolderObject;
+			for (int j = 0; j < PlaceHolders.GetLength(1); j++)
+			{
+				PlaceHolders[i, j] = PlaceHolderObject;
+			}
 		}
 	}
 	
