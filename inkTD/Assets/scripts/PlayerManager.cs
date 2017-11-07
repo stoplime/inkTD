@@ -351,9 +351,27 @@ public static class PlayerManager
     /// <returns></returns>
     public static bool PlaceTower(int gridID, int playerID, IntVector2 gridPos, Quaternion orientation, string towerPrefab, GameObject notEnoughInkObject, string notEnoughInkText, int textLife)
     {
+        return PlaceTower(gridID, playerID, gridPos, orientation, Resources.Load("Towers/" + towerPrefab) as GameObject, notEnoughInkObject, notEnoughInkText, textLife);
+    }
+
+    /// <summary>
+    /// Places a tower of the given prefab at the given location if the position is valid, and the player with the ID of playerID has enough ink in their balance.
+    /// </summary>
+    /// <param name="gridID">The ID of the grid where the tower will be placed.</param>
+    /// <param name="playerID">The ID of the player whose ink will decrease for purchasing the tower.</param>
+    /// <param name="gridPos">The position to place the tower.</param>
+    /// <param name="orientation">The angle/rotation orientation of the tower.</param>
+    /// <param name="towerPrefab">The tower prefab that is being spawned.</param>
+    /// <param name="notEnoughInkObject">The gameobject that appears when there is not enough ink.</param>
+    /// <param name="notEnoughInkText">The text that is applied the the notEnoughInkObject.</param>
+    /// <param name="textLife">The time the notEnoughInkObject stick around for (if applicable).</param>
+    /// <returns></returns>
+    public static bool PlaceTower(int gridID, int playerID, IntVector2 gridPos, Quaternion orientation, GameObject towerPrefab, GameObject notEnoughInkObject, string notEnoughInkText, int textLife)
+    {
+        //Resources.Load("Towers/" + towerPrefab), location, orientation
         List<Creature> creatures = GetCreatures(playerID);
         Vector3 location = Grid.gridToPos(gridPos);
-        GameObject newTower = GameObject.Instantiate(Resources.Load("Towers/" + towerPrefab), location, orientation) as GameObject; //Note: we can use an empty gameobject until we've confirmed the path is not obstructed.
+        GameObject newTower = GameObject.Instantiate(towerPrefab) as GameObject; //Note: we can use an empty gameobject until we've confirmed the path is not obstructed.
         Tower ntScript = newTower.GetComponent<Tower>();
         ntScript.ownerID = playerID;
         ntScript.SetTowerPosition(gridPos);

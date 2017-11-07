@@ -72,7 +72,7 @@ public class GameLoader : MonoBehaviour
     private int snapshotLayerNumber = 0;
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
         snapshotLayerNumber = LayerMask.NameToLayer(snapshotLayer);
         
@@ -97,12 +97,16 @@ public class GameLoader : MonoBehaviour
         GameObject snapshotTower;
         Tower script;
         int prevLayer;
+
+        if (snapshotCamera == null)
+            throw new System.Exception("GameLoader script is missing a snapshot camera!");
+
         for (int i = 0; i < towerEntries.Length; i++)
         {
             if (towerEntries[i].prefab != null)
             {
                 script = towerEntries[i].prefab.GetComponent<Tower>();
-
+                
                 snapshotTower = Instantiate(towerEntries[i].prefab);
 
                 prevLayer = snapshotTower.layer;

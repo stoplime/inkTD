@@ -120,7 +120,6 @@
     <Compile Include="Assets\scripts\Tower.cs" />
     <Compile Include="Assets\scripts\TowerCamera.cs" />
     <Compile Include="Assets\scripts\Towers.cs" />
-    <Compile Include="Assets\scripts\TowerSelect.cs" />
     <Compile Include="Assets\scripts\TowerSpawner.cs" />
     <Compile Include="Assets\scripts\TowerStructure.cs" />
     <Compile Include="Assets\scripts\UI_Tracker.cs" />

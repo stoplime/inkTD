@@ -60,12 +60,16 @@ public class EnemyAI : MonoBehaviour {
     private int endIndexOffset = 1;
 
     private AIStates state = AIStates.PlacingTowers;
+    private Towers targetTower = Towers.Bomb;
+    private Tower targetTowerScript;
 
     private bool gridFull = false;
 
     private int towersInPlay = 0;
 
     private CreatureSpawner creatureSpawner;
+
+    private GameLoader gameData;
 
 	// Use this for initialization
 	void Start ()
@@ -83,7 +87,31 @@ public class EnemyAI : MonoBehaviour {
         timer1000ms.Elapsed += Timer1000ms_Elapsed;
 
         creatureSpawner = GetComponentsInParent<CreatureSpawner>()[0];
-	}
+
+        gameData = Help.GetGameLoader();
+
+        SetState(state);
+    }
+
+    /// <summary>
+    /// Sets the current tower the AI is attempted to place during its place tower phase.
+    /// </summary>
+    /// <param name="tower">The tower the AI will attempt to place</param>
+    private void SetTargetTower(Towers tower)
+    {
+        targetTower = tower;
+        targetTowerScript = gameData.GetTowerScript(tower);
+    }
+
+    private void SetState(AIStates state)
+    {
+        this.state = state;
+
+        if (state == AIStates.PlacingTowers)
+        {
+            SetTargetTower(targetTower);
+        }
+    }
 
     private void Timer1000ms_Elapsed(object sender, System.EventArgs e)
     {
@@ -94,7 +122,7 @@ public class EnemyAI : MonoBehaviour {
         {
             if (towersInPlay < 10 || PlayerManager.GetBalance(playerID) > 200)
             {
-                state = AIStates.PlacingTowers;
+                SetState(AIStates.PlacingTowers);
             }
         }
 
@@ -102,7 +130,7 @@ public class EnemyAI : MonoBehaviour {
         {
             if (PlayerManager.GetBalance(playerID) < 100 && towersInPlay >= 10)
             {
-                state = AIStates.SpawningCreatures;
+                SetState(AIStates.SpawningCreatures);
             }
         }
 
@@ -179,35 +207,35 @@ public class EnemyAI : MonoBehaviour {
                 offset++;
             }
 
-            if (PlayerManager.GetBalance(playerID) >= 10) //NOTE: Hard coded to match the archer tower's value, this is a temporary measure until we can determine if the tower we are placing is affordable.
-                endIndexOffset = offset; //TODO: Determine if the AI can afford the tower, if it can, then we do this line of code. If it cannot then we do not do this line of code.
-
-            if (possiblePositions.Count > 0)
+            //We do not try to place the tower is the AI cannot afford the tower.
+            if (PlayerManager.GetBalance(playerID) >= targetTowerScript.price)
             {
-                HPosition bestPosition = possiblePositions[0];
-                for (int i = 0; i < possiblePositions.Count; i++)
-                {
-                    if (bestPosition.value < possiblePositions[i].value)
-                        bestPosition = possiblePositions[i];
-                }
+                endIndexOffset = offset; //By setting the endIndexOffset to the offset, we are .. actually I don't know anymore.
 
-                //should probably check if we can afford the tower.
-                bool placed = PlayerManager.PlaceTower(playerID, playerID, bestPosition.position, Quaternion.identity, "Arrow/Archer_Tower", null, "", 0);
-
-                if (placed)
+                if (possiblePositions.Count > 0)
                 {
-                    towersInPlay += 1;
+                    HPosition bestPosition = possiblePositions[0];
+                    for (int i = 0; i < possiblePositions.Count; i++)
+                    {
+                        if (bestPosition.value < possiblePositions[i].value)
+                            bestPosition = possiblePositions[i];
+                    }
+
+                    //should probably check if we can afford the tower.
+                    bool placed = PlayerManager.PlaceTower(playerID, playerID, bestPosition.position, Quaternion.identity, targetTowerScript.gameObject, null, "", 0);
+
+                    if (placed)
+                    {
+                        towersInPlay += 1;
+                    }
                 }
             }
         }
         //Temporary Test: When it finishes the tower maze, it goes on to spawn creatures.
         else if (state != AIStates.SpawningCreatures)
         {
-            state = AIStates.SpawningCreatures;
+            SetState(AIStates.SpawningCreatures);
         }
-
-        //TODO: Build a table with the prefab information for towers, so that the price of a tower can be determined without instantiating a prefab. Same for creatures,
-        //so that the AI can determine if it has enough ink to purchase towers/creatures before going through the trouble of computing it.
     }
 
     // Update is called once per frame

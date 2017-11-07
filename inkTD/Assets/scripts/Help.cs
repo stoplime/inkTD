@@ -111,7 +111,7 @@ namespace helper
             if (gameLoader == null)
             {
                 //Getting the game loader:
-                gameLoader = GameObject.Find("toolstrip").GetComponent<GameLoader>();
+                gameLoader = GameObject.Find("Toolstrip").GetComponent<GameLoader>();
             }
 
             return gameLoader;
