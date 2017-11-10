@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 135657210430950004}
   - component: {fileID: 114341970952743836}
   - component: {fileID: 114888175955869086}
+  - component: {fileID: 65432881911118852}
   m_Layer: 9
   m_Name: Cannonball_Tower
   m_TagString: Tower
@@ -99,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772217654577564}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0000014959369, z: 0}
+  m_LocalPosition: {x: 15, y: 0.0000014959369, z: 18}
   m_LocalScale: {x: 12, y: 13, z: 12}
   m_Children:
   - {fileID: 4334382109451786}
@@ -185,6 +186,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772217654577564}
   m_Mesh: {fileID: 4300000, guid: f06818c85776ca143a763b0eed322706, type: 3}
+--- !u!65 &65432881911118852
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772217654577564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1957241, y: 0.32125643, z: 0.2026968}
+  m_Center: {x: 0.0014088552, y: 0.16062807, z: 0.013985465}
 --- !u!82 &82610127407559784
 AudioSource:
   m_ObjectHideFlags: 1
@@ -337,8 +350,8 @@ MonoBehaviour:
     its targets. It has has improved speed and AOE but does not have much speed compared
     to other towers at this tier.
   range: 8
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 5
+  initialGridPositionY: 6
   priorityTarget: 0
   projectileAreaRadius: 2.2
   projectileLife: 1000
@@ -350,6 +363,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114720722275168568}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!114 &114720722275168568
 MonoBehaviour:
   m_ObjectHideFlags: 1

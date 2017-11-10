@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 135100214046073164}
   - component: {fileID: 114005475382449468}
   - component: {fileID: 114715961255217252}
+  - component: {fileID: 65670313425466968}
   m_Layer: 9
   m_Name: Bomb_Tower
   m_TagString: Tower
@@ -103,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1990056703932884}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0000014959369, z: 0}
+  m_LocalPosition: {x: 18, y: 0.0000014959369, z: 18}
   m_LocalScale: {x: 55, y: 70, z: 55}
   m_Children:
   - {fileID: 4915297776498430}
@@ -216,6 +217,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1990056703932884}
   m_Mesh: {fileID: 4300000, guid: 715480d6ccbb7cf489c33c644bf4abeb, type: 3}
+--- !u!65 &65670313425466968
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1990056703932884}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04854751, y: 0.06448378, z: 0.04599999}
+  m_Center: {x: -0.001130506, y: 0.032741886, z: 0.00012267285}
 --- !u!82 &82645937145140696
 AudioSource:
   m_ObjectHideFlags: 1
@@ -368,8 +381,8 @@ MonoBehaviour:
     Its fantastic AOE can hit more targets at once than any tower before it! Indeed
     one may even say this tower is the bomb!
   range: 9
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 6
+  initialGridPositionY: 6
   priorityTarget: 0
   projectileAreaRadius: 2.65
   projectileLife: 1000
@@ -381,6 +394,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114315610146389352}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!114 &114315610146389352
 MonoBehaviour:
   m_ObjectHideFlags: 1

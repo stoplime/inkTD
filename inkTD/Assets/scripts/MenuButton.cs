@@ -54,6 +54,13 @@ public class MenuButton : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-		
-	}
+		if(type == ButtonType.Creature && PlayerManager.GetBalance(0) < cost)
+        {
+            this.GetComponent<Button>().interactable = false;
+        }
+        if (type == ButtonType.Creature && PlayerManager.GetBalance(0) >= cost)
+        {
+            this.GetComponent<Button>().interactable = true;
+        }
+    }
 }

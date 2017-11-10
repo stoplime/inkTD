@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 135531258721086744}
   - component: {fileID: 114971970710283286}
   - component: {fileID: 114864728302967686}
+  - component: {fileID: 65127384450468566}
   m_Layer: 9
   m_Name: Trebuchet_Tower
   m_TagString: Tower
@@ -86,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1774801157594910}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0000014959369, z: 0}
+  m_LocalPosition: {x: 12, y: 0.0000014959369, z: 18}
   m_LocalScale: {x: 50, y: 80, z: 50}
   m_Children:
   - {fileID: 4999336575966920}
@@ -185,6 +186,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1774801157594910}
   m_Mesh: {fileID: 4300000, guid: 9f310381c5fe8374bbfa7affc52578fa, type: 3}
+--- !u!65 &65127384450468566
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1774801157594910}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.059369754, y: 0.05040894, z: 0.059696577}
+  m_Center: {x: 0.0012398624, y: 0.02520446, z: 0.0003108573}
 --- !u!82 &82357353767244186
 AudioSource:
   m_ObjectHideFlags: 1
@@ -366,10 +379,10 @@ MonoBehaviour:
   description: This tower utilizes trebuchets in order to defeat enemies, giving it
     a large area of effect when its 90kg projectiles hit their target.
   range: 8
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 4
+  initialGridPositionY: 6
   priorityTarget: 0
-  projectileAreaRadius: 2
+  projectileAreaRadius: 1.8
   projectileLife: 1000
   projectileObject: {fileID: 1809517007167910, guid: 153ec03f1c88e3745a78a75d41dab6ed,
     type: 2}
@@ -379,6 +392,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114388699050614804}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!135 &135531258721086744
 SphereCollider:
   m_ObjectHideFlags: 1

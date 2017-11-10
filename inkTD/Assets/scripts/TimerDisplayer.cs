@@ -35,8 +35,8 @@ public class TimerDisplayer : MonoBehaviour
     private Text text; //Text for the income timer.
     private TaylorTimer timer;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         if (timerTextObject != null)
             text = timerTextObject.GetComponent<Text>();

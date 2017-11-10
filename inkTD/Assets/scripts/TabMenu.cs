@@ -124,7 +124,7 @@ public class TabMenu : MonoBehaviour
                     topBottomMenu.SetActive(false);
                 break;
             case UIAnchors.Top:
-                inwardGoal = Screen.height - topBottomRect.rect.height;
+                inwardGoal = Screen.height - topBottomRect.rect.height - 25;
                 outwardGoal = Screen.height - toolbar.rect.height;
                 leftRightOrientation = false;
 

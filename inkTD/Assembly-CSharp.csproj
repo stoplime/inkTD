@@ -66,8 +66,10 @@
      <Compile Include="Assets\scripts\InfoPanel.cs" />
      <Compile Include="Assets\scripts\Initializer.cs" />
      <Compile Include="Assets\scripts\InkObject.cs" />
+     <Compile Include="Assets\scripts\MainMenuScript.cs" />
      <Compile Include="Assets\scripts\MenuButton.cs" />
      <Compile Include="Assets\scripts\Modifier.cs" />
+     <Compile Include="Assets\scripts\Obstacle.cs" />
      <Compile Include="Assets\scripts\PathTraverser.cs" />
      <Compile Include="Assets\scripts\PathVisualizer.cs" />
      <Compile Include="Assets\scripts\PlayerManager.cs" />
@@ -79,7 +81,6 @@
      <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
      <Compile Include="Assets\scripts\Tower.cs" />
      <Compile Include="Assets\scripts\TowerCamera.cs" />
-     <Compile Include="Assets\scripts\TowerSelect.cs" />
      <Compile Include="Assets\scripts\TowerSpawner.cs" />
      <Compile Include="Assets\scripts\TowerStructure.cs" />
      <Compile Include="Assets\scripts\UI_Tracker.cs" />
@@ -91,7 +92,6 @@
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
      <None Include="Assets\Shaders\sclicer.shader" />
      <None Include="Assets\Shaders\FixedColor.shader" />
-     <None Include="Assets\WaterShader3.shader" />
      <None Include="Assets\Shaders\XZWaveTransparentShader.shader" />
      <None Include="Assets\Shaders\Texture.shader" />
      <None Include="Assets\Shaders\WindyGrass.shader" />

@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 135288819058607528}
   - component: {fileID: 114980946180083540}
   - component: {fileID: 114443377985514708}
+  - component: {fileID: 65779236543107590}
   m_Layer: 9
   m_Name: Brain_Tower
   m_TagString: Tower
@@ -73,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1902401722485748}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 21, y: 0, z: 12}
   m_LocalScale: {x: 15, y: 12, z: 15}
   m_Children:
   - {fileID: 4804572438841468}
@@ -88,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260736444261366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.008333334, z: -2.9140934e-10}
+  m_LocalPosition: {x: 0, y: 0.008333334, z: -2.9140929e-10}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4337343780046786}
@@ -185,6 +186,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1902401722485748}
   m_Mesh: {fileID: 4300000, guid: f838e2d49f237e2439f0cad8b06264ba, type: 3}
+--- !u!65 &65779236543107590
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1902401722485748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17828643, y: 0.3615265, z: 0.18997158}
+  m_Center: {x: -0.0031997284, y: 0.18076241, z: -0.0062413216}
 --- !u!82 &82190282397032144
 AudioSource:
   m_ObjectHideFlags: 1
@@ -367,8 +380,8 @@ MonoBehaviour:
     making an appearance like a brain. Indeed unlike before I can say with confidence
     this tower is big headed!
   range: 7.5
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 7
+  initialGridPositionY: 4
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -380,6 +393,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114566545430561514}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!135 &135288819058607528
 SphereCollider:
   m_ObjectHideFlags: 1

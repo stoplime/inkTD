@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 135178045805328858}
   - component: {fileID: 114403616749882300}
   - component: {fileID: 114772365069373414}
+  - component: {fileID: 65900262841643220}
   m_Layer: 9
   m_Name: Catapult_Tower
   m_TagString: Tower
@@ -73,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1563290457805312}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0000014959369, z: 0}
+  m_LocalPosition: {x: 9, y: 0.0000014959369, z: 18}
   m_LocalScale: {x: 50, y: 80, z: 50}
   m_Children:
   - {fileID: 4856007442806064}
@@ -185,6 +186,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1563290457805312}
   m_Mesh: {fileID: 4300000, guid: 2df3020eb93a3a74f8f0d189f51c8685, type: 3}
+--- !u!65 &65900262841643220
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563290457805312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.045774586, y: 0.053938117, z: 0.045422554}
+  m_Center: {x: -0.0011659503, y: 0.026969064, z: 0.00037000538}
 --- !u!82 &82847034875548840
 AudioSource:
   m_ObjectHideFlags: 1
@@ -352,8 +365,8 @@ MonoBehaviour:
   description: A tower which utilizes low speed and large area of effect (AOE). It
     is the spiritual rival of arrow towers.
   range: 7
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 3
+  initialGridPositionY: 6
   priorityTarget: 0
   projectileAreaRadius: 1
   projectileLife: 1000
@@ -365,6 +378,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114278674043045166}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!114 &114772365069373414
 MonoBehaviour:
   m_ObjectHideFlags: 1

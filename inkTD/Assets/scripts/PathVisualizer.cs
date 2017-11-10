@@ -116,8 +116,11 @@ public class PathVisualizer : MonoBehaviour {
 
         for (int i = 0; i < createdObjects.Count; i++)
         {
-            createdObjects[i].transform.position = Grid.gridToPos(new IntVector2(path[i].x, path[i].y));
-            createdObjects[i].GetComponent<MeshRenderer>().material.color = Color.Lerp(endColor, startColor, (float)i / path.Count);
+            if (createdObjects[i] != null)
+            {
+                createdObjects[i].transform.position = Grid.gridToPos(new IntVector2(path[i].x, path[i].y));
+                createdObjects[i].GetComponent<MeshRenderer>().material.color = Color.Lerp(endColor, startColor, (float)i / path.Count);
+            }
         }
         for (int i = createdObjects.Count; i < path.Count; i++)
         {

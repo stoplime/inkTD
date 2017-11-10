@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 135143965412966628}
   - component: {fileID: 114720845998176524}
   - component: {fileID: 114663398785905636}
+  - component: {fileID: 65637968965577120}
   m_Layer: 9
   m_Name: Aether_Tower
   m_TagString: Tower
@@ -103,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288869615545966}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 21, y: 0, z: 9}
   m_LocalScale: {x: 44, y: 75, z: 44}
   m_Children:
   - {fileID: 4033022771075200}
@@ -119,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811287783857868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0013333333, z: -9.9344054e-11}
+  m_LocalPosition: {x: 0, y: 0.0013333333, z: -9.934406e-11}
   m_LocalScale: {x: 0.3181818, y: 1, z: 0.3181818}
   m_Children: []
   m_Father: {fileID: 4448827297926788}
@@ -216,6 +217,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811287783857868}
   m_Mesh: {fileID: 0}
+--- !u!65 &65637968965577120
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288869615545966}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.058505937, y: 0.051221237, z: 0.06380944}
+  m_Center: {x: 0.001424058, y: 0.025610562, z: 0.0028792473}
 --- !u!82 &82383474419465514
 AudioSource:
   m_ObjectHideFlags: 1
@@ -398,8 +411,8 @@ MonoBehaviour:
     draws from that place. This tower bolsters long range and high damage ([d]) over
     speed ([s]).
   range: 14
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 7
+  initialGridPositionY: 3
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -411,6 +424,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114219451049173396}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!135 &135143965412966628
 SphereCollider:
   m_ObjectHideFlags: 1
