@@ -1,20 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Toolbar_Handler : MonoBehaviour
 {
 
     public float cameraScreenPercentage = 0.95f;
 
-    private RectTransform toolbarRectangle;
+    public RectTransform toolbarRectangle;
 
     void Awake()
     {
-        toolbarRectangle = GetComponent<RectTransform>();
+        PlayerManager.resetGrids();
+        if (toolbarRectangle != null)
+        {
+            toolbarRectangle = GetComponent<RectTransform>();
+        }
         Align();
         helper.Help.onResolutionChange += onResolutionChange;
-
         GameObject[] grids = GameObject.FindGameObjectsWithTag("Grid");
         foreach (GameObject g in grids)
         {

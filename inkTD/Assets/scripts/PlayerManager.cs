@@ -12,6 +12,8 @@ public static class PlayerManager
 
     private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose_Menu";
 
+    public static WinLoseHandler winLoseScript;
+
     /// <summary>
     /// Switches between allowing the player to spawn a tower and selecting a tower
     /// </summary>
@@ -239,11 +241,14 @@ public static class PlayerManager
             if (deadPlayers.Contains(CurrentPlayer))
             {
                 GameObject canvas = GameObject.Instantiate(Resources.Load<GameObject>(WinLoseMenuPrefabPath));
-                WinLoseHandler winLoseScript = canvas.GetComponent<WinLoseHandler>();
+                //canvas.SetActive(true);
+                winLoseScript = canvas.GetComponent<WinLoseHandler>();
+                //WinLoseHandler winLoseScript = GameObject.Find("Win/Lose Menu").GetComponent<WinLoseHandler>();
                 winLoseScript.TitleText = "You Lost!";
                 winLoseScript.TitleColor = Color.red;
-
+                //MainMenuScript.levelNum = -1;
                 //Game is lost:
+
                 if (OnGameLose != null)
                 {
                     OnGameLose(null, EventArgs.Empty);
@@ -252,9 +257,12 @@ public static class PlayerManager
             else if (deadPlayers.Count >= GridCount - 1)
             {
                 GameObject canvas = GameObject.Instantiate(Resources.Load<GameObject>(WinLoseMenuPrefabPath));
-                WinLoseHandler winLoseScript = canvas.GetComponent<WinLoseHandler>();
+                //canvas.SetActive(true);
+                winLoseScript = canvas.GetComponent<WinLoseHandler>();
+                //WinLoseHandler winLoseScript = GameObject.Find("Win/Lose Menu").GetComponent<WinLoseHandler>();
                 winLoseScript.TitleText = "You Won!";
                 winLoseScript.TitleColor = Color.green;
+                //MainMenuScript.levelNum = -1;
 
                 //Game is won:
                 if (OnGameWin != null)
@@ -297,6 +305,16 @@ public static class PlayerManager
     public static Grid GetGrid(int playerID){
 		return grids[playerID];
 	}
+
+    /// <summary>
+    /// Returns the grid associated with the given player id.
+    /// </summary>
+    /// <param name="playerID">The given player id.</param>
+    /// <returns>Returns the grid associated with the given player id.</returns>
+    public static void resetGrids()
+    {
+        grids = new Dictionary<int, Grid>();
+    }
 
     /// <summary>
     /// Sets a gameobject to the grid at the given x and y coordinates.
