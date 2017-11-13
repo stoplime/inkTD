@@ -30,9 +30,10 @@ public class TowerSpawner : MonoBehaviour {
     public static string selectedTowerPath;
 
 	/// <summary>
+	/// Static Constructor
 	/// Constructs the data structure for the Tower types and upgrades.
 	/// </summary>
-	public void InitTowerPrefabs()
+	static TowerSpawner()
 	{
 		// Root Tower Arrow Type
 		TowerData Arrow = new TowerData("Arrow");
@@ -136,7 +137,6 @@ public class TowerSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InitTowerPrefabs();
 		parentGrid = gameObject.GetComponentInParent<Grid>();
 		highlight.transform.localScale = new Vector3(Grid.gridSize, 0.1f, Grid.gridSize);
 		isPlaceable = (OwnerID == parentGrid.ID);
