@@ -57,6 +57,7 @@
      <Compile Include="Assets\scripts\CircleMeshCreator.cs" />
      <Compile Include="Assets\scripts\circles.cs" />
      <Compile Include="Assets\scripts\Creature.cs" />
+     <Compile Include="Assets\scripts\CreatureQueuer.cs" />
      <Compile Include="Assets\scripts\Creatures.cs" />
      <Compile Include="Assets\scripts\CreatureSpawner.cs" />
      <Compile Include="Assets\scripts\EnemyAI.cs" />
