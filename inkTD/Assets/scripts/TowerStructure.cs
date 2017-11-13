@@ -91,6 +91,28 @@ public class TowerNode<T> where T : TowerData
         return null;
     }
 
+    public TowerNode<T> this[Towers id]
+    {
+        get 
+        {
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (children[i].data.Id == id)
+                {
+                    return children[i];
+                }
+                else
+                {
+                    TowerNode<T> find = children[i][id];
+                    if (find != null)
+                    {
+                        return find;
+                    }
+                }
+            }
+            return null; 
+        }
+    }
     public TowerNode<T> this[T dataValue]
     {
         get 
