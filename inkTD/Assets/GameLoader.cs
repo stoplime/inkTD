@@ -45,7 +45,8 @@ public class GameLoader : MonoBehaviour
         public Creature creatureScript;
     }
 
-    [Header("Basic Settings")]
+    [Header("Basic Settings:")]
+    [Space(20)]
     [Tooltip("The camera used to take snapshots of the towers for their sprites.")]
     public Camera snapshotCamera;
 
@@ -60,7 +61,11 @@ public class GameLoader : MonoBehaviour
     [Tooltip("8, 16, or 24 pixel depth.")]
     public int snapshotDepth = 24;
 
+    [Tooltip("The sprite used in the event no sprite is available for a creature.")]
+    public Sprite defaultCreatureSprite;
+
     [Header("Prefab Entries:")]
+    [Space(20)]
     public CreatureEntry[] creatureEntries;
 
     public TowerEntry[] towerEntries;
@@ -85,6 +90,10 @@ public class GameLoader : MonoBehaviour
                 creatureData = new CreatureData();
                 creatureData.entry = creatureEntries[i];
                 creatureData.creatureScript = creatureEntries[i].prefab.GetComponent<Creature>();
+
+                if (creatureData.entry.icon == null)
+                    creatureData.entry.icon = defaultCreatureSprite;
+
                 creatures.Add(creatureEntries[i].creature, creatureData);
             }
         }
