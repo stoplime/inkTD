@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: wat2
-  m_Shader: {fileID: 4800000, guid: 278238f54c194c54085c702f0e5ac795, type: 3}
+  m_Shader: {fileID: 4800000, guid: 5f23054d19d7b4279a6198dba55e02cb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 4f0c9db69f467244699997484f039051, type: 3}
+        m_Texture: {fileID: 2800000, guid: b397156cfea714ffba479388c394f4d1, type: 3}
         m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _Cube:

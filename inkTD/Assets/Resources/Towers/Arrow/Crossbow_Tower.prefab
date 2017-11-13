@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 135879372596757310}
   - component: {fileID: 114940609350934020}
   - component: {fileID: 114692894685091286}
+  - component: {fileID: 65781989167022636}
   m_Layer: 9
   m_Name: Crossbow_Tower
   m_TagString: Tower
@@ -73,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1942671930265772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.007692308, z: -7.195441e-10}
+  m_LocalPosition: {x: 0, y: 0.0076923072, z: -3.3624145e-10}
   m_LocalScale: {x: 0.53846157, y: 1, z: 0.53846157}
   m_Children: []
   m_Father: {fileID: 4991402104500452}
@@ -99,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1004673541745306}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 12, y: 0, z: 15}
   m_LocalScale: {x: 13, y: 13, z: 13}
   m_Children:
   - {fileID: 4066609492303022}
@@ -185,6 +186,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1004673541745306}
   m_Mesh: {fileID: 4300000, guid: 834e99cb5793f4746947e7c035f2ef3b, type: 3}
+--- !u!65 &65781989167022636
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004673541745306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17819497, y: 0.3713915, z: 0.18959486}
+  m_Center: {x: 0.00008955369, y: 0.18569575, z: -0.0072189574}
 --- !u!82 &82398872788710310
 AudioSource:
   m_ObjectHideFlags: 1
@@ -366,8 +379,8 @@ MonoBehaviour:
   description: A tower with medieval crossbows at the helm. Its speed and power make
     it an opposing tower.
   range: 7
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 4
+  initialGridPositionY: 5
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 1000
@@ -379,6 +392,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114399807975503382}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!135 &135879372596757310
 SphereCollider:
   m_ObjectHideFlags: 1

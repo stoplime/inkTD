@@ -82,7 +82,8 @@ namespace helper
             get { return towerSoundEffectVolume; }
             set { towerSoundEffectVolume = value; }
         }
-        
+
+        private static GameLoader gameLoader = null;
        
         private static RectTransform blankButtonRect = null;
 
@@ -99,6 +100,21 @@ namespace helper
             {
                 onResolutionChange(null, EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        /// Gets the game loader script in the current scene.
+        /// </summary>
+        /// <returns>Returns the game laoder script in the current scene.</returns>
+        public static GameLoader GetGameLoader()
+        {
+            if (gameLoader == null)
+            {
+                //Getting the game loader:
+                gameLoader = GameObject.Find("Toolstrip").GetComponent<GameLoader>();
+            }
+
+            return gameLoader;
         }
 
         /// <summary>

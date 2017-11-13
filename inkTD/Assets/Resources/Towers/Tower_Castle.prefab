@@ -1039,6 +1039,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114420344460630748}
   existsInGrid: 0
+  towerCam: {fileID: 0}
 --- !u!135 &135815339811403946
 SphereCollider:
   m_ObjectHideFlags: 1

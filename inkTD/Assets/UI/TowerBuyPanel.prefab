@@ -311,11 +311,11 @@ MonoBehaviour:
   m_Content: {fileID: 224071566210479782}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 3
   m_Viewport: {fileID: 224557146312833002}
   m_HorizontalScrollbar: {fileID: 114537103547114106}
   m_VerticalScrollbar: {fileID: 114374543037570500}
@@ -504,7 +504,10 @@ MonoBehaviour:
   cost: 150
   damage: 20
   rateOfFire: 1
+  speed: 0
   image: {fileID: 21300000, guid: 04f89989c1cf63044bd8bd41e3c1bdca, type: 3}
+  attachedTower: {fileID: 0}
+  attachedCreature: {fileID: 0}
   type: 0
   infoPanel: {fileID: 0}
 --- !u!114 &114315784519889356
@@ -573,7 +576,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224044952594199088}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.91966677
+  m_Size: 0.60599995
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -646,7 +649,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224100826306042990}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -756,7 +759,10 @@ MonoBehaviour:
   cost: 200
   damage: 20
   rateOfFire: 1
+  speed: 0
   image: {fileID: 21300000, guid: 04f89989c1cf63044bd8bd41e3c1bdca, type: 3}
+  attachedTower: {fileID: 0}
+  attachedCreature: {fileID: 0}
   type: 0
   infoPanel: {fileID: 0}
 --- !u!114 &114652962416102272
@@ -777,7 +783,10 @@ MonoBehaviour:
   cost: 100
   damage: 10
   rateOfFire: 1
+  speed: 0
   image: {fileID: 21300000, guid: 04f89989c1cf63044bd8bd41e3c1bdca, type: 3}
+  attachedTower: {fileID: 0}
+  attachedCreature: {fileID: 0}
   type: 0
   infoPanel: {fileID: 0}
 --- !u!114 &114685147626319322
@@ -1300,8 +1309,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9, y: -44}
-  m_SizeDelta: {x: 284.2, y: 292.9}
+  m_AnchoredPosition: {x: 9, y: -12.7}
+  m_SizeDelta: {x: 356.9, y: 198.8}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224936900531911470
 RectTransform:

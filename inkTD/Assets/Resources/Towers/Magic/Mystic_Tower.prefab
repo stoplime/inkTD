@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 135733600769257894}
   - component: {fileID: 114292007791735738}
   - component: {fileID: 114561288445089130}
+  - component: {fileID: 65949382826145974}
   m_Layer: 9
   m_Name: Mystic_Tower
   m_TagString: Tower
@@ -90,8 +91,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1051511845382824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0013333333, z: -7.947525e-11}
-  m_LocalScale: {x: 0.11818182, y: 1, z: 0.11818182}
+  m_LocalPosition: {x: 0, y: 0.0013333333, z: -8.094702e-11}
+  m_LocalScale: {x: 0.12037037, y: 1, z: 0.12037037}
   m_Children: []
   m_Father: {fileID: 4846892123513656}
   m_RootOrder: 1
@@ -129,8 +130,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1868965088539644}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 55, y: 75, z: 55}
+  m_LocalPosition: {x: 12, y: 0, z: 9}
+  m_LocalScale: {x: 54, y: 75, z: 54}
   m_Children:
   - {fileID: 4789776124030090}
   - {fileID: 4607277491207882}
@@ -216,6 +217,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1051511845382824}
   m_Mesh: {fileID: 0}
+--- !u!65 &65949382826145974
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1868965088539644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05069906, y: 0.045517832, z: 0.04999463}
+  m_Center: {x: -0.00029666335, y: 0.02275891, z: 0.0010761751}
 --- !u!82 &82447230640774042
 AudioSource:
   m_ObjectHideFlags: 1
@@ -367,8 +380,8 @@ MonoBehaviour:
   description: The more powerful the magic tower, the more powerful life it can extinguish,
     and this tower is the next step in powerful magic towers!
   range: 6.5
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 4
+  initialGridPositionY: 3
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -380,6 +393,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114346372436544270}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!114 &114346372436544270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -392,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faces: 20
-  range: 0.11818182
+  range: 0.12037037
   yOffset: 0.1
   color: {r: 0, g: 1, b: 1, a: 1}
   drawViaGizmos: 0

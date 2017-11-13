@@ -53,8 +53,8 @@ public class Tower : InkObject
     public bool existsInGrid = true;
 
     public static bool isSelected;
-    private Ray ray;
-    private RaycastHit hit;
+
+    public Camera towerCam;
 
     /// <summary>
     /// Gets or sets the target this tower is aiming at.
@@ -81,6 +81,22 @@ public class Tower : InkObject
     {
         get { return gridPositionY; }
         set { SetTowerPosition(gridPositionX, value); }
+    }
+
+    /// <summary>
+    /// Gets the height of the tower.
+    /// </summary>
+    public float Height
+    {
+        get { return towerBounds.max.y; }
+    }
+
+    /// <summary>
+    /// Gets the bounding box of the tower.
+    /// </summary>
+    public Bounds Bounds
+    {
+        get { return towerBounds; }
     }
 
     private GameObject target = null;
@@ -320,6 +336,7 @@ public class Tower : InkObject
                     nearbyCreatures.RemoveAt(i);
             }
 
+            //TODO: Refactor the code below, or at least clean it up to look nicer.
             foreach (Creature c in nearbyCreatures)
             {
                 if (c.GridPosition.x > gridPositionX - rangeRounded
@@ -476,12 +493,12 @@ public class Tower : InkObject
         timer.Update();
     }
 
-    // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
     /// <summary>
     /// When the towers are selected, the range sould display and the tower menu should pop up.
     /// </summary>
-    public void OnSelect()
+    public override void OnSelect()
     {
-        visualizeRadius = true;
+        // towerCam.GetComponent<TowerCamera>().MoveCamera(this);
+        // visualizeRadius = true;
     }
 }

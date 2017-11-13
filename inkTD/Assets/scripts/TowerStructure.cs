@@ -7,6 +7,12 @@ using UnityEngine;
 /// </summary>
 public class TowerData
 {
+    private Towers id;
+    public Towers Id
+    {
+        get { return id;}
+        set { id = value;}
+    }
     private string path;
     public string Path
     {
@@ -17,6 +23,12 @@ public class TowerData
     public TowerData(string path)
     {
         this.path = path;
+        this.id = Towers.Root;
+    }
+    public TowerData(string path, Towers id)
+    {
+        this.path = path;
+        this.id = id;
     }
 
     private static bool calculateEquals(TowerData obj1, TowerData obj2)
@@ -79,6 +91,28 @@ public class TowerNode<T> where T : TowerData
         return null;
     }
 
+    public TowerNode<T> this[Towers id]
+    {
+        get 
+        {
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (children[i].data.Id == id)
+                {
+                    return children[i];
+                }
+                else
+                {
+                    TowerNode<T> find = children[i][id];
+                    if (find != null)
+                    {
+                        return find;
+                    }
+                }
+            }
+            return null; 
+        }
+    }
     public TowerNode<T> this[T dataValue]
     {
         get 

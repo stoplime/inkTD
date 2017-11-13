@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using helper;
 
-public class InkObject : MonoBehaviour
+public class InkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [Tooltip("The name of the creature.")]
     public string objName;
@@ -179,5 +180,32 @@ public class InkObject : MonoBehaviour
     protected virtual void OnOwnerChange()
     {
 
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Debug.Log("Pointer Enter");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Debug.Log("Pointer Exit");
+    }
+
+    // Towers need a non-onTrigger collider for the events to work
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        // Select code here
+        Debug.Log(this.gameObject.name + " Was Clicked.");
+    }
+
+    // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
+    /// <summary>
+    /// When the towers are selected, the range sould display and the tower menu should pop up.
+    /// </summary>
+    public virtual void OnSelect()
+    {
+        // towerCam.GetComponent<TowerCamera>().MoveCamera(this);
+        // visualizeRadius = true;
     }
 }

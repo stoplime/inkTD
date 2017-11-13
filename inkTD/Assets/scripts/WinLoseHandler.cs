@@ -32,13 +32,14 @@ public class WinLoseHandler : MonoBehaviour
         }
     }
 
-    private Text titleText;
+    public Text titleText;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
+        
         FindTitleText();
-	}
+    }
 
     private void FindTitleText()
     {
@@ -48,10 +49,8 @@ public class WinLoseHandler : MonoBehaviour
         }
     }
 
-	
-	// Update is called once per frame
-	//void Update ()
- //   {
-		
-	//}
+    public void EnableMenu()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
 }

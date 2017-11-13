@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 135107605418228332}
   - component: {fileID: 114728443789202782}
   - component: {fileID: 114237318531108492}
+  - component: {fileID: 65614980197021380}
   m_Layer: 9
   m_Name: Mana_Tower
   m_TagString: Tower
@@ -116,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988751567310180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0013333333, z: -9.9344054e-11}
+  m_LocalPosition: {x: 0, y: 0.0013333333, z: -9.934406e-11}
   m_LocalScale: {x: 0.27272728, y: 1, z: 0.27272728}
   m_Children: []
   m_Father: {fileID: 4905512439560420}
@@ -129,7 +130,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138235627301146}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 18, y: 0, z: 9}
   m_LocalScale: {x: 44, y: 75, z: 44}
   m_Children:
   - {fileID: 4288371693253784}
@@ -216,6 +217,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138235627301146}
   m_Mesh: {fileID: 4300000, guid: 33695956907e7714193ee5bfced49834, type: 3}
+--- !u!65 &65614980197021380
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138235627301146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.056532092, y: 0.050116275, z: 0.059837244}
+  m_Center: {x: -0.0018631275, y: 0.025058175, z: 0.0018346148}
 --- !u!82 &82677942358333984
 AudioSource:
   m_ObjectHideFlags: 1
@@ -398,8 +411,8 @@ MonoBehaviour:
     The mana tower utilizes longer ranged attacks than its predecessors, but its speed
     suffers  shooting at only [s] times per minute.
   range: 12
-  initialGridPositionX: 0
-  initialGridPositionY: 0
+  initialGridPositionX: 6
+  initialGridPositionY: 3
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -411,6 +424,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114214421561894522}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!135 &135107605418228332
 SphereCollider:
   m_ObjectHideFlags: 1

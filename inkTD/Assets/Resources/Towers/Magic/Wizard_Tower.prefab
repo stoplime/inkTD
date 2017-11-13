@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 135582720488234498}
   - component: {fileID: 114654106572630768}
   - component: {fileID: 114771703797023534}
+  - component: {fileID: 65868942176120440}
   m_Layer: 9
   m_Name: Wizard_Tower
   m_TagString: Tower
@@ -216,6 +217,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891192075045668}
   m_Mesh: {fileID: 0}
+--- !u!65 &65868942176120440
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1747824625071908}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.053080678, y: 0.055432428, z: 0.054789416}
+  m_Center: {x: -0.0006266941, y: 0.027216217, z: 0.00008074804}
 --- !u!82 &82303320747160614
 AudioSource:
   m_ObjectHideFlags: 1
@@ -381,6 +394,7 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizer: {fileID: 114822597129160218}
   existsInGrid: 1
+  towerCam: {fileID: 0}
 --- !u!114 &114771703797023534
 MonoBehaviour:
   m_ObjectHideFlags: 1
