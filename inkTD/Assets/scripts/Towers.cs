@@ -1,5 +1,6 @@
 ﻿public enum Towers
 {
+    Root = -1,
     Archer = 0,
     Crossbow = 1,
     Musket = 2,
