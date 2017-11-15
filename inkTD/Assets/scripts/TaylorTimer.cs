@@ -26,12 +26,20 @@ public class TaylorTimer
     }
 
     /// <summary>
-    /// Gets or sets the time between event calls, this is in milliseconds.
+    /// Gets or sets the time between event calls, this is in seconds.
     /// </summary>
     public double TargetTime
     {
         get { return targetTime; }
-        set { targetTime = value / 1000; }
+        set { targetTime = value; }
+    }
+
+    /// <summary>
+    /// Gets the time between event calls, this is in milliseconds.
+    /// </summary>
+    public double TargetTimeMilliseconds
+    {
+        get { return targetTime * 1000d; }
     }
 
     /// <summary>

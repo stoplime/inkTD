@@ -12,7 +12,7 @@ public class Toolbar_Handler : MonoBehaviour
 
     void Awake()
     {
-        PlayerManager.resetGrids();
+        PlayerManager.ResetManager();
         if (toolbarRectangle != null)
         {
             toolbarRectangle = GetComponent<RectTransform>();
