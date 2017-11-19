@@ -174,6 +174,11 @@ public class InkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         return names;
     }
 
+    protected float GetTerrainHeight()
+    {
+        return Terrain.activeTerrain.SampleHeight(transform.position);
+    }
+
     /// <summary>
     /// A method that runs when the owner of the ink object changes.
     /// </summary>

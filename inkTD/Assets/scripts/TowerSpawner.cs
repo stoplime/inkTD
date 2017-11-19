@@ -107,7 +107,7 @@ public class TowerSpawner : MonoBehaviour {
 					IntVector2 gridPos = Grid.posToGrid(hit.point);
 					if (parentGrid.inArena(gridPos) && parentGrid.isGridEmpty(gridPos)){
 						Vector3 target = Grid.gridToPos(gridPos);
-						target.y = 0.1f;
+						target.y += 0.1f;
 						if(existingHighlight == null){
 							existingHighlight = Instantiate(highlight, target, hit.collider.transform.rotation);
 						}else{

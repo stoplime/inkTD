@@ -50,8 +50,8 @@ public class Grid : MonoBehaviour {
     /// <returns></returns>
     public static Vector3 gridToPos(IntVector2 input)
     {
-        return new Vector3(input.x * gridSize, 0,
-                        input.y * gridSize);
+        Vector3 pos = new Vector3(input.x * gridSize, 0, input.y * gridSize);
+        return new Vector3(pos.x, Terrain.activeTerrain.SampleHeight(pos), pos.z);
     }
 
     /// <summary>
