@@ -87,7 +87,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameLoader.cs" />
     <Compile Include="Assets\scripts\BezierVisualizer.cs" />
     <Compile Include="Assets\scripts\Camera_Controller.cs" />
     <Compile Include="Assets\scripts\CircleMeshCreator.cs" />
@@ -95,10 +94,12 @@
     <Compile Include="Assets\scripts\Creature.cs" />
     <Compile Include="Assets\scripts\CreatureQueuer.cs" />
     <Compile Include="Assets\scripts\Creatures.cs" />
+    <Compile Include="Assets\scripts\CreatureSpawnButton.cs" />
     <Compile Include="Assets\scripts\CreatureSpawner.cs" />
     <Compile Include="Assets\scripts\EnemyAI.cs" />
     <Compile Include="Assets\scripts\Event_Checker.cs" />
     <Compile Include="Assets\scripts\EventArguments.cs" />
+    <Compile Include="Assets\scripts\GameLoader.cs" />
     <Compile Include="Assets\scripts\Grid.cs" />
     <Compile Include="Assets\scripts\GridVisualizer.cs" />
     <Compile Include="Assets\scripts\Help.cs" />

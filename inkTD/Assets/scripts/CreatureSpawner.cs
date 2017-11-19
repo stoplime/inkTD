@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using helper;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,7 +37,8 @@ public class CreatureSpawner : MonoBehaviour {
 		creatures.Add("Banshee_Creature");
 		creatures.Add("Griffon_Creature");
 		creatures.Add("Beholder_Creature");
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

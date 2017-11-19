@@ -10,6 +10,11 @@ using UnityEngine;
 public static class PlayerManager
 {
 
+    /// <summary>
+    /// The default time a player must wait before a creature can be spawned.
+    /// </summary>
+    public const float DefaultCreatureSpawnTime = 333f;
+
     private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose_Menu";
 
     public static WinLoseHandler winLoseScript;
@@ -49,6 +54,14 @@ public static class PlayerManager
     /// </summary>
     private static Dictionary<int, List<Creature> > creatures = new Dictionary<int, List<Creature> >();
 
+    /// <summary>
+    /// A dictionary filled with the time a player must wait (in milliseconds) before one of their creatures can be spawned.
+    /// </summary>
+    private static Dictionary<int, float> creatureSpawnTime = new Dictionary<int, float>();
+
+    /// <summary>
+    /// A list of currently dead players.
+    /// </summary>
     private static List<int> deadPlayers = new List<int>();
 
     /// <summary>
@@ -189,17 +202,19 @@ public static class PlayerManager
     /// </summary>
     /// <param name="playerID">The given player id.</param>
     /// <param name="grid">The grid to associate with the given player id.</param>
-	public static void AddGrid(int playerID, Grid grid){
+	public static void AddGrid(int playerID, Grid grid)
+    {
 		grids.Add(playerID, grid);
         creatures[playerID] = new List<Creature>(30);
         balance[playerID] = 0;
         income[playerID] = 50;
+        creatureSpawnTime[playerID] = DefaultCreatureSpawnTime;
 
         grid.OnGridChange += Grid_OnGridChange;
 	}
 
     /// <summary>
-    /// Gets the number of creatures
+    /// Gets the number of grids in the game.
     /// </summary>
     /// <returns></returns>
     public static int GetGridCount()
@@ -226,6 +241,26 @@ public static class PlayerManager
         {
             bestPaths[e.PlayerID] = Help.GetGridPath(e.PlayerID, grid.StartPosition, grid.EndPosition);
         }
+    }
+
+    /// <summary>
+    /// Gets the time a player must wait before their creature can be spawned.
+    /// </summary>
+    /// <param name="playerID">The ID of the player whose wait time will be returned.</param>
+    /// <returns></returns>
+    public static float GetCreatureSpawnTime(int playerID)
+    {
+        return creatureSpawnTime[playerID];
+    }
+
+    /// <summary>
+    /// Sets the time (in milliseconds) a player must wait before their creature can be spawned.
+    /// </summary>
+    /// <param name="playerID">The ID of the player whose wait time is being modified.</param>
+    /// <param name="timeInMilliseconds">The time in milliseconds the wait time will be set to.</param>
+    public static void SetCreatureSpawnTime(int playerID, float timeInMilliseconds)
+    {
+        creatureSpawnTime[playerID] = timeInMilliseconds;
     }
 
     /// <summary>
@@ -302,7 +337,8 @@ public static class PlayerManager
     /// </summary>
     /// <param name="playerID">The given player id.</param>
     /// <returns>Returns the grid associated with the given player id.</returns>
-    public static Grid GetGrid(int playerID){
+    public static Grid GetGrid(int playerID)
+    {
 		return grids[playerID];
 	}
 
@@ -311,9 +347,15 @@ public static class PlayerManager
     /// </summary>
     /// <param name="playerID">The given player id.</param>
     /// <returns>Returns the grid associated with the given player id.</returns>
-    public static void resetGrids()
+    public static void ResetManager()
     {
-        grids = new Dictionary<int, Grid>();
+        grids.Clear();
+        deadPlayers.Clear();
+        balance.Clear();
+        income.Clear();
+        bestPaths.Clear();
+
+        //TODO: Empty the other dictionaries and lists...
     }
 
     /// <summary>
@@ -456,7 +498,6 @@ public static class PlayerManager
     /// </summary>
     /// <param name="playerID">The ID of the player spawning this creautre.</param>
     /// <param name="creaturePrefab">The name of the creature that will be spawned.</param>
-    /// <param name="spawner"></param>
     /// <returns></returns>
     public static bool CreateCreature(int playerID, string creaturePrefab)
     {
@@ -466,6 +507,41 @@ public static class PlayerManager
 		{
 			PlayerManager.AddBalance(playerID, -clone.price);
 		}
+        else
+        {
+            return false;
+        }
+        GameObject creature;
+        AddIncome(playerID, clone.inkcomeValue);
+        foreach (KeyValuePair<int, List<Creature>> v in creatures)
+        {
+            if (playerID != v.Key && !grids[v.Key].TowerCastleDead)
+            {
+                creature = MonoBehaviour.Instantiate(prefab) as GameObject;
+                clone = creature.GetComponent<Creature>();
+                clone.gridID = v.Key;
+                clone.ownerID = playerID;
+                AddCreature(playerID, v.Key, clone);
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Creates a creature at every grid except the one that is spawning the creatures. Returns true if the creature was succesfully created, false otherwise.
+    /// </summary>
+    /// <param name="playerID">The ID of the player spawning this creautre.</param>
+    /// <param name="creatureToCreate">The creature that will be created.</param>
+    /// <returns></returns>
+    public static bool CreateCreature(int playerID, Creatures creatureToCreate)
+    {
+        GameLoader info = Help.GetGameLoader();
+        GameObject prefab = info.GetCreaturePrefab(creatureToCreate);
+        Creature clone = info.GetCreatureScript(creatureToCreate);
+        if (PlayerManager.GetBalance(playerID) >= clone.price)
+        {
+            PlayerManager.AddBalance(playerID, -clone.price);
+        }
         else
         {
             return false;
