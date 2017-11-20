@@ -178,6 +178,7 @@ public class Creature : InkObject
 		transform.LookAt(lookAtTarget);
 		transform.position = animatePos+pos+OffsetTranslation;
 		transform.rotation *= Quaternion.Euler(OffsetRotation);
+		// transform.position += new Vector3(0, GetTerrainHeight(), 0);
 	}
 
 	/// <summary>
