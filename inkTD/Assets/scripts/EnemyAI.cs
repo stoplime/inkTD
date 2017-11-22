@@ -77,15 +77,6 @@ public class EnemyAI : MonoBehaviour {
         currentGrid = PlayerManager.GetGrid(playerID);
         creatures = PlayerManager.GetCreatures(playerID);
 
-        timer100ms = new TaylorTimer(100);
-        timer100ms.Elapsed += Timer100ms_Elapsed;
-
-        timer500ms = new TaylorTimer(500);
-        timer500ms.Elapsed += Timer500ms_Elapsed;
-
-        timer1000ms = new TaylorTimer(1000);
-        timer1000ms.Elapsed += Timer1000ms_Elapsed;
-
         creatureSpawner = GetComponentsInParent<CreatureSpawner>()[0];
 
         gameData = Help.GetGameLoader();
@@ -113,50 +104,13 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
-    private void Timer1000ms_Elapsed(object sender, System.EventArgs e)
-    {
-        //1 second update 'ticks'
-
-        //Basic flip/flop between tower spawning and creature creating.
-        if (!gridFull && state != AIStates.PlacingTowers)
-        {
-            if (towersInPlay < 10 || PlayerManager.GetBalance(playerID) > 200)
-            {
-                SetState(AIStates.PlacingTowers);
-            }
-        }
-
-        if (state != AIStates.SpawningCreatures)
-        {
-            if (PlayerManager.GetBalance(playerID) < 100 && towersInPlay >= 10)
-            {
-                SetState(AIStates.SpawningCreatures);
-            }
-        }
-
-        ComputeCreatureSpawn();
-    }
-
-    private void Timer500ms_Elapsed(object sender, System.EventArgs e)
-    {
-        //500 millisecond update 'ticks'
-
-    }
-
-    private void Timer100ms_Elapsed(object sender, System.EventArgs e)
-    {
-        //100 millisecond update 'ticks'
-
-        ComputeTowerPlacement();
-    }
-
     private void ComputeCreatureSpawn()
     {
         if (state != AIStates.SpawningCreatures)
             return;
 
         // PlayerManager.CreateCreature(playerID, "Creature_Stickman", gameObject);
-        creatureSpawner.OnClick(playerID);
+        creatureSpawner.OnClick(playerID, Creatures.Stickfigure);
     }
 
     private void ComputeTowerPlacement()
