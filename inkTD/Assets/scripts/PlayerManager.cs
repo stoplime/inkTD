@@ -15,6 +15,8 @@ public static class PlayerManager
     /// </summary>
     public const float DefaultCreatureSpawnTime = 333f;
 
+    public const float DefaultIncome = 50f;
+
     private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose_Menu";
 
     public static WinLoseHandler winLoseScript;
@@ -207,7 +209,7 @@ public static class PlayerManager
 		grids.Add(playerID, grid);
         creatures[playerID] = new List<Creature>(30);
         balance[playerID] = 0;
-        income[playerID] = 50;
+        income[playerID] = DefaultIncome;
         creatureSpawnTime[playerID] = DefaultCreatureSpawnTime;
 
         grid.OnGridChange += Grid_OnGridChange;
@@ -421,6 +423,23 @@ public static class PlayerManager
     /// <param name="playerID">The ID of the player whose ink will decrease for purchasing the tower.</param>
     /// <param name="gridPos">The position to place the tower.</param>
     /// <param name="orientation">The angle/rotation orientation of the tower.</param>
+    /// <param name="towerPrefab">The name of the tower prefab.</param>
+    /// <param name="notEnoughInkObject">The gameobject that appears when there is not enough ink.</param>
+    /// <param name="notEnoughInkText">The text that is applied the the notEnoughInkObject.</param>
+    /// <param name="textLife">The time the notEnoughInkObject stick around for (if applicable).</param>
+    /// <returns></returns>
+    public static bool PlaceTower(int gridID, int playerID, IntVector2 gridPos, Quaternion orientation, Towers tower, GameObject notEnoughInkObject, string notEnoughInkText, int textLife)
+    {
+        return PlaceTower(gridID, playerID, gridPos, orientation, Help.GetGameLoader().GetTowerPrefab(tower), notEnoughInkObject, notEnoughInkText, textLife);
+    }
+
+    /// <summary>
+    /// Places a tower of the given prefab at the given location if the position is valid, and the player with the ID of playerID has enough ink in their balance.
+    /// </summary>
+    /// <param name="gridID">The ID of the grid where the tower will be placed.</param>
+    /// <param name="playerID">The ID of the player whose ink will decrease for purchasing the tower.</param>
+    /// <param name="gridPos">The position to place the tower.</param>
+    /// <param name="orientation">The angle/rotation orientation of the tower.</param>
     /// <param name="towerPrefab">The tower prefab that is being spawned.</param>
     /// <param name="notEnoughInkObject">The gameobject that appears when there is not enough ink.</param>
     /// <param name="notEnoughInkText">The text that is applied the the notEnoughInkObject.</param>
@@ -533,19 +552,24 @@ public static class PlayerManager
     /// <param name="playerID">The ID of the player spawning this creautre.</param>
     /// <param name="creatureToCreate">The creature that will be created.</param>
     /// <returns></returns>
-    public static bool CreateCreature(int playerID, Creatures creatureToCreate)
+    public static bool CreateCreature(int playerID, Creatures creatureToCreate, bool changeBalance)
     {
         GameLoader info = Help.GetGameLoader();
         GameObject prefab = info.GetCreaturePrefab(creatureToCreate);
         Creature clone = info.GetCreatureScript(creatureToCreate);
-        if (PlayerManager.GetBalance(playerID) >= clone.price)
+
+        if (changeBalance)
         {
-            PlayerManager.AddBalance(playerID, -clone.price);
+            if (PlayerManager.GetBalance(playerID) >= clone.price)
+            {
+                PlayerManager.AddBalance(playerID, -clone.price);
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
-        {
-            return false;
-        }
+
         GameObject creature;
         AddIncome(playerID, clone.inkcomeValue);
         foreach (KeyValuePair<int, List<Creature>> v in creatures)

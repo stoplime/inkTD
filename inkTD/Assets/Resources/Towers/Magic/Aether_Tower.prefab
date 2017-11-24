@@ -410,6 +410,7 @@ MonoBehaviour:
   description: The aether is a mysterious place with mysterious power, and this tower
     draws from that place. This tower bolsters long range and high damage ([d]) over
     speed ([s]).
+  towerType: 26
   range: 14
   initialGridPositionX: 7
   initialGridPositionY: 3

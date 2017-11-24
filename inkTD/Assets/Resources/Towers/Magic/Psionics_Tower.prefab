@@ -349,6 +349,7 @@ MonoBehaviour:
   description: A tower which attacks the mind through its projectiles, strange indeed
     but deadly nonetheless. It boasts a large spherical head, huh, not sure what to
     say about that strange addition to the tower.
+  towerType: 22
   range: 7
   initialGridPositionX: 6
   initialGridPositionY: 4

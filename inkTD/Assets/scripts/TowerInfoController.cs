@@ -38,7 +38,7 @@ public class TowerInfoController : MonoBehaviour
         builder = new StringBuilder();
         builder.AppendLine(script.maxHealth.ToString() + "HP");
         builder.AppendLine(script.range.ToString() + " Range");
-        builder.AppendLine(script.speed.ToString() + " Projectiles/Sec");
+        builder.AppendLine(script.speed.ToString() + " Projectiles/Minute");
         builder.AppendLine(script.damage.ToString() + " Damage");
         builder.AppendLine("$" + script.price.ToString());
 

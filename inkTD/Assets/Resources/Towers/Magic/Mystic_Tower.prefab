@@ -379,6 +379,7 @@ MonoBehaviour:
   ownerID: 0
   description: The more powerful the magic tower, the more powerful life it can extinguish,
     and this tower is the next step in powerful magic towers!
+  towerType: 20
   range: 6.5
   initialGridPositionX: 4
   initialGridPositionY: 3

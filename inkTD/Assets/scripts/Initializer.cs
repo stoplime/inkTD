@@ -17,13 +17,16 @@ public class Initializer : MonoBehaviour {
 
 	void Awake ()
     {
-		PlayerManager.SetBalance(ID, StartInk);
-		PlayerManager.SetIncome(ID, StartInkcome);
-
         //Instantiating and setting the tower castle:
         towerCastleObject = Instantiate(Resources.Load<GameObject>("Towers/" + towerCastlePrefabName));
         towerCastleObject.name = "Player " + (ID + 1).ToString() + "'s Tower Castle";
-        PlayerManager.GetGrid(ID).TowerCastle = towerCastleObject;
-        Debug.Log("ID: "+ID);
+        GetComponent<Grid>().TowerCastle = towerCastleObject;
+        //Debug.Log("ID: "+ID);
 	}
+
+    void Start()
+    {
+        PlayerManager.SetBalance(ID, StartInk);
+        PlayerManager.SetIncome(ID, StartInkcome);
+    }
 }

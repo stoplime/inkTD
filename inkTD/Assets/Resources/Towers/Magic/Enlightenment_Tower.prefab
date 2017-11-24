@@ -379,6 +379,7 @@ MonoBehaviour:
   ownerID: 0
   description: Behold! This tower is enlightened by its own intelligence! Truly a
     magnanimous and powerful tower which inspires awe in its victims!
+  towerType: 24
   range: 7.5
   initialGridPositionX: 8
   initialGridPositionY: 4

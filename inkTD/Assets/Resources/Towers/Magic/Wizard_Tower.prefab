@@ -380,6 +380,7 @@ MonoBehaviour:
   description: A tower which gets its strength from incredibly powerful wizards who
     have practiced their entire lives in the realm of magic. This is a top tier powerhouse
     of a magic tower!
+  towerType: 27
   range: 15
   initialGridPositionX: 0
   initialGridPositionY: 0

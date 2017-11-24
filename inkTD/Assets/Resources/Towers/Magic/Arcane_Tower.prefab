@@ -409,6 +409,7 @@ MonoBehaviour:
   ownerID: 0
   description: Wow! What's that? Just [p] ink? Amazing! This cheap and powerful tower
     can be YOURS for just a single payment of [p] ink! Get it today!
+  towerType: 21
   range: 7
   initialGridPositionX: 5
   initialGridPositionY: 3

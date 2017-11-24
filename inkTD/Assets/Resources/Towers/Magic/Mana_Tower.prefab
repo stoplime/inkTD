@@ -410,6 +410,7 @@ MonoBehaviour:
   description: A tower adept at concentrating magical energies to strike enemies down.
     The mana tower utilizes longer ranged attacks than its predecessors, but its speed
     suffers  shooting at only [s] times per minute.
+  towerType: 25
   range: 12
   initialGridPositionX: 6
   initialGridPositionY: 3

@@ -59,7 +59,7 @@ public class CreatureQueuer : MonoBehaviour
 
             queueProgressBar.sizeDelta = new Vector2(0, queueProgressBar.sizeDelta.y);
 
-            PlayerManager.CreateCreature(playerID, buttons.First.Value.CreatureBeingSpawned);
+            PlayerManager.CreateCreature(playerID, buttons.First.Value.CreatureBeingSpawned, false);
             DequeueTop();
         }
     }

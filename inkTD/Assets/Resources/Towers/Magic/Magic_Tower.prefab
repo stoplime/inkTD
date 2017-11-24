@@ -395,6 +395,7 @@ MonoBehaviour:
   ownerID: 0
   description: A tower composed partially of magical energy. The base of powerful
     magical towers.
+  towerType: 19
   range: 6
   initialGridPositionX: 3
   initialGridPositionY: 3

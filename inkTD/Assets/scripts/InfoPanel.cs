@@ -1,4 +1,5 @@
-﻿using System;
+﻿using helper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,49 +18,47 @@ public class InfoPanel : MonoBehaviour
     public Text modifiersText;
     public Text speedText;
     public Button buyButton;
-    private string towerPath;
     public Camera towerCam;
+
+    [Tooltip("THe script used to spawn towers in this scene.")]
+    public TowerSpawner towerSpawner;
 
 
     public string objName, description;
     public string[] modifiers;
     public float cost, health, rateOfFire, damage, range, speed;
 
+    private GameLoader info;
+
+    private CreatureQueuer creatureQueue;
+    private Creatures creature;
+    private Towers tower;
+    private PurchaseType purchaseType;
+
     void Start ()
     {
         ClearMenu();
+        info = Help.GetGameLoader();
+        creatureQueue = GameObject.FindGameObjectWithTag("Toolbar").GetComponent<CreatureQueuer>();
 	}
 
-    /// <summary>
-    /// A method used to recieve the tower information from a button clicked in the buy menu
-    /// </summary>
-    /// <param name="towerName"></param>
-    /// <param name="description"></param>
-    /// <param name="cost"></param>
-    /// <param name="damage"></param>
-    /// <param name="range"></param>
-    /// <param name="image"></param>
-    public void RecieveTowerInfo(string towerName, string description, float cost, float damage, float range, Sprite image, string towerPath)
+    public void RecieveTowerInfo(Towers tower)
     {
-        objName = towerName;
-        this.description = description;
-        this.cost = cost;
-        this.damage = damage;
-        this.rateOfFire = range;
-        //this.image.overrideSprite = image;
-        TowerSpawner.selectedTowerPath = towerPath;
-    }
+        this.tower = tower;
+        Tower towerScript = info.GetTowerScript(tower);
+        objName = towerScript.objName;
+        description = towerScript.description;
+        cost = towerScript.price;
+        damage = towerScript.damage;
+        range = towerScript.range;
+        image.sprite = info.GetTowerSprite(tower);
+        purchaseType = PurchaseType.Tower;
+        towerSpawner.SetSelectedTower(tower);
 
-    public void RecieveTowerInfo(Tower i, string towerPath)
-    {
-        objName = i.objName;
-        this.description = i.description;
-        this.cost = i.price;
-        this.damage = i.damage;
-        this.range = i.range;
+        ApplyText();
         //this.image.overrideSprite = image;
-        TowerSpawner.selectedTowerPath = towerPath;
-        towerCam.GetComponent<TowerCamera>().MoveCamera(i);
+        //TowerSpawner.selectedTowerPath = towerPath;
+        //towerCam.GetComponent<TowerCamera>().MoveCamera(i);
     }
 
     /// <summary>
@@ -71,16 +70,20 @@ public class InfoPanel : MonoBehaviour
     /// <param name="cost"></param>
     /// <param name="damage"></param>
     /// <param name="image"></param>
-    public void RecieveCreatureInfo(string creatureName, string description, float health, float cost, float damage, float speed, string path, Sprite image)
+    public void RecieveCreatureInfo(Creatures creature)
     {
-        objName = creatureName;
-        this.description = description;
-        this.health = health;
-        this.cost = cost;
-        this.damage = damage;
-        this.speed = speed;
-        this.image.overrideSprite = image;
-        CreatureSpawner.path = path;
+        this.creature = creature;
+        Creature creatureScript = info.GetCreatureScript(creature);
+        objName = creatureScript.objName;
+        description = creatureScript.description;
+        health = creatureScript.health;
+        cost = creatureScript.price;
+        damage = creatureScript.damage;
+        speed = creatureScript.damage;
+        image.overrideSprite = info.GetCreatureSprite(creature);
+        purchaseType = PurchaseType.Creature;
+
+        ApplyText();
     }
 
     /// <summary>
@@ -89,9 +92,48 @@ public class InfoPanel : MonoBehaviour
     /// <param name="modName"></param>
     /// <param name="description"></param>
     /// <param name="cost"></param>
-    public static void RecieveModifierInfo(string modName, string description, float cost)
+    public void RecieveModifierInfo(string modName, string description, float cost)
     {
 
+    }
+
+    public void OnBuyClick()
+    {
+        if (purchaseType == PurchaseType.Creature)
+        {
+            if (PlayerManager.GetBalance(0) >= cost)
+            {
+                creatureQueue.AddButton(creature);
+                PlayerManager.AddBalance(0, -cost);
+            }
+        }
+        else if (purchaseType == PurchaseType.Tower)
+        {
+
+        }
+    }
+
+    private void ApplyText()
+    {
+        nameText.text = objName;
+        descriptionText.text = description;
+        costText.text = "Cost: " + Convert.ToString(cost);
+        damageText.text = "Damage: " + Convert.ToString(damage);
+
+        if (rangeText != null)
+        {
+            rangeText.text = "Range: " + Convert.ToString(range);
+        }
+
+        if (healthText != null)
+        {
+            healthText.text = "Health: " + Convert.ToString(health);
+        }
+
+        if (speedText != null)
+        {
+            speedText.text = "Speed: " + Convert.ToString(speed);
+        }
     }
 
     /// <summary>
@@ -124,25 +166,7 @@ public class InfoPanel : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        nameText.text = objName;
-        descriptionText.text = description;
-        costText.text = "Cost: " + Convert.ToString(cost);
-        damageText.text = "Damage: " + Convert.ToString(damage);
-
-        if (rangeText != null)
-        {
-            rangeText.text = "Range: " + Convert.ToString(range);
-        }
-
-        if (healthText != null)
-        {
-            healthText.text = "Health: " + Convert.ToString(health);
-        }
-
-        if (speedText != null)
-        {
-            speedText.text = "Speed: " + Convert.ToString(speed);
-        }
+        
 
         
     }

@@ -377,6 +377,7 @@ MonoBehaviour:
   price: 10
   ownerID: 0
   description: A fast firing tower that is the staple of all great tower mazes.
+  towerType: 0
   range: 7
   initialGridPositionX: 3
   initialGridPositionY: 5
