@@ -34,6 +34,7 @@ public class GameLoader : MonoBehaviour
         public Towers tower;
         public Sprite towerSnapShot;
         public Tower towerScript;
+        //TODO: Add the upgrade path here
     }
 
     /// <summary>
@@ -44,6 +45,15 @@ public class GameLoader : MonoBehaviour
         public CreatureEntry entry;
         public Creature creatureScript;
     }
+
+    [Header("Scene-Specific Info:")]
+    [Space(20)]
+    public GameObject leftRightUpgradeMenuContent;
+    public GameObject upDownUpgradeMenuContent;
+    public TowerInfoController towerControllerCurrentLeftRight;
+    public TowerInfoController towerControllerCurrentUpDown;
+
+    public GameObject towerTabButton;
 
     [Header("Basic Settings:")]
     [Space(20)]
@@ -115,13 +125,14 @@ public class GameLoader : MonoBehaviour
             if (towerEntries[i].prefab != null)
             {
                 script = towerEntries[i].prefab.GetComponent<Tower>();
-                
+                script.towerType = towerEntries[i].tower;
+
                 snapshotTower = Instantiate(towerEntries[i].prefab);
 
                 prevLayer = snapshotTower.layer;
                 snapshotTower.transform.position = snapshotCamera.transform.position + snapshotCamera.transform.forward * towerSnapshotDistance;
                 //NOTE: Since tower pivot point is at the bottom we must offset it. 1.5 is roughly hard coded since 2 doesn't result in the tower being centered in its snapshot.
-                snapshotTower.transform.position -= snapshotTower.transform.up * (script.Height / 1.5f); 
+                snapshotTower.transform.position -= snapshotTower.transform.up * (script.Height / 2f); 
                 snapshotTower.layer = snapshotLayerNumber;
                 snapshotCamera.targetTexture = render;
                 snapshotCamera.Render();

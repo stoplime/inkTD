@@ -349,6 +349,7 @@ MonoBehaviour:
   description: A slim and sleak tower built to hurdle heavy balls of steel to destroy
     its targets. It has has improved speed and AOE but does not have much speed compared
     to other towers at this tier.
+  towerType: 12
   range: 8
   initialGridPositionX: 5
   initialGridPositionY: 6

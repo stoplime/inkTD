@@ -378,6 +378,7 @@ MonoBehaviour:
   ownerID: 0
   description: A tower with medieval crossbows at the helm. Its speed and power make
     it an opposing tower.
+  towerType: 1
   range: 7
   initialGridPositionX: 4
   initialGridPositionY: 5

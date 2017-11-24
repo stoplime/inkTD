@@ -29,11 +29,14 @@ public class TowerInfoController : MonoBehaviour
     /// <param name="tower">The given tower whose info will be displayed.</param>
     public void SetTower(Towers tower)
     {
+        if (gameLoader == null)
+            gameLoader = Help.GetGameLoader();
+
         Tower script = gameLoader.GetTowerScript(tower);
         towerPreview.sprite = gameLoader.GetTowerSprite(tower);
 
         builder = new StringBuilder();
-        builder.Append(script.maxHealth.ToString() + "HP");
+        builder.AppendLine(script.maxHealth.ToString() + "HP");
         builder.AppendLine(script.range.ToString() + " Range");
         builder.AppendLine(script.speed.ToString() + " Projectiles/Sec");
         builder.AppendLine(script.damage.ToString() + " Damage");
@@ -41,7 +44,7 @@ public class TowerInfoController : MonoBehaviour
 
         statText.text = builder.ToString();
 
-        description.text = script.description;
+        description.text = script.GetPostDescription();
     }
 	
 	// Update is called once per frame

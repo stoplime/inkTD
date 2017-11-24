@@ -1025,6 +1025,7 @@ MonoBehaviour:
   ownerID: 0
   description: An amazing sight! Behold the castle hoisted atop a tower! If this guy
     is sieged then the magic pen will be lost!
+  towerType: 0
   range: 0
   initialGridPositionX: 4
   initialGridPositionY: 2

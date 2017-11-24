@@ -23,7 +23,41 @@ public class TabMenu : MonoBehaviour
     [Tooltip("If true the menu will be hidden the moment the game is loaded.")]
     public bool hideMenuOnStart = true;
 
-    public TabMenu otherMenu;
+    public TabMenu otherMenu; //What is this for? Why is it hardcoded to a single menu?
+
+    [Header("Alternative Menu")]
+
+    [Tooltip("The left right menu that is used if the alternative menu is active.")]
+    public GameObject alternativeLeftRightMenu;
+
+    [Tooltip("The top bottom menu that is used if the alternative menu is active.")]
+    public GameObject alternativeTopBottomMenu;
+
+    [Tooltip("If true, when the menu is hidden or closed, the original menu will become the active menu.")]
+    public bool restoreOriginalMenuOnClose = true;
+
+    [Tooltip("If true the alternative menu will be used instead of the actual menu.")]
+    private bool alternativeMenuActive = false;
+
+    /// <summary>
+    /// Determines if the alternative menu is the active menu.
+    /// </summary>
+    public bool AlternativeMenuActive
+    {
+        get { return alternativeMenuActive; }
+        set
+        {
+            UseAlternativeMenu(value);
+        }
+    }
+    
+    /// <summary>
+    /// Returns true if the tab menu is currently visible, false otherwise.
+    /// </summary>
+    public bool IsVisible
+    {
+        get { return visible; }
+    }
 
     /// <summary>
     /// Gets or sets the menu face the screen is attached to.
@@ -55,6 +89,9 @@ public class TabMenu : MonoBehaviour
     private float inwardGoal = 0f;
     private float outwardGoal;
 
+    private GameObject activeLeftRightMenu;
+    private GameObject activeTopBottomMenu;
+
     /// <summary>
     /// If transitionIn is true, then the menu transition in inward to the screen so it becomes visible to the player. If false it is outward to go beyond
     /// the screen becoming invisible to the player.
@@ -67,17 +104,9 @@ public class TabMenu : MonoBehaviour
 
         tabHandler = tabButton.GetComponent<Tab_Handler>();
 
-        if (leftRightMenu != null)
-        {
-            leftRightRect = leftRightMenu.GetComponent<RectTransform>();
-            leftRightPosition = leftRightRect.anchoredPosition;
-        }
+        SetActiveLeftRightMenu(leftRightMenu);
 
-        if (topBottomMenu != null)
-        {
-            topBottomRect = topBottomMenu.GetComponent<RectTransform>();
-            topBottomPosition = topBottomRect.anchoredPosition;
-        }
+        SetActiveTopBottomMenu(topBottomMenu);
 
         ChangeAnchor(anchor);
 
@@ -85,6 +114,65 @@ public class TabMenu : MonoBehaviour
             HideMenu();
 
         toolbar = GameObject.FindGameObjectWithTag("ToolbarPanel").GetComponent<RectTransform>();
+    }
+
+    public void SetActiveLeftRightMenu(GameObject menu)
+    {
+        if (menu != null)
+        {
+            bool visiblity = false;
+            if (activeLeftRightMenu != null)
+            {
+                visiblity = activeLeftRightMenu.activeSelf;
+                HideMenu();
+            }
+
+            leftRightRect = menu.GetComponent<RectTransform>();
+            leftRightPosition = leftRightRect.anchoredPosition;
+            activeLeftRightMenu = menu;
+            activeLeftRightMenu.SetActive(visiblity);
+        }
+    }
+
+    public void SetActiveTopBottomMenu(GameObject menu)
+    {
+        if (menu != null)
+        {
+            bool visiblity = false;
+            if (activeTopBottomMenu != null)
+            {
+                visiblity = activeTopBottomMenu.activeSelf;
+                HideMenu();
+            }
+
+            topBottomRect = menu.GetComponent<RectTransform>();
+            topBottomPosition = topBottomRect.anchoredPosition;
+            activeTopBottomMenu = menu;
+            activeTopBottomMenu.SetActive(visiblity);
+        }
+    }
+
+    /// <summary>
+    /// Sets the active state of the alternative menu.
+    /// </summary>
+    /// <param name="value">If true the alternative menu will be the active menu, if false the regular menu will be used.</param>
+    public void UseAlternativeMenu(bool value)
+    {
+        if (alternativeMenuActive != value)
+        {
+            if (value)
+            {
+                SetActiveLeftRightMenu(alternativeLeftRightMenu);
+                SetActiveTopBottomMenu(alternativeTopBottomMenu);
+            }
+            else
+            {
+                SetActiveLeftRightMenu(leftRightMenu);
+                SetActiveTopBottomMenu(topBottomMenu);
+            }
+
+            alternativeMenuActive = value;
+        }
     }
 
     private void ChangeAnchor(UIAnchors anchor)
@@ -98,40 +186,40 @@ public class TabMenu : MonoBehaviour
                 outwardGoal = -topBottomRect.rect.height;
                 leftRightOrientation = false;
 
-                if (leftRightMenu != null)
-                    leftRightMenu.SetActive(false);
-                if (topBottomMenu != null)
-                    topBottomMenu.SetActive(true);
+                if (activeLeftRightMenu != null)
+                    activeLeftRightMenu.SetActive(false);
+                if (activeTopBottomMenu != null)
+                    activeTopBottomMenu.SetActive(true);
                 break;
             case UIAnchors.Left:
                 inwardGoal = leftRightRect.rect.width - Screen.width;
                 outwardGoal = -Screen.width;
                 leftRightOrientation = true;
 
-                if (leftRightMenu != null)
-                    leftRightMenu.SetActive(true);
-                if (topBottomMenu != null)
-                    topBottomMenu.SetActive(false);
+                if (activeLeftRightMenu != null)
+                    activeLeftRightMenu.SetActive(true);
+                if (activeTopBottomMenu != null)
+                    activeTopBottomMenu.SetActive(false);
                 break;
             case UIAnchors.Right:
                 inwardGoal = 0f;
                 outwardGoal = leftRightRect.rect.width;
                 leftRightOrientation = true;
 
-                if (leftRightMenu != null)
-                    leftRightMenu.SetActive(true);
-                if (topBottomMenu != null)
-                    topBottomMenu.SetActive(false);
+                if (activeLeftRightMenu != null)
+                    activeLeftRightMenu.SetActive(true);
+                if (activeTopBottomMenu != null)
+                    activeTopBottomMenu.SetActive(false);
                 break;
             case UIAnchors.Top:
                 inwardGoal = Screen.height - topBottomRect.rect.height - 25;
                 outwardGoal = Screen.height - toolbar.rect.height;
                 leftRightOrientation = false;
 
-                if (leftRightMenu != null)
-                    leftRightMenu.SetActive(false);
-                if (topBottomMenu != null)
-                    topBottomMenu.SetActive(true);
+                if (activeLeftRightMenu != null)
+                    activeLeftRightMenu.SetActive(false);
+                if (activeTopBottomMenu != null)
+                    activeTopBottomMenu.SetActive(true);
                 break;
         }
         HideMenu();
@@ -152,6 +240,11 @@ public class TabMenu : MonoBehaviour
 
     public virtual void OnClick()
     {
+        ToggleMenuRollout();
+    }
+
+    public void ToggleMenuRollout()
+    {
         otherMenu.HideMenu();
         if (!transitioning)
         {
@@ -162,18 +255,25 @@ public class TabMenu : MonoBehaviour
         transitionIn = !transitionIn;
     }
 
+    private void RestoreOriginalMenu()
+    {
+        SetActiveLeftRightMenu(leftRightMenu);
+        SetActiveTopBottomMenu(topBottomMenu);
+        alternativeMenuActive = false;
+    }
+
     /// <summary>
     /// Hides the menu from being visible.
     /// </summary>
     public virtual void HideMenu()
     {
-        if (leftRightMenu != null)
+        if (activeLeftRightMenu != null)
         {
             leftRightPosition.x = outwardGoal;
             leftRightRect.anchoredPosition = leftRightPosition;
         }
 
-        if (topBottomMenu != null)
+        if (activeTopBottomMenu != null)
         {
             topBottomPosition.y = outwardGoal;
             topBottomRect.anchoredPosition = topBottomPosition;
@@ -237,6 +337,11 @@ public class TabMenu : MonoBehaviour
                                 topBottomPosition.y = outwardGoal;
                                 transitioning = false;
                                 visible = false;
+
+                                if (restoreOriginalMenuOnClose && alternativeMenuActive)
+                                {
+                                    RestoreOriginalMenu();
+                                }
                             }
                         }
 
@@ -263,6 +368,11 @@ public class TabMenu : MonoBehaviour
                                 leftRightPosition.x = outwardGoal;
                                 transitioning = false;
                                 visible = false;
+
+                                if (restoreOriginalMenuOnClose && alternativeMenuActive)
+                                {
+                                    RestoreOriginalMenu();
+                                }
                             }
                         }
                         tabHandler.OffsetLeft = leftRightPosition.x - outwardGoal;
@@ -288,6 +398,11 @@ public class TabMenu : MonoBehaviour
                                 leftRightPosition.x = outwardGoal;
                                 transitioning = false;
                                 visible = false;
+
+                                if (restoreOriginalMenuOnClose && alternativeMenuActive)
+                                {
+                                    RestoreOriginalMenu();
+                                }
                             }
                         }
                         tabHandler.OffsetRight = leftRightRect.rect.width - leftRightPosition.x;
@@ -313,6 +428,11 @@ public class TabMenu : MonoBehaviour
                                 topBottomPosition.y = outwardGoal;
                                 transitioning = false;
                                 visible = false;
+
+                                if (restoreOriginalMenuOnClose && alternativeMenuActive)
+                                {
+                                    RestoreOriginalMenu();
+                                }
                             }
                         }
 

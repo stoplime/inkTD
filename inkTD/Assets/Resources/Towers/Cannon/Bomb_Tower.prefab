@@ -380,6 +380,7 @@ MonoBehaviour:
   description: Hunker down because this beefy tower is going to blow your socks off!
     Its fantastic AOE can hit more targets at once than any tower before it! Indeed
     one may even say this tower is the bomb!
+  towerType: 13
   range: 9
   initialGridPositionX: 6
   initialGridPositionY: 6

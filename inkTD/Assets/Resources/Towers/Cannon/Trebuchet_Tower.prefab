@@ -378,6 +378,7 @@ MonoBehaviour:
   ownerID: 0
   description: This tower utilizes trebuchets in order to defeat enemies, giving it
     a large area of effect when its 90kg projectiles hit their target.
+  towerType: 11
   range: 8
   initialGridPositionX: 4
   initialGridPositionY: 6
