@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657993, g: 0.49641442, b: 0.5748189, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465809, g: 0.49641508, b: 0.5748199, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1162,7 +1162,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4429847603309108, guid: 3afa7a316786e6946b65ebb2aa6f4e01, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.0000000025801143
+      value: 0.0000000025801146
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3afa7a316786e6946b65ebb2aa6f4e01, type: 2}
@@ -2768,7 +2768,7 @@ Prefab:
       objectReference: {fileID: 707201316}
     - target: {fileID: 4334382109451786, guid: 94de333e42fa88944893a1e9daa3afe4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.15288688
+      value: -0.1528869
       objectReference: {fileID: 0}
     - target: {fileID: 4334382109451786, guid: 94de333e42fa88944893a1e9daa3afe4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -6164,7 +6164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -420.4, y: -0.000028908253}
+  m_AnchoredPosition: {x: -420.4, y: 0.60241544}
   m_SizeDelta: {x: 454, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1001 &925211411
@@ -7748,7 +7748,7 @@ Prefab:
     - target: {fileID: 224990868931123594, guid: f248c0922a72cca4d8e565a580bd8cd1,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.08002657
+      value: 0.080026746
       objectReference: {fileID: 0}
     - target: {fileID: 224990868931123594, guid: f248c0922a72cca4d8e565a580bd8cd1,
         type: 2}
@@ -10667,7 +10667,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1254744110}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9972393
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11391,7 +11391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 929c08e3edfefe64eb777d21203724ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatures: []
 --- !u!114 &1621539894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12733,7 +12732,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1768725261}
   - component: {fileID: 1768725260}
-  - component: {fileID: 1768725262}
   m_Layer: 0
   m_Name: AI
   m_TagString: Untagged
@@ -12766,18 +12764,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1768725262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1768725259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 929c08e3edfefe64eb777d21203724ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  creatures: []
 --- !u!1 &1790923398
 GameObject:
   m_ObjectHideFlags: 0
@@ -14401,11 +14387,11 @@ Prefab:
       objectReference: {fileID: 1795392705}
     - target: {fileID: 4066609492303022, guid: 43c5b109a0f83c1448ec76b949275202, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.15288688
+      value: -0.1528869
       objectReference: {fileID: 0}
     - target: {fileID: 4066609492303022, guid: 43c5b109a0f83c1448ec76b949275202, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.000000006682898
+      value: 0.0000000066828982
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 43c5b109a0f83c1448ec76b949275202, type: 2}

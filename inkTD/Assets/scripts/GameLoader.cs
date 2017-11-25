@@ -35,6 +35,39 @@ public class GameLoader : MonoBehaviour
         public Sprite towerSnapShot;
         public Tower towerScript;
         //TODO: Add the upgrade path here
+
+        public TowerData(){}
+        public TowerData(Towers tower)
+        {
+            this.tower = tower;
+        }
+        private static bool calculateEquals(TowerData obj1, TowerData obj2)
+        {
+            if (obj1.tower.Equals(obj2.tower))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool operator ==(TowerData obj1, TowerData obj2)
+        {
+            return calculateEquals(obj1, obj2);
+        }
+        
+        public static bool operator !=(TowerData obj1, TowerData obj2)
+        {
+            return !calculateEquals(obj1, obj2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return calculateEquals(this, obj as TowerData);
+        }
+        public override int GetHashCode() 
+        {
+            return tower.GetHashCode();
+        }
     }
 
     /// <summary>
@@ -80,11 +113,90 @@ public class GameLoader : MonoBehaviour
 
     public TowerEntry[] towerEntries;
 
+    private TowerNode<TowerData> TowerUpgradeTree;
+
     private Dictionary<Towers, TowerData> towers = new Dictionary<Towers, TowerData>();
 
     private Dictionary<Creatures, CreatureData> creatures = new Dictionary<Creatures, CreatureData>();
 
     private int snapshotLayerNumber = 0;
+
+    /// <summary>
+    /// Tree structure which holds the upgrade tree of the towers
+    /// </summary>
+    private class TowerNode<T> where T : TowerData
+    {
+        private T data;
+        private List<TowerNode<T>> children;
+
+        public TowerNode(T data)
+        {
+            this.data = data;
+            children = new List<TowerNode<T>>();
+        }
+        
+        public void AddNode(T data)
+        {
+            children.Add(new TowerNode<T>(data));
+        }
+
+        public int GetChildrenCount()
+        {
+            return children.Count;
+        }
+
+        public TowerNode<T> GetChild(int i)
+        {
+            if (i < children.Count && i >= 0)
+                return children[i];
+            return null;
+        }
+
+        public TowerNode<T> this[Towers id]
+        {
+            get 
+            {
+                for (int i = 0; i < children.Count; i++)
+                {
+                    if (children[i].data.tower == id)
+                    {
+                        return children[i];
+                    }
+                    else
+                    {
+                        TowerNode<T> find = children[i][id];
+                        if (find != null)
+                        {
+                            return find;
+                        }
+                    }
+                }
+                return null; 
+            }
+        }
+        public TowerNode<T> this[T dataValue]
+        {
+            get 
+            {
+                for (int i = 0; i < children.Count; i++)
+                {
+                    if (children[i].data == dataValue)
+                    {
+                        return children[i];
+                    }
+                    else
+                    {
+                        TowerNode<T> find = children[i][dataValue];
+                        if (find != null)
+                        {
+                            return find;
+                        }
+                    }
+                }
+                return null; 
+            }
+        }
+    }
 
     // Use this for initialization
     void Awake ()
@@ -160,6 +272,72 @@ public class GameLoader : MonoBehaviour
         //Not setting the snapshot camera's target texture may result in the last tower's snapshot getting overwritten upon using the camera again.
         //snapshotCamera.targetTexture = null;
         RenderTexture.active = null;
+
+        //Builds the tree design for the tower upgrades
+        BuildTowerUpgradeTree(out TowerUpgradeTree);
+    }
+
+    /// <summary>
+    /// Changes to the Tower Upgrades go here
+    /// </summary>
+    private void BuildTowerUpgradeTree(out TowerNode<TowerData> tree)
+    {
+        tree = new TowerNode<TowerData>(new TowerData(Towers.Root));
+        //Design the Tower Upgrade here
+        TowerData Arrow = new TowerData(Towers.ArrowCatagory);
+		tree.AddNode(Arrow);
+		// Lvl 1
+		TowerData Archer_Tower = new TowerData(Towers.Archer);
+		tree[Arrow].AddNode(Archer_Tower);
+		// Lvl 2
+		TowerData Crossbow_Tower = new TowerData(Towers.Crossbow);
+		tree[Archer_Tower].AddNode(Crossbow_Tower);
+
+
+		// Root Tower Cannon Type
+		TowerData Cannon = new TowerData(Towers.CannonCatagory);
+		tree.AddNode(Cannon);
+		// Lvl 1
+		TowerData Catapult_Tower = new TowerData(Towers.Catapult);
+		tree[Cannon].AddNode(Catapult_Tower);
+		// Lvl 2
+		TowerData Trebuchet_Tower = new TowerData(Towers.Trebuchet);
+		tree[Catapult_Tower].AddNode(Trebuchet_Tower);
+		// Lvl 3
+		TowerData Cannonball_Tower = new TowerData(Towers.Cannonball);
+		tree[Trebuchet_Tower].AddNode(Cannonball_Tower);
+		// Lvl 4 Split Cannonball_Tower to Bomb_Tower path and Anvil_Tower path
+		TowerData Bomb_Tower = new TowerData(Towers.Bomb);
+		tree[Cannonball_Tower].AddNode(Bomb_Tower);
+
+
+		// Root Tower Magic Type
+		TowerData Magic = new TowerData(Towers.MagicCatagory);
+		tree.AddNode(Magic);
+		// Lvl 1
+		TowerData Magic_Tower = new TowerData(Towers.Magic);
+		tree[Magic].AddNode(Magic_Tower);
+		// Lvl 2
+		TowerData Mystic_Tower = new TowerData(Towers.Mystic);
+		tree[Magic_Tower].AddNode(Mystic_Tower);
+		// Lvl 3
+		TowerData Arcane_Tower = new TowerData(Towers.Arcane);
+		tree[Mystic_Tower].AddNode(Arcane_Tower);
+		// Lvl 4 Split Arcane_Tower to Psionics_Towerpath and Mana_Tower path
+		TowerData Psionics_Tower = new TowerData(Towers.Psionics);
+		tree[Arcane_Tower].AddNode(Psionics_Tower);
+		TowerData Mana_Tower = new TowerData(Towers.Mana);
+		tree[Arcane_Tower].AddNode(Mana_Tower);
+		// Lvl 5
+		TowerData Brain_Tower = new TowerData(Towers.Brain);
+		tree[Psionics_Tower].AddNode(Brain_Tower);
+		TowerData Aether_Tower = new TowerData(Towers.Aether);
+		tree[Mana_Tower].AddNode(Aether_Tower);
+		// Lvl 6
+		TowerData Enlightenment_Tower = new TowerData(Towers.Enlightenment);
+		tree[Brain_Tower].AddNode(Enlightenment_Tower);
+		TowerData Wizard_Tower = new TowerData(Towers.Wizard);
+		tree[Aether_Tower].AddNode(Wizard_Tower);
     }
 
     /// <summary>

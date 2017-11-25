@@ -1,5 +1,8 @@
 ﻿public enum Towers
 {
+    MagicCatagory = -4,
+    CannonCatagory = -3,
+    ArrowCatagory = -2,
     Root = -1,
     Archer = 0,
     Crossbow = 1,
