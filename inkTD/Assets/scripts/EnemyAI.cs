@@ -75,15 +75,6 @@ public class EnemyAI : MonoBehaviour {
         currentGrid = PlayerManager.GetGrid(playerID);
         creatures = PlayerManager.GetCreatures(playerID);
 
-        timer100ms = new TaylorTimer(100);
-        timer100ms.Elapsed += Timer100ms_Elapsed;
-
-        timer500ms = new TaylorTimer(500);
-        timer500ms.Elapsed += Timer500ms_Elapsed;
-
-        timer1000ms = new TaylorTimer(1000);
-        timer1000ms.Elapsed += Timer1000ms_Elapsed;
-
         gameData = Help.GetGameLoader();
 
         SetState(state);
@@ -199,8 +190,8 @@ public class EnemyAI : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        timer100ms.Update();
-        timer500ms.Update();
-        timer1000ms.Update();
+        // timer100ms.Update();
+        // timer500ms.Update();
+        // timer1000ms.Update();
     }
 }

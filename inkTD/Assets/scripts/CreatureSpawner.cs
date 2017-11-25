@@ -17,7 +17,7 @@ public class CreatureSpawner : MonoBehaviour {
         }
         else
         {
-            PlayerManager.CreateCreature(id, type);
+            PlayerManager.CreateCreature(id, type, true);
         }
 	}
 

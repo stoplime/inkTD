@@ -79,6 +79,7 @@
      <Compile Include="Assets\scripts\PathVisualizer.cs" />
      <Compile Include="Assets\scripts\PlayerManager.cs" />
      <Compile Include="Assets\scripts\Projectile_Controller.cs" />
+     <Compile Include="Assets\scripts\PurchaseType.cs" />
      <Compile Include="Assets\scripts\Tab_Handler.cs" />
      <Compile Include="Assets\scripts\TabMenu.cs" />
      <Compile Include="Assets\scripts\TaylorTimer.cs" />
@@ -86,6 +87,7 @@
      <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
      <Compile Include="Assets\scripts\Tower.cs" />
      <Compile Include="Assets\scripts\TowerCamera.cs" />
+     <Compile Include="Assets\scripts\TowerInfoController.cs" />
      <Compile Include="Assets\scripts\Towers.cs" />
      <Compile Include="Assets\scripts\TowerSpawner.cs" />
      <Compile Include="Assets\scripts\TowerStructure.cs" />
