@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using helper;
+using UnityEngine.EventSystems;
 
 public class Tower : InkObject
 {
     [Header("General Settings")]
+
+    [Tooltip("The towers type that this tower represents.")]
+    public Towers towerType;
+
     [Tooltip("The distance in all directions around the tower in world coordinates that can be fired upon. Example: 5")]
     public float range;
 
@@ -274,6 +279,31 @@ public class Tower : InkObject
         }
     }
 
+    /// <summary>
+    /// Event that runs when the tower is selected.
+    /// </summary>
+    /// <param name="eventData"></param>
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        base.OnPointerDown(eventData);
+
+        GameLoader info = Help.GetGameLoader(); //Could cache this.
+
+        GameObject leftRightMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuHor");
+        GameObject upDownMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuVer");
+
+        GameObject selectedMenu = leftRightMenu; //TODO: Determine whether the tower menu button is on left/right or up/down.
+
+        TowerInfoController currentController = info.towerControllerCurrentLeftRight;
+
+        currentController.SetTower(towerType);
+
+        Tab_Handler towerButtonHandler = info.towerTabButton.GetComponent<Tab_Handler>();
+        towerButtonHandler.menuScript.AlternativeMenuActive = true;
+        if (!towerButtonHandler.menuScript.IsVisible)
+            towerButtonHandler.menuScript.ToggleMenuRollout();
+    }
+
     public override void OnValidate()
     {
         base.OnValidate();
@@ -491,14 +521,5 @@ public class Tower : InkObject
     void Update ()
     {
         timer.Update();
-    }
-
-    /// <summary>
-    /// When the towers are selected, the range sould display and the tower menu should pop up.
-    /// </summary>
-    public override void OnSelect()
-    {
-        // towerCam.GetComponent<TowerCamera>().MoveCamera(this);
-        // visualizeRadius = true;
     }
 }

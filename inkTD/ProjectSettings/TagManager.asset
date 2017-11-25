@@ -13,6 +13,9 @@ TagManager:
   - Projectile
   - Grid
   - Selector
+  - InfoContent
+  - TowerSelectMenuHor
+  - TowerSelectMenuVer
   layers:
   - Default
   - TransparentFX

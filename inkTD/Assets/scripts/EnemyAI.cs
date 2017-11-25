@@ -67,8 +67,6 @@ public class EnemyAI : MonoBehaviour {
 
     private int towersInPlay = 0;
 
-    private CreatureSpawner creatureSpawner;
-
     private GameLoader gameData;
 
 	// Use this for initialization
@@ -77,7 +75,14 @@ public class EnemyAI : MonoBehaviour {
         currentGrid = PlayerManager.GetGrid(playerID);
         creatures = PlayerManager.GetCreatures(playerID);
 
-        creatureSpawner = GetComponentsInParent<CreatureSpawner>()[0];
+        timer100ms = new TaylorTimer(100);
+        timer100ms.Elapsed += Timer100ms_Elapsed;
+
+        timer500ms = new TaylorTimer(500);
+        timer500ms.Elapsed += Timer500ms_Elapsed;
+
+        timer1000ms = new TaylorTimer(1000);
+        timer1000ms.Elapsed += Timer1000ms_Elapsed;
 
         gameData = Help.GetGameLoader();
 
@@ -108,9 +113,8 @@ public class EnemyAI : MonoBehaviour {
     {
         if (state != AIStates.SpawningCreatures)
             return;
-
-        // PlayerManager.CreateCreature(playerID, "Creature_Stickman", gameObject);
-        creatureSpawner.OnClick(playerID, Creatures.Stickfigure);
+        
+        PlayerManager.CreateCreature(playerID, Creatures.BatteringRam, true);
     }
 
     private void ComputeTowerPlacement()

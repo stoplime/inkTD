@@ -1,49 +1,93 @@
-﻿using System.Collections;
+﻿using helper;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuButton : MonoBehaviour
 {
-    public string objName, description, path;
-    public float health, cost, damage, rateOfFire, speed;
-    public Sprite image;
+    public Towers purchasableTower;
 
-    public Tower attachedTower;
-    public Creature attachedCreature;
-    public Modifier attachedModifier;
-
-    public enum ButtonType { Tower, Creature, Modifier };
-
-    public ButtonType type;
+    public Creatures purchasableCreature;
+    
+    public PurchaseType purchaseType;
 
     public InfoPanel infoPanel;
+
+    private GameLoader info;
+    private Tower towerScript;
+    private Creature creatureScript;
 
 	// Use this for initialization
 	void Start ()
     {
-		
-	}
+        info = Help.GetGameLoader();
+        PlayerManager.OnCurrentPlayerBalanceChange += PlayerManager_OnCurrentPlayerBalanceChange;
+
+        if (purchaseType == PurchaseType.Creature)
+        {
+            creatureScript = info.GetCreatureScript(purchasableCreature);
+        }
+        else if (purchaseType == PurchaseType.Tower)
+        {
+            towerScript = info.GetTowerScript(purchasableTower);
+        }
+
+        DetermineInteractivity();
+    }
+
+    private void PlayerManager_OnCurrentPlayerBalanceChange(object sender, System.EventArgs e)
+    {
+        DetermineInteractivity();
+    }
+
+    private void DetermineInteractivity()
+    {
+        if (purchaseType == PurchaseType.Creature)
+        {
+            if (PlayerManager.GetBalance(0) < creatureScript.price)
+            {
+                GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                GetComponent<Button>().interactable = true;
+            }
+        }
+        else if (purchaseType == PurchaseType.Tower)
+        {
+            if (PlayerManager.GetBalance(0) < towerScript.price)
+            {
+                GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                GetComponent<Button>().interactable = true;
+            }
+        }
+    }
+
+    void OnDestroy()
+    {
+        PlayerManager.OnCurrentPlayerBalanceChange -= PlayerManager_OnCurrentPlayerBalanceChange;
+    }
 
     /// <summary>
     /// A method that sends certain pieces of information to the InfoPanel, based on which BuyPanel the button is in
     /// </summary>
     public void OnClick()
     {
-        switch(type)
+        switch(purchaseType)
         {
-            case ButtonType.Tower:
-                //infoPanel.RecieveTowerInfo(objName, description, cost, damage, rateOfFire, image, path);
-                infoPanel.RecieveTowerInfo(attachedTower, path);
-                Debug.Log("Ok");
+            case PurchaseType.Tower:
+                infoPanel.RecieveTowerInfo(purchasableTower);
                 break;
 
-            case ButtonType.Creature:
-                infoPanel.RecieveCreatureInfo(objName, description, health, cost, damage, speed, path, image);
-                Debug.Log("Ok");
+            case PurchaseType.Creature:
+                infoPanel.RecieveCreatureInfo(purchasableCreature);
                 break;
 
-            case ButtonType.Modifier:
+            case PurchaseType.Modifier:
                 //InfoPanel.RecieveModifierInfo();
                 Debug.Log("Ok");
                 break;
@@ -54,13 +98,6 @@ public class MenuButton : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-		if(type == ButtonType.Creature && PlayerManager.GetBalance(0) < cost)
-        {
-            this.GetComponent<Button>().interactable = false;
-        }
-        if (type == ButtonType.Creature && PlayerManager.GetBalance(0) >= cost)
-        {
-            this.GetComponent<Button>().interactable = true;
-        }
+		
     }
 }

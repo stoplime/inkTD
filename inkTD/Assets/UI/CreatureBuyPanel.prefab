@@ -803,18 +803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Battering Ram
-  description: A ram made of wood with an iron tip for busting down castle gates.
-  path: BatteringRam_Creature
-  health: 150
-  cost: 12
-  damage: 100
-  rateOfFire: 0
-  speed: 2
-  image: {fileID: 21300000, guid: ca75aca88771da942b80a5514b77bd8e, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 11
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114018137503045120
 MonoBehaviour:
@@ -854,18 +845,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Giant Eagle
-  description: A large bird of prey, known for its diet of human flesh.
-  path: Eagle_Creature
-  health: 200
-  cost: 35
-  damage: 150
-  rateOfFire: 0
-  speed: 3
-  image: {fileID: 21300000, guid: 31c11fa7cbf459646ae0615ebe88867a, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 14
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114046387753171248
 MonoBehaviour:
@@ -998,19 +980,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Banshee
-  description: A ghost whose loud shrieks, screams, and wails are said to send bad
-    omens to those who hear them.
-  path: Banshee_Creature
-  health: 200
-  cost: 35
-  damage: 150
-  rateOfFire: 0
-  speed: 3
-  image: {fileID: 21300000, guid: a10c303a6c41e6948a396a303d14ff42, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 20
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114080259292053688
 MonoBehaviour:
@@ -1276,19 +1248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Ghost
-  description: A spirit that lingers on the physical plane because of some unfinished
-    buisness.
-  path: Ghost_Creature
-  health: 120
-  cost: 20
-  damage: 70
-  rateOfFire: 0
-  speed: 2
-  image: {fileID: 21300000, guid: 195033454103ad144b28433640349eec, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 7
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114130179861519990
 MonoBehaviour:
@@ -1353,19 +1315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Mud Golem
-  description: An animated pile of earth said to perform any task that was written
-    on paper and inserted into its mouth.
-  path: MudGolem_Creature
-  health: 175
-  cost: 50
-  damage: 70
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: 8451556d70d9efe4c912c7176f565540, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 15
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114193759785804070
 MonoBehaviour:
@@ -1390,18 +1342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Mimic
-  description: A creature that can take on the form of any visible object.
-  path: Mimic_Creature
-  health: 200
-  cost: 35
-  damage: 150
-  rateOfFire: 0
-  speed: 3
-  image: {fileID: 21300000, guid: f39780b520ffd9e40b403bb6d2df6d9b, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 18
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114239028759871020
 MonoBehaviour:
@@ -1466,18 +1409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Owlbear
-  description: Part owl, part bear, all dangerous.
-  path: Owlbear_Creature
-  health: 175
-  cost: 50
-  damage: 70
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: c71e3b056303d5d4d99f116840ecece3, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 17
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114262545613885670
 MonoBehaviour:
@@ -1668,19 +1602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Giant Frog
-  description: A giant amphibian with powerful legs to help it jump and swim incredibly
-    fast.
-  path: Frog_Creature
-  health: 150
-  cost: 12
-  damage: 90
-  rateOfFire: 0
-  speed: 2
-  image: {fileID: 21300000, guid: 4711b4cf4443e154a9999cb62652384c, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 13
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114332057741599300
 MonoBehaviour:
@@ -1778,18 +1702,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Troll
-  description: A large, hairy ape-like creature. Synonymous with Bigfoot.
-  path: Troll_Creature
-  health: 160
-  cost: 17
-  damage: 70
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: c529b5174899ab048bc8e3afeac0a7eb, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 11
+  purchasableCreature: 12
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114375786351217488
 MonoBehaviour:
@@ -1960,18 +1875,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Mushroom Man
-  description: Humanoid fungus creature that thrives off of decaying matter.
-  path: MushroomMan_Creature
-  health: 120
-  cost: 17
-  damage: 70
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: 5ebb090bea2d0c7459db1148f5ef1b0a, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 6
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114427604677332728
 MonoBehaviour:
@@ -2370,18 +2276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Treant
-  description: A tree that has attained stneience and human-like limbs.
-  path: Treent_Creature
-  health: 175
-  cost: 50
-  damage: 70
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: 306ed375eb8b89c4886bb669f39dbc88, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 19
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114576243300752000
 MonoBehaviour:
@@ -2394,18 +2291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Rock Golem
-  description: An animated creature of stone, reknown for its durability.
-  path: Golem_Creature
-  health: 200
-  cost: 35
-  damage: 150
-  rateOfFire: 0
-  speed: 3
-  image: {fileID: 21300000, guid: df2ef7e874fecd349bcab1b4dc7d1c99, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 16
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114585458737688428
 MonoBehaviour:
@@ -2558,11 +2446,11 @@ MonoBehaviour:
   m_Content: {fileID: 224409402851477352}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 8
   m_Viewport: {fileID: 224298943999354666}
   m_HorizontalScrollbar: {fileID: 114512433818174872}
   m_VerticalScrollbar: {fileID: 114764517376459560}
@@ -2679,18 +2567,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Cerberus
-  description: Legendary three-headed dog that guards the gate to the Underworld.
-  path: Cerberus_Creature
-  health: 175
-  cost: 50
-  damage: 70
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: ac167d0b38ea2d64b8a19689932639f3, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 23
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114764517376459560
 MonoBehaviour:
@@ -2730,8 +2609,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114077096371562422}
   m_HandleRect: {fileID: 224610410014818496}
   m_Direction: 2
-  m_Value: 0.9999997
-  m_Size: 0.7365584
+  m_Value: 0.9999994
+  m_Size: 0.7365582
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2749,18 +2628,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Skeleton
-  description: Human remains reanimated by nefarious necromantic energies.
-  path: Skeleton_Creature
-  health: 115
-  cost: 15
-  damage: 60
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: 649f6717a32d9fa4f9fe92e174e4af75, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 5
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114790653917229012
 MonoBehaviour:
@@ -2999,18 +2869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Ogre
-  description: A large, hairy ape-like creature. Synonymous with Bigfoot.
-  path: Ogre_Creature
-  health: 140
-  cost: 22
-  damage: 60
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: 075e1586b729c1246b843f13d59bee44, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 8
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114880213951713978
 MonoBehaviour:
@@ -3102,18 +2963,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a69a12747ce63489f763f5a0e97dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objName: Stickman
-  description: The Basic Stickman. Kinda boring really.
-  path: Stickman_Creature
-  health: 100
-  cost: 10
-  damage: 50
-  rateOfFire: 0
-  speed: 1
-  image: {fileID: 21300000, guid: 246618de432210b4fbd4d411f6f139c5, type: 3}
-  attachedTower: {fileID: 0}
-  attachedCreature: {fileID: 0}
-  type: 1
+  purchasableTower: 0
+  purchasableCreature: 1
+  purchaseType: 1
   infoPanel: {fileID: 0}
 --- !u!114 &114943186426179310
 MonoBehaviour:
@@ -3456,7 +3308,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1226925193077222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 194, y: -121.06195, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224555173785479974}
@@ -3493,7 +3345,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1863794905798416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -204.46196, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224082507919285222}
@@ -3512,7 +3364,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1396312903681514}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 195.6, y: -35.311905, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224313734387877268}
@@ -3531,7 +3383,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1984516736418728}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -247.06195, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224752292805297570}
@@ -3586,7 +3438,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1936757135878856}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -35.311935, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224488722304362660}
@@ -3605,7 +3457,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1677590298707770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -118.36197, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224899140418032720}
@@ -3624,7 +3476,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1677876026041010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 133.6, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224580339945209768}
@@ -3680,7 +3532,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092279234413032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -77.26192, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224761803418519054}
@@ -3699,7 +3551,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1476965539995290}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 194.1, y: -77.28999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224212081969948654}
@@ -3718,7 +3570,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1544059969491670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.000030517578, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224241886000606378}
@@ -3752,7 +3604,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1924483140451468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193.99991, y: -287.76202, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224671479380920068}
@@ -3807,7 +3659,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973682563056648}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193.99991, y: -205.36195, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224693271624406212}
@@ -3844,7 +3696,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1314641510763640}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -287.16205, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224478171529049390}
@@ -3881,7 +3733,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1289538880703116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: -44, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.95572287, z: 1}
   m_Children:
   - {fileID: 224298943999354666}
@@ -3892,7 +3744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9, y: -44}
+  m_AnchoredPosition: {x: 9, y: -343.181}
   m_SizeDelta: {x: 284.2, y: 292.9}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224580339945209768
@@ -3920,14 +3772,14 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1483582786646736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.278648, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224615352768648916}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.08033335}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.26344165}
+  m_AnchorMax: {x: 1, y: 0.9999999}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3938,7 +3790,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733087796615800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -137.95, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224610410014818496}
@@ -3975,7 +3827,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1543953807331014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193.99991, y: -331.66193, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224616161206526988}
@@ -4030,7 +3882,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1626157585444562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -331.06195, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224524778044114660}
@@ -4085,7 +3937,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688737494202316}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193.99991, y: -247.66193, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224877642731623256}
@@ -4104,7 +3956,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1205312908709094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 68.600006, y: -161.66196, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224211673488260798}
@@ -4123,7 +3975,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1704940848728750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 284.2, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224615352768648916}
@@ -4142,7 +3994,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1856070327345234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -292.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224261431621222990}
@@ -4179,7 +4031,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1443668582470898}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193.99991, y: -162.16196, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999696, z: 1}
   m_Children:
   - {fileID: 224908630074016508}

@@ -27,7 +27,7 @@ public class TowerSpawner : MonoBehaviour {
 
     private List<Creature> creatures;
 
-    public static string selectedTowerPath;
+    private Towers tower = Towers.Archer;
 
 	/// <summary>
 	/// Static Constructor
@@ -94,12 +94,21 @@ public class TowerSpawner : MonoBehaviour {
 		
 	}
 
-    public void PlaceTower(string towerPrefab, IntVector2 gridPos, Quaternion orientation)
+    /// <summary>
+    /// Sets the tower that is set to be placed.
+    /// </summary>
+    /// <param name="tower"></param>
+    public void SetSelectedTower(Towers tower)
+    {
+        this.tower = tower;
+    }
+
+    public void PlaceTower(Towers tower, IntVector2 gridPos, Quaternion orientation)
 	{
-        PlayerManager.PlaceTower(OwnerID, OwnerID, gridPos, orientation, towerPrefab, notEnoughInkObject, notEnoughInkText, textLife);
+        PlayerManager.PlaceTower(OwnerID, OwnerID, gridPos, orientation, tower, notEnoughInkObject, notEnoughInkText, textLife);
 	}
 
-	public void SelectLocation(string towerPrefab)
+	public void SelectLocation()
 	{
 		if (!Help.MouseOnUI){
 			if (Help.GetObjectInMousePath(out hit)){
@@ -114,7 +123,7 @@ public class TowerSpawner : MonoBehaviour {
 							existingHighlight.transform.position = target;
 						}
 						if (Input.GetButtonDown("Fire1")){
-							PlaceTower(towerPrefab, gridPos, hit.collider.transform.rotation);
+							PlaceTower(tower, gridPos, hit.collider.transform.rotation);
 						}
 					}
 					else if(existingHighlight != null){
@@ -146,13 +155,9 @@ public class TowerSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(selectedTowerPath == null)
-        {
-            selectedTowerPath = "Arrow/Archer_Tower";
-        }
 		if (isPlaceable)
 		{
-			SelectLocation(selectedTowerPath);
+			SelectLocation();
 		}
 	}
 }

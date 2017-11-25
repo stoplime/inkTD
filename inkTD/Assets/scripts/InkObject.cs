@@ -100,10 +100,21 @@ public class InkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public virtual void Start()
     {
-        description = description.Replace("[p]", price.ToString());
-        description = description.Replace("[s]", speed.ToString());
-        description = description.Replace("[d]", damage.ToString());
-        description = description.Replace("[h]", health.ToString());
+        
+    }
+
+    /// <summary>
+    /// Gets the description of the ink object after variables have been replaced with their actual values.
+    /// </summary>
+    /// <returns></returns>
+    public string GetPostDescription()
+    {
+        string s = description;
+        s = s.Replace("[p]", price.ToString());
+        s = s.Replace("[s]", speed.ToString());
+        s = s.Replace("[d]", damage.ToString());
+        s = s.Replace("[h]", health.ToString());
+        return s;
     }
 
     public virtual void OnValidate()
@@ -198,10 +209,11 @@ public class InkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     // Towers need a non-onTrigger collider for the events to work
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         // Select code here
         Debug.Log(this.gameObject.name + " Was Clicked.");
+
     }
 
     // TODO: setup an on select event system for selecting a tower. Also hook it up to the tower menu.
