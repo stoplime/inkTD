@@ -162,8 +162,12 @@ public class EnemyAI : MonoBehaviour {
         {
             if (!TryTowerPlacement())
             {
-                
+                // Maybe decrease the chance to trying to spawn a tower?
             }
+        }
+        else if (state == AIStates.SpawningCreatures)
+        {
+            ComputeCreatureSpawn();
         }
     }
 
