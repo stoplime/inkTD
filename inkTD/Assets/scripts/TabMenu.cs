@@ -60,6 +60,14 @@ public class TabMenu : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns true if the menu is in a transition phase. Phase otherwise.
+    /// </summary>
+    public bool Transitioning
+    {
+        get { return transitioning; }
+    }
+
+    /// <summary>
     /// Gets or sets the menu face the screen is attached to.
     /// </summary>
     public UIAnchors Anchor

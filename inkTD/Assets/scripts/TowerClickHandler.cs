@@ -41,7 +41,9 @@ public class TowerClickHandler : MonoBehaviour
             {
                 obj.Pressed();
             }
-            else
+            else if (gameLoader.TowerTabMenu.AlternativeMenuActive 
+                && gameLoader.TowerTabMenu.IsVisible
+                && !gameLoader.TowerTabMenu.Transitioning)
             {
                 RemoveExtraInfo(gameLoader.TowerTabMenu);
                 gameLoader.TowerTabMenu.ToggleMenuRollout();
