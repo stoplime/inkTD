@@ -196,6 +196,17 @@ namespace helper
         }
 
         /// <summary>
+        /// Gets the object directly in front of the mouse. Returns true if an object was hit, false otherwise.
+        /// </summary>
+        /// <param name="hit">The raycast hit results.</param>
+        /// <returns>Returns true if there was an object that was hit, false otherwise.</returns>
+        public static bool GetObjectInMousePath(out RaycastHit hit, int layerMask)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            return Physics.Raycast(ray, out hit, 1000000f, layerMask, QueryTriggerInteraction.UseGlobal);
+        }
+
+        /// <summary>
         /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
         /// </summary>
         /// <param name="x">The horizontal position on the grid that will be checked.</param>

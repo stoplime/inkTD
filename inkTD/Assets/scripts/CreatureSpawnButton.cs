@@ -16,15 +16,15 @@ public class CreatureSpawnButton : MonoBehaviour
     /// </summary>
     public CreatureQueuer Queuer { get; set; }
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         Button button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(OnClick);
     }
 
-    void OnClick()
+    public void OnClick()
     {
-        Queuer.DeleteButtonByInstanceID(GetInstanceID());
+        Queuer.DeleteButtonByInstanceID(GetInstanceID(), true);
     }
 }

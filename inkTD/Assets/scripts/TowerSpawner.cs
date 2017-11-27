@@ -24,7 +24,11 @@ public class TowerSpawner : MonoBehaviour {
 
     private List<Creature> creatures;
 
-    private Towers tower = Towers.Archer;
+    private Towers selectedTower = Towers.Archer;
+
+    private GameLoader gameLoader;
+
+    private int layerMask;
 
     /// <summary>
     /// Sets the tower that is set to be placed.
@@ -32,7 +36,8 @@ public class TowerSpawner : MonoBehaviour {
     /// <param name="tower"></param>
     public void SetSelectedTower(Towers tower)
     {
-        this.tower = tower;
+        this.selectedTower = tower;
+
     }
 
     public void PlaceTower(Towers tower, IntVector2 gridPos, Quaternion orientation)
@@ -42,39 +47,43 @@ public class TowerSpawner : MonoBehaviour {
 
 	public void SelectLocation()
 	{
-		if (!Help.MouseOnUI){
-			if (Help.GetObjectInMousePath(out hit)){
-				if (hit.collider.tag == "GroundObject"){
-					IntVector2 gridPos = Grid.posToGrid(hit.point);
-					if (parentGrid.inArena(gridPos) && parentGrid.isGridEmpty(gridPos)){
-						Vector3 target = Grid.gridToPos(gridPos);
-						target.y += 0.1f;
-						if(existingHighlight == null){
-							existingHighlight = Instantiate(highlight, target, hit.collider.transform.rotation);
-						}else{
-							existingHighlight.transform.position = target;
-						}
-						if (Input.GetButtonDown("Fire1")){
-							PlaceTower(tower, gridPos, hit.collider.transform.rotation);
-						}
-					}
-					else if(existingHighlight != null){
-						existingHighlight.transform.position = new Vector3(0,-100,0);
-					}
-				}
-			}
-		}
-		else
-		if(existingHighlight != null)
-		{
-			existingHighlight.transform.position = new Vector3(0,-100,0);
-		}
-	}
+        if (!gameLoader.TowerTabMenu.IsVisible || gameLoader.TowerTabMenu.AlternativeMenuActive)
+        {
+            if (existingHighlight != null && existingHighlight.transform.position.y > -90)
+                existingHighlight.transform.position = new Vector3(0, -100, 0);
 
-    /*public void SetSelected(string path)
-    {
-        TowerPrefabs = path;
-    }*/
+            return; //Returns if the tower tab menu is not active and visible.
+        }
+
+		if (!Help.MouseOnUI 
+            && Help.GetObjectInMousePath(out hit, layerMask)
+            && hit.collider.tag == "GroundObject")
+        {
+            IntVector2 gridPos = Grid.posToGrid(hit.point);
+            if (parentGrid.inArena(gridPos) && parentGrid.isGridEmpty(gridPos))
+            {
+                Vector3 target = Grid.gridToPos(gridPos);
+                target.y += 0.1f;
+                if (existingHighlight == null)
+                {
+                    existingHighlight = Instantiate(highlight, target, hit.collider.transform.rotation);
+                }
+                else
+                {
+                    existingHighlight.transform.position = target;
+                }
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    PlaceTower(selectedTower, gridPos, hit.collider.transform.rotation);
+                }
+            }
+            else if (existingHighlight != null)
+            {
+                existingHighlight.transform.position = new Vector3(0, -100, 0);
+            }
+        }
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -83,6 +92,11 @@ public class TowerSpawner : MonoBehaviour {
 		isPlaceable = (OwnerID == parentGrid.ID);
 
         creatures = PlayerManager.GetCreatures(OwnerID);
+
+        gameLoader = Help.GetGameLoader();
+
+        LayerMask mask = LayerMask.GetMask("Ground");
+        layerMask = mask.value;
     }
 	
 	// Update is called once per frame

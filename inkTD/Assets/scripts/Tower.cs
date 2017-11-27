@@ -135,6 +135,8 @@ public class Tower : InkObject
     private float creatureDist = 0f;
     private int rangeRounded;
 
+    private GameLoader gameLoader;
+
     /// <summary>
     /// A list of targets a tower can target.
     /// </summary>
@@ -193,10 +195,12 @@ public class Tower : InkObject
 
         rangeRounded = (int)(range + 0.5f);
 
+        gameLoader = Help.GetGameLoader();
+
         //TEST ONLY:
-        Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
-        Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
-        Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
+        //Modifiers.Add(new Modifier(ModiferTypes.Fire, 1));
+        //Modifiers.Add(new Modifier(ModiferTypes.Ice, 1));
+        //Modifiers.Add(new Modifier(ModiferTypes.Acid, 1));
     }
 
     private void CalculateBounds()
@@ -287,21 +291,22 @@ public class Tower : InkObject
     {
         base.OnPointerDown(eventData);
 
-        GameLoader info = Help.GetGameLoader(); //Could cache this.
+        if (gameLoader.TowerTabMenu.AlternativeMenuActive || !gameLoader.TowerTabMenu.IsVisible)
+        { //The upgrade menu can only be shown if the alternative menu is active or if the menu is simply not visible.
+            GameObject leftRightMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuHor");
+            GameObject upDownMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuVer");
 
-        GameObject leftRightMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuHor");
-        GameObject upDownMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuVer");
+            GameObject selectedMenu = leftRightMenu; //TODO: Determine whether the tower menu button is on left/right or up/down.
 
-        GameObject selectedMenu = leftRightMenu; //TODO: Determine whether the tower menu button is on left/right or up/down.
+            TowerInfoController currentController = gameLoader.towerControllerCurrentLeftRight;
 
-        TowerInfoController currentController = info.towerControllerCurrentLeftRight;
+            currentController.SetTower(towerType);
 
-        currentController.SetTower(towerType);
+            gameLoader.TowerTabMenu.AlternativeMenuActive = true;
 
-        Tab_Handler towerButtonHandler = info.towerTabButton.GetComponent<Tab_Handler>();
-        towerButtonHandler.menuScript.AlternativeMenuActive = true;
-        if (!towerButtonHandler.menuScript.IsVisible)
-            towerButtonHandler.menuScript.ToggleMenuRollout();
+            if (!gameLoader.TowerTabMenu.IsVisible)
+                gameLoader.TowerTabMenu.ToggleMenuRollout();
+        }
     }
 
     public override void OnValidate()

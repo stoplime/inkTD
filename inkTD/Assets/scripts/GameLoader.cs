@@ -79,6 +79,85 @@ public class GameLoader : MonoBehaviour
         public Creature creatureScript;
     }
 
+    /// <summary>
+    /// Tree structure which holds the upgrade tree of the towers
+    /// </summary>
+    private class TowerNode<T> where T : TowerData
+    {
+        public T data;
+        public List<TowerNode<T>> children;
+
+        public TowerNode(T data)
+        {
+            this.data = data;
+            children = new List<TowerNode<T>>();
+        }
+
+        public void AddNode(T data)
+        {
+            children.Add(new TowerNode<T>(data));
+        }
+
+        public int GetChildrenCount()
+        {
+            return children.Count;
+        }
+
+        public TowerNode<T> GetChild(int i)
+        {
+            if (i < children.Count && i >= 0)
+                return children[i];
+            return null;
+        }
+
+        public TowerNode<T> this[Towers id]
+        {
+            get
+            {
+                for (int i = 0; i < children.Count; i++)
+                {
+                    if (children[i].data.tower == id)
+                    {
+                        return children[i];
+                    }
+                    else
+                    {
+                        TowerNode<T> find = children[i][id];
+                        if (find != null)
+                        {
+                            return find;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+        public TowerNode<T> this[T dataValue]
+        {
+            get
+            {
+                for (int i = 0; i < children.Count; i++)
+                {
+                    if (children[i].data == dataValue)
+                    {
+                        return children[i];
+                    }
+                    else
+                    {
+                        TowerNode<T> find = children[i][dataValue];
+                        if (find != null)
+                        {
+                            return find;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+    }
+
+    //Public variables:
+
     [Header("Scene-Specific Info:")]
     [Space(20)]
     public GameObject leftRightUpgradeMenuContent;
@@ -113,6 +192,18 @@ public class GameLoader : MonoBehaviour
 
     public TowerEntry[] towerEntries;
 
+    //Properties:
+
+    /// <summary>
+    /// Gets the tower tab menu.
+    /// </summary>
+    public TabMenu TowerTabMenu
+    {
+        get { return towerTabMenu; }
+    }
+
+    //Private Variables:
+
     private TowerNode<TowerData> TowerUpgradeTree;
 
     private Dictionary<Towers, TowerData> towers = new Dictionary<Towers, TowerData>();
@@ -121,83 +212,8 @@ public class GameLoader : MonoBehaviour
 
     private int snapshotLayerNumber = 0;
 
-    /// <summary>
-    /// Tree structure which holds the upgrade tree of the towers
-    /// </summary>
-    private class TowerNode<T> where T : TowerData
-    {
-        public T data;
-        public List<TowerNode<T>> children;
-
-        public TowerNode(T data)
-        {
-            this.data = data;
-            children = new List<TowerNode<T>>();
-        }
-        
-        public void AddNode(T data)
-        {
-            children.Add(new TowerNode<T>(data));
-        }
-
-        public int GetChildrenCount()
-        {
-            return children.Count;
-        }
-
-        public TowerNode<T> GetChild(int i)
-        {
-            if (i < children.Count && i >= 0)
-                return children[i];
-            return null;
-        }
-
-        public TowerNode<T> this[Towers id]
-        {
-            get 
-            {
-                for (int i = 0; i < children.Count; i++)
-                {
-                    if (children[i].data.tower == id)
-                    {
-                        return children[i];
-                    }
-                    else
-                    {
-                        TowerNode<T> find = children[i][id];
-                        if (find != null)
-                        {
-                            return find;
-                        }
-                    }
-                }
-                return null; 
-            }
-        }
-        public TowerNode<T> this[T dataValue]
-        {
-            get 
-            {
-                for (int i = 0; i < children.Count; i++)
-                {
-                    if (children[i].data == dataValue)
-                    {
-                        return children[i];
-                    }
-                    else
-                    {
-                        TowerNode<T> find = children[i][dataValue];
-                        if (find != null)
-                        {
-                            return find;
-                        }
-                    }
-                }
-                return null; 
-            }
-        }
-    }
-
+    private TabMenu towerTabMenu;
+    
     // Use this for initialization
     void Awake ()
     {
@@ -219,7 +235,24 @@ public class GameLoader : MonoBehaviour
                 creatures.Add(creatureEntries[i].creature, creatureData);
             }
         }
-        
+
+        //Builds the tree design for the tower upgrades
+        if (TowerUpgradeTree == null)
+            BuildTowerUpgradeTree(out TowerUpgradeTree);
+
+        if (towerTabButton != null)
+        {
+            towerTabMenu = towerTabButton.GetComponent<TabMenu>();
+        }
+    }
+
+    void Start()
+    {
+        TakeTowerSnapShots();
+    }
+
+    private void TakeTowerSnapShots()
+    {
         //Loading towers and creating their snapshots:
         Sprite snapshotResult;
         RenderTexture render = new RenderTexture(snapshotWidth, snapshotHeight, snapshotDepth);
@@ -244,7 +277,7 @@ public class GameLoader : MonoBehaviour
                 prevLayer = snapshotTower.layer;
                 snapshotTower.transform.position = snapshotCamera.transform.position + snapshotCamera.transform.forward * towerSnapshotDistance;
                 //NOTE: Since tower pivot point is at the bottom we must offset it. 1.5 is roughly hard coded since 2 doesn't result in the tower being centered in its snapshot.
-                snapshotTower.transform.position -= snapshotTower.transform.up * (script.Height / 2f); 
+                snapshotTower.transform.position -= snapshotTower.transform.up * (script.Height / 3f);
                 snapshotTower.layer = snapshotLayerNumber;
                 snapshotCamera.targetTexture = render;
                 snapshotCamera.Render();
@@ -254,7 +287,7 @@ public class GameLoader : MonoBehaviour
                 texture = new Texture2D(snapshotWidth, snapshotHeight);
                 texture.ReadPixels(new Rect(0, 0, render.width, render.height), 0, 0);
                 texture.Apply();
-                
+
                 snapshotResult = Sprite.Create(texture, new Rect(0, 0, snapshotWidth, snapshotHeight), Vector2.zero);
                 snapshotResult.name = towerEntries[i].tower.ToString() + " Tower Sprite";
 
@@ -272,10 +305,6 @@ public class GameLoader : MonoBehaviour
         //Not setting the snapshot camera's target texture may result in the last tower's snapshot getting overwritten upon using the camera again.
         //snapshotCamera.targetTexture = null;
         RenderTexture.active = null;
-
-        //Builds the tree design for the tower upgrades
-        if (TowerUpgradeTree == null)
-            BuildTowerUpgradeTree(out TowerUpgradeTree);
     }
 
     /// <summary>

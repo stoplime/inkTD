@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CreatureQueuer : MonoBehaviour
 {
-    
+
     public GameObject contentUIElement;
 
     public GameObject creatureButtonPrefab;
@@ -26,8 +26,8 @@ public class CreatureQueuer : MonoBehaviour
 
     private GameLoader gameLoader;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         maxProgressBarLength = queueProgressBar.sizeDelta.x;
         queueProgressBar.sizeDelta = new Vector2(0, queueProgressBar.sizeDelta.y);
@@ -65,13 +65,13 @@ public class CreatureQueuer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         if (buttons.Count != 0)
         {
             progressTimer.Update();
         }
-	}
+    }
 
     /// <summary>
     /// Dequeues to top (next) button in the queue.
@@ -86,7 +86,7 @@ public class CreatureQueuer : MonoBehaviour
     /// Deletes a button from the creature queue.
     /// </summary>
     /// <param name="instanceID"></param>
-    public void DeleteButtonByInstanceID(int instanceID)
+    public void DeleteButtonByInstanceID(int instanceID, bool refund)
     {
         LinkedListNode<CreatureSpawnButton> it;
 
@@ -96,6 +96,11 @@ public class CreatureQueuer : MonoBehaviour
             {
                 Destroy(it.Value.gameObject);
                 buttons.Remove(it);
+
+                if (refund)
+                {
+                    PlayerManager.AddBalance(playerID, gameLoader.GetCreatureScript(it.Value.CreatureBeingSpawned).price);
+                }
             }
         }
     }
@@ -109,6 +114,7 @@ public class CreatureQueuer : MonoBehaviour
         GameObject newButton = Instantiate(creatureButtonPrefab, contentUIElement.transform);
         CreatureSpawnButton button = newButton.GetComponent<CreatureSpawnButton>();
         button.CreatureBeingSpawned = creatureToSpawn;
+        button.Queuer = this;
 
         Image image = newButton.GetComponent<Image>();
         image.sprite = gameLoader.GetCreatureSprite(creatureToSpawn);
