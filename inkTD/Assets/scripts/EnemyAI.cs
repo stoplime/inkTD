@@ -250,7 +250,7 @@ public class EnemyAI : MonoBehaviour {
             else
             {
                 // I have no idea why it would run here
-                Debug.Log("EnemyAI Tower Placement Went Horribly Wrong!... I think?", gameObject);
+                throw new Exception("This error should not have occured, but its a problem in the AI class in TryTowerPlacement()");
                 return false;
             }
         }
