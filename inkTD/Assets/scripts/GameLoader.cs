@@ -236,9 +236,26 @@ public class GameLoader : MonoBehaviour
             }
         }
 
+        Tower script;
+        TowerData data;
+        for (int i = 0; i < towerEntries.Length; i++)
+        {
+            if (towerEntries[i].prefab != null)
+            {
+                script = towerEntries[i].prefab.GetComponent<Tower>();
+                script.towerType = towerEntries[i].tower;
+
+                data = new TowerData();
+                data.entry = towerEntries[i];
+                data.tower = towerEntries[i].tower;
+                data.towerScript = script;
+                towers.Add(towerEntries[i].tower, data);
+            }
+        }
+
         //Builds the tree design for the tower upgrades
         if (TowerUpgradeTree == null)
-            BuildTowerUpgradeTree(out TowerUpgradeTree);
+        BuildTowerUpgradeTree(out TowerUpgradeTree);
 
         if (towerTabButton != null)
         {
@@ -257,9 +274,7 @@ public class GameLoader : MonoBehaviour
         Sprite snapshotResult;
         RenderTexture render = new RenderTexture(snapshotWidth, snapshotHeight, snapshotDepth);
         Texture2D texture;
-        TowerData data;
         GameObject snapshotTower;
-        Tower script;
         int prevLayer;
 
         if (snapshotCamera == null)
@@ -269,15 +284,12 @@ public class GameLoader : MonoBehaviour
         {
             if (towerEntries[i].prefab != null)
             {
-                script = towerEntries[i].prefab.GetComponent<Tower>();
-                script.towerType = towerEntries[i].tower;
-
                 snapshotTower = Instantiate(towerEntries[i].prefab);
 
                 prevLayer = snapshotTower.layer;
                 snapshotTower.transform.position = snapshotCamera.transform.position + snapshotCamera.transform.forward * towerSnapshotDistance;
                 //NOTE: Since tower pivot point is at the bottom we must offset it. 1.5 is roughly hard coded since 2 doesn't result in the tower being centered in its snapshot.
-                snapshotTower.transform.position -= snapshotTower.transform.up * (script.Height / 3f);
+                snapshotTower.transform.position -= snapshotTower.transform.up * (towers[towerEntries[i].tower].towerScript.Height / 3f);
                 snapshotTower.layer = snapshotLayerNumber;
                 snapshotCamera.targetTexture = render;
                 snapshotCamera.Render();
@@ -290,15 +302,8 @@ public class GameLoader : MonoBehaviour
 
                 snapshotResult = Sprite.Create(texture, new Rect(0, 0, snapshotWidth, snapshotHeight), Vector2.zero);
                 snapshotResult.name = towerEntries[i].tower.ToString() + " Tower Sprite";
-
-                data = new TowerData();
-                data.entry = towerEntries[i];
-                data.tower = towerEntries[i].tower;
-                data.towerScript = script;
-                data.towerSnapShot = snapshotResult;
-
-                towers.Add(towerEntries[i].tower, data);
-
+                
+                towers[towerEntries[i].tower].towerSnapShot = snapshotResult;
                 Destroy(snapshotTower);
             }
         }

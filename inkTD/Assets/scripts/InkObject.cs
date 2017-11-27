@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using helper;
 
-public class InkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class InkObject : MonoBehaviour
 {
     [Tooltip("The name of the creature.")]
     public string objName;
@@ -198,21 +198,11 @@ public class InkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        // Debug.Log("Pointer Enter");
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // Debug.Log("Pointer Exit");
-    }
-
     // Towers need a non-onTrigger collider for the events to work
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public virtual void Pressed()
     {
         // Select code here
-        Debug.Log(this.gameObject.name + " Was Clicked.");
+        //Debug.Log(this.gameObject.name + " Was Clicked.");
 
     }
 

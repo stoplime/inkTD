@@ -89,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150017993326830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.041025378, z: 0.0000000025563434}
+  m_LocalPosition: {x: 0, y: 0.0052083335, z: -3.2453787e-10}
   m_LocalScale: {x: 0.20788766, y: 1, z: 0.20788766}
   m_Children: []
   m_Father: {fileID: 4260197806608052}
@@ -390,6 +390,7 @@ MonoBehaviour:
   shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
   visualizeBezier: 0
   visualizeRadius: 0
+  radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114592614270107694}
   existsInGrid: 1
   towerCam: {fileID: 0}

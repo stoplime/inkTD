@@ -122,6 +122,7 @@
     <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
     <Compile Include="Assets\scripts\Tower.cs" />
     <Compile Include="Assets\scripts\TowerCamera.cs" />
+    <Compile Include="Assets\scripts\TowerClickHandler.cs" />
     <Compile Include="Assets\scripts\TowerInfoController.cs" />
     <Compile Include="Assets\scripts\Towers.cs" />
     <Compile Include="Assets\scripts\TowerSpawner.cs" />

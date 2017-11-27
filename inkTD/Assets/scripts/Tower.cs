@@ -51,6 +51,9 @@ public class Tower : InkObject
     [Tooltip("If true the cicle of the tower will be visualized and rendered.")]
     public bool visualizeRadius = false;
 
+    [Tooltip("The offset applied to the radius visualizer's y axis.")]
+    public float radiusVisualizerYOffset = 0.25f;
+
     public CircleMeshCreator radiusVisualizer;
 
     [Header("Special Settings")]
@@ -231,6 +234,17 @@ public class Tower : InkObject
         spawnPos.y += projectileSpawnHeight;
     }
 
+    public void UpdateRadiusVisiblity()
+    {
+        if (radiusVisualizer != null)
+        {
+            radiusVisualizer.Range = range / transform.lossyScale.x;
+            radiusVisualizer.transform.position = new Vector3(radiusVisualizer.transform.position.x, gameObject.transform.position.y + radiusVisualizerYOffset, radiusVisualizer.transform.position.z);
+            if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
+                radiusVisualizer.gameObject.SetActive(visualizeRadius);
+        }
+    }
+
     private void ValidateUpdate()
     {
         if (Application.isPlaying && timer != null && (speed < timer.TargetTime * 60000 + 0.0001 || speed > timer.TargetTime * 60000 - 0.0001))
@@ -240,12 +254,7 @@ public class Tower : InkObject
 
         SetSpawnPos();
 
-        if (radiusVisualizer != null)
-        {
-            radiusVisualizer.Range = range / transform.lossyScale.x;
-            if (radiusVisualizer.isActiveAndEnabled != visualizeRadius)
-                radiusVisualizer.gameObject.SetActive(visualizeRadius);
-        }
+        UpdateRadiusVisiblity();
 
         rangeRounded = (int)(range + 0.5f);
 
@@ -287,9 +296,9 @@ public class Tower : InkObject
     /// Event that runs when the tower is selected.
     /// </summary>
     /// <param name="eventData"></param>
-    public override void OnPointerDown(PointerEventData eventData)
+    public override void Pressed()
     {
-        base.OnPointerDown(eventData);
+        base.Pressed();
 
         if (gameLoader.TowerTabMenu.AlternativeMenuActive || !gameLoader.TowerTabMenu.IsVisible)
         { //The upgrade menu can only be shown if the alternative menu is active or if the menu is simply not visible.
@@ -303,6 +312,11 @@ public class Tower : InkObject
             currentController.SetTower(towerType);
 
             gameLoader.TowerTabMenu.AlternativeMenuActive = true;
+            
+            gameLoader.TowerTabMenu.ExtraInfo = this;
+
+            visualizeRadius = true;
+            UpdateRadiusVisiblity();
 
             if (!gameLoader.TowerTabMenu.IsVisible)
                 gameLoader.TowerTabMenu.ToggleMenuRollout();

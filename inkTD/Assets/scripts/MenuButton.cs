@@ -56,6 +56,11 @@ public class MenuButton : MonoBehaviour
         }
         else if (purchaseType == PurchaseType.Tower)
         {
+            if (towerScript == null)
+            {
+                towerScript = info.GetTowerScript(purchasableTower);
+            }
+
             if (PlayerManager.GetBalance(0) < towerScript.price)
             {
                 GetComponent<Button>().interactable = false;

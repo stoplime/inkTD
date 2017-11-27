@@ -393,6 +393,7 @@ MonoBehaviour:
   shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
   visualizeBezier: 0
   visualizeRadius: 0
+  radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114822597129160218}
   existsInGrid: 1
   towerCam: {fileID: 0}

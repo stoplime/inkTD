@@ -71,6 +71,15 @@ public class TabMenu : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets or sets additional information for this tab menu.
+    /// </summary>
+    public object ExtraInfo
+    {
+        get { return extraInfo; }
+        set { extraInfo = value; }
+    }
+
     protected UIAnchors anchor = UIAnchors.Right;
     protected RectTransform toolbar;
     protected Tab_Handler tabHandler;
@@ -79,6 +88,8 @@ public class TabMenu : MonoBehaviour
     protected RectTransform topBottomRect;
     protected Vector3 leftRightPosition;
     protected Vector3 topBottomPosition;
+
+    private object extraInfo;
 
     private bool transitioning = false;
 
