@@ -36,6 +36,27 @@ namespace helper
         {
             return new IntVector2(a.x - b.x, a.y - b.y);
         }
+
+        /// <summary>
+        /// Gets the Distance between two positions
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static float Distance(IntVector2 a, IntVector2 b)
+        {
+            return (float)Math.Sqrt((a.x-b.x) * (a.x-b.x) + (a.y-b.y) * (a.y-b.y));
+        }
+
+        /// <summary>
+        /// Gets the distance between this point and another
+        /// </summary>
+        /// <param name="other">The other point</param>
+        /// <returns></returns>
+        public float Dist(IntVector2 other)
+        {
+            return IntVector2.Distance(this, other);
+        }
     }
 
     public static class Help
@@ -247,7 +268,9 @@ namespace helper
         public static bool ValidPosition(int x, int y, int playerID, List<Creature> creatures, Grid grid)
         {
             //Determine if the coordinates are within the grid's bounds and an object is not already in the position.
-            if (!grid.inArena(x, y) && grid.getGridObject(x, y) != null)
+            if (!grid.inArena(x, y))
+                return false;
+            if (grid.getGridObject(x, y) != null)
                 return false;
 
             //empty game object used to generate a best path after filling the position's location on the grid.

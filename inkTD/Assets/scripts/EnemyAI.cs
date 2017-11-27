@@ -4,20 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-
-AI PLANS
-
-Tower placement
-- go through the optimal path backwards and look and the adjacent nodes on the path
-  to find an available placement.
-- use a weighted random selection between adjacent nodes to place
-
-Creature spawning
-- hard coded strategies that will use combinations of creatures
-- spawn based off a random weighted list of actions, where an action is a creature or combination
-
- */
 /// <summary>
 /// Defines a structure for a heuristic position that holds a heuristic value and a position.
 /// </summary>
@@ -41,8 +27,9 @@ public enum AIStates
 {
     Idle = 0,
     PlacingTowers = 1,
-    SpawningCreatures = 2,
-
+    UpgradeTowers = 2,
+    SpawningCreatures = 3,
+    ApplyModifiers = 4
 }
 
 public class EnemyAI : MonoBehaviour {
@@ -50,100 +37,134 @@ public class EnemyAI : MonoBehaviour {
     [Tooltip("The player ID for this AI, this AI will assume the role of a player with the given ID.")]
 	public int playerID;
 
+    [Tooltip("How fast the AI will react to different decisions. Value in Miliseconds")]
+    public int TimerValue = 500;
+
+    [Tooltip("The Range of towers to be checked before placing. Making this large can take too long and place towers way too far off the main path.")]    
+    public int TowerPlacementRange = 3;
+
+    [Tooltip("A custom tower selection distribution, leave blank for a random distribution. Should have a length of the number of base towers available")]
+    public List<float> CustomBaseTowerDistribution;
+
 	private Grid currentGrid;
     private List<Creature> creatures;
-    
-    private TaylorTimer timer100ms;
-    private TaylorTimer timer500ms;
-    private TaylorTimer timer1000ms;
 
-    private int endIndexOffset = 1;
+    private TaylorTimer actionTimer;
 
     private AIStates state = AIStates.PlacingTowers;
-    private Towers targetTower = Towers.Bomb;
-    private Tower targetTowerScript;
+    private List<float> stateWeights;
 
-    private bool gridFull = false;
+    private GameLoader gameData;
+
+    // Represents the likelyhood of selecting which base tower on tower placement, has length number of base towers
+    private List<float> BaseTowerDistribution;
+    private List<Towers> BaseTowers;
 
     private int towersInPlay = 0;
 
-    private GameLoader gameData;
+    // For creature spawning hoards
+    private List<Creature> SpawnCreaturesWave;
 
 	// Use this for initialization
 	void Start ()
     {
+        actionTimer = new TaylorTimer(TimerValue);
+        actionTimer.Elapsed += ActionTimer_Elapsed;
+
+        stateWeights = new List<float>();
+        stateWeights.Add(0.1f);  // 10% Idle
+        stateWeights.Add(0.6f);  // 60% Place Tower
+        stateWeights.Add(0.05f); // 5% Upgrade Towers
+        stateWeights.Add(0.2f);  // 20% Spawn a Creaure Wave
+        stateWeights.Add(0.05f); // 5% Applying Modifiers
+
         currentGrid = PlayerManager.GetGrid(playerID);
         creatures = PlayerManager.GetCreatures(playerID);
 
-        timer100ms = new TaylorTimer(100);
-        timer100ms.Elapsed += Timer100ms_Elapsed;
-
-        timer500ms = new TaylorTimer(500);
-        timer500ms.Elapsed += Timer500ms_Elapsed;
-
-        timer1000ms = new TaylorTimer(1000);
-        timer1000ms.Elapsed += Timer1000ms_Elapsed;
-
         gameData = Help.GetGameLoader();
+
+        BaseTowerDistribution = new List<float>();
+        BaseTowers = gameData.GetBaseTowers();
+        if (CustomBaseTowerDistribution == null || CustomBaseTowerDistribution.Count != BaseTowers.Count)
+        {
+            for (int i = 0; i < BaseTowers.Count; i++)
+            {
+                BaseTowerDistribution.Add(UnityEngine.Random.value);
+            }
+            Normalize(BaseTowerDistribution);
+        }
+        else
+        {
+            BaseTowerDistribution = CustomBaseTowerDistribution;
+        }
+        
 
         SetState(state);
     }
 
-    /// <summary>
-    /// Sets the current tower the AI is attempted to place during its place tower phase.
-    /// </summary>
-    /// <param name="tower">The tower the AI will attempt to place</param>
-    private void SetTargetTower(Towers tower)
+    // Timer update function, runs every TimerValue amount of Milseconds
+    private void ActionTimer_Elapsed(object sender, System.EventArgs e)
     {
-        targetTower = tower;
-        targetTowerScript = gameData.GetTowerScript(tower);
+        Normalize(stateWeights);
+        // Set the newly selected state
+        SetState( (AIStates)SelectWeightedRandom(stateWeights) );
     }
 
+    /// <summary>
+    /// Provides a random selected index based off of a normalized list of weights
+    /// </summary>
+    /// <param name="weights">Must be Normalized! (All numbers in the list has to add up to 1)</param>
+    /// <returns></returns>
+    private int SelectWeightedRandom(List<float> weights)
+    {
+        return SelectWeightedRandom(weights, UnityEngine.Random.value);
+    }
+
+    /// <summary>
+    /// Provides a random selected index based off of a list of weights (does not have to be normalized)
+    /// </summary>
+    /// <param name="weights">Distribution of Weights</param>
+    /// <param name="randomValue">A selected Value between 0 and the sum of all the Weights</param>
+    /// <returns>if returns -1 then it broke</returns>
+    private int SelectWeightedRandom(List<float> weights, float randomValue)
+    {
+        float percentBracket = 0;
+        for (int i = 0; i < weights.Count; i++)
+        {
+            percentBracket += weights[i];
+            if (randomValue <= percentBracket)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void Normalize(List<float> collection)
+    {
+        float sum = 0;
+        for (int i = 0; i < collection.Count; i++)
+        {
+            sum += collection[i];
+        }
+        for (int i = 0; i < collection.Count; i++)
+        {
+            collection[i] = collection[i]/sum;
+        }
+    }
+
+    // initializes an onStateChangeTo function
     private void SetState(AIStates state)
     {
         this.state = state;
 
         if (state == AIStates.PlacingTowers)
         {
-            SetTargetTower(targetTower);
-        }
-    }
-
-    private void Timer1000ms_Elapsed(object sender, System.EventArgs e)
-    {
-        //1 second update 'ticks'
-
-        //Basic flip/flop between tower spawning and creature creating.
-        if (!gridFull && state != AIStates.PlacingTowers)
-        {
-            if (towersInPlay < 10 || PlayerManager.GetBalance(playerID) > 200)
+            if (!TryTowerPlacement())
             {
-                SetState(AIStates.PlacingTowers);
+                
             }
         }
-
-        if (state != AIStates.SpawningCreatures)
-        {
-            if (PlayerManager.GetBalance(playerID) < 100 && towersInPlay >= 10)
-            {
-                SetState(AIStates.SpawningCreatures);
-            }
-        }
-
-        ComputeCreatureSpawn();
-    }
-
-    private void Timer500ms_Elapsed(object sender, System.EventArgs e)
-    {
-        //500 millisecond update 'ticks'
-
-    }
-
-    private void Timer100ms_Elapsed(object sender, System.EventArgs e)
-    {
-        //100 millisecond update 'ticks'
-
-        ComputeTowerPlacement();
     }
 
     private void ComputeCreatureSpawn()
@@ -154,90 +175,91 @@ public class EnemyAI : MonoBehaviour {
         PlayerManager.CreateCreature(playerID, Creatures.BatteringRam, true);
     }
 
-    private void ComputeTowerPlacement()
+    private bool TryTowerPlacement()
     {
-        if (state != AIStates.PlacingTowers || gridFull)
-            return;
+        if (state != AIStates.PlacingTowers)
+            return false;
 
         List<IntVector2> bestPath = PlayerManager.GetBestPath(playerID);
+
+        Grid grid = PlayerManager.GetGrid(playerID);
         
-        gridFull = bestPath.Count - endIndexOffset <= 0;
+        // possiblePositions and heuristicWeights has to have the same length
+        List<HPosition> possiblePositions = new List<HPosition>();
+        List<float> heuristicWeights = new List<float>();
 
-        if (!gridFull) //If the AI did not already scan the entire path...
+        IntVector2 selectedTowerPos;
+
+        // picks a random point on the best path as the starting tower placement choice
+        HPosition randomPathPos = new HPosition();
+        randomPathPos.position = bestPath[UnityEngine.Random.Range(0, bestPath.Count -1)];
+        randomPathPos.value = 1;
+        if (Help.ValidPosition(randomPathPos.position, playerID, creatures, currentGrid))
         {
-            List<HPosition> possiblePositions = new List<HPosition>();
-            bool towerPositionFound = false;
-            int offset = endIndexOffset;
+            possiblePositions.Add(randomPathPos);
+            heuristicWeights.Add(1);
+        }
 
-            while (!towerPositionFound && offset != bestPath.Count)
+        // Check around the random Point on the best path based on TowerPlacementRange
+        for (int x = randomPathPos.position.x - TowerPlacementRange; x < randomPathPos.position.x; x++)
+        {
+            for (int y = randomPathPos.position.y - TowerPlacementRange; y < randomPathPos.position.y; y++)
             {
-                //TODO: Expand this, by finding adjacent tiles to the bestPath[bestPath.Count - offset], so that we can add more tiles the AI can choose from (whether they're top heuristic or not
-                //is up to the AI to determine if it wants to maximize the heuristic.)
-                towerPositionFound = Help.ValidPosition(bestPath[bestPath.Count - offset], playerID, creatures, currentGrid);
-
-                if (towerPositionFound)
+                IntVector2 testPoint = new IntVector2(x, y);
+                if (Help.ValidPosition(testPoint, playerID, creatures, currentGrid))
                 {
-                    HPosition resultPosition = new HPosition();
-                    IntVector2 position = bestPath[bestPath.Count - offset];
-                    int heuristic = 0;
-
-                    //Defining the heuristic of the position, is this position good? If so, here's the criteria to determine how good:
-
-                    //Looping through ± 3 positions (3 above, 3 below) from the current position to determine if this position we're looking at is on the best path.
-                    for (int i = Math.Min(bestPath.Count - 1, bestPath.Count - offset + 3); i >= 0 && i >= bestPath.Count - offset - 3; i--)
-                    {
-                        if (bestPath[i].x == position.x && bestPath[i].y == position.y)
-                        {
-                            heuristic += 20; //20 points for being on the best path.
-                            break;
-                        }
-                    }
-
-                    //Adding this position to the possible positions list.
-                    resultPosition.value = heuristic;
-                    resultPosition.position = position;
-                    possiblePositions.Add(resultPosition);
-                }
-                //Incrementing the offset from the last position in the best path.
-                offset++;
-            }
-
-            //We do not try to place the tower is the AI cannot afford the tower.
-            if (PlayerManager.GetBalance(playerID) >= targetTowerScript.price)
-            {
-                endIndexOffset = offset; //By setting the endIndexOffset to the offset, we are .. actually I don't know anymore.
-
-                if (possiblePositions.Count > 0)
-                {
-                    HPosition bestPosition = possiblePositions[0];
-                    for (int i = 0; i < possiblePositions.Count; i++)
-                    {
-                        if (bestPosition.value < possiblePositions[i].value)
-                            bestPosition = possiblePositions[i];
-                    }
-
-                    //should probably check if we can afford the tower.
-                    bool placed = PlayerManager.PlaceTower(playerID, playerID, bestPosition.position, Quaternion.identity, targetTowerScript.gameObject, null, "", 0);
-
-                    if (placed)
-                    {
-                        towersInPlay += 1;
-                    }
+                    HPosition validPos = new HPosition();
+                    validPos.position = testPoint;
+                    // Value will be 1/(x+1) where x is the distance to the randomPathPos
+                    // Value will be normalized first before setting it as the heuristic
+                    float dist = testPoint.Dist(randomPathPos.position);
+                    heuristicWeights.Add( 1/((dist*dist)+1) );
+                    possiblePositions.Add(validPos);
                 }
             }
         }
-        //Temporary Test: When it finishes the tower maze, it goes on to spawn creatures.
-        else if (state != AIStates.SpawningCreatures)
+
+        // if none of the looked positions are available, then break out of towerplacement
+        if (possiblePositions.Count == 0)
         {
-            SetState(AIStates.SpawningCreatures);
+            return false;
+        }
+
+        // normalize and select a random tower
+        Normalize(heuristicWeights);
+        selectedTowerPos = possiblePositions[SelectWeightedRandom(heuristicWeights)].position;
+        
+        // Once a valid Tower location has been selected, find the appropriate tower to go in that location
+        Towers selectedTower = BaseTowers[SelectWeightedRandom(BaseTowerDistribution)];
+        Tower selectedTowerScript = gameData.GetTowerScript(selectedTower);
+
+        //We do not try to place the tower if the AI cannot afford the tower.
+        if (PlayerManager.GetBalance(playerID) >= selectedTowerScript.price)
+        {
+            bool placed = PlayerManager.PlaceTower(playerID, playerID, selectedTowerPos, Quaternion.identity, selectedTowerScript.gameObject, null, "", 0);
+
+            if (placed)
+            {
+                towersInPlay += 1;
+                return true;
+            }
+            else
+            {
+                // I have no idea why it would run here
+                Debug.Log("EnemyAI Tower Placement Went Horribly Wrong!... I think?", gameObject);
+                return false;
+            }
+        }
+        else
+        {
+            // Not enough money to place the tower
+            return false;
         }
     }
 
     // Update is called once per frame
     void Update ()
     {
-        timer100ms.Update();
-        timer500ms.Update();
-        timer1000ms.Update();
+        actionTimer.Update();
     }
 }

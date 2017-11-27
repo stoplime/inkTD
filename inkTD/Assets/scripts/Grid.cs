@@ -147,12 +147,13 @@ public class Grid : MonoBehaviour {
     }
 
 	/// <summery>
-	/// checks if grid pos is currently occupide with a tower
+	/// checks if grid pos is currently occupide or unplaceable aka not in arena
 	/// </summery>
 	public bool isGridEmpty(IntVector2 pos){
-		if (grid[pos.x - gridOffset.x, pos.y - gridOffset.y] != null){
+        if (!inArena(pos))
+            return false;
+		if (grid[pos.x - gridOffset.x, pos.y - gridOffset.y] != null)
 			return false;
-		}
 		return true;
 	}
 

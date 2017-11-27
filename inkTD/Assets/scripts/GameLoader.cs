@@ -126,8 +126,8 @@ public class GameLoader : MonoBehaviour
     /// </summary>
     private class TowerNode<T> where T : TowerData
     {
-        private T data;
-        private List<TowerNode<T>> children;
+        public T data;
+        public List<TowerNode<T>> children;
 
         public TowerNode(T data)
         {
@@ -274,7 +274,8 @@ public class GameLoader : MonoBehaviour
         RenderTexture.active = null;
 
         //Builds the tree design for the tower upgrades
-        BuildTowerUpgradeTree(out TowerUpgradeTree);
+        if (TowerUpgradeTree == null)
+            BuildTowerUpgradeTree(out TowerUpgradeTree);
     }
 
     /// <summary>
@@ -338,6 +339,28 @@ public class GameLoader : MonoBehaviour
 		tree[Brain_Tower].AddNode(Enlightenment_Tower);
 		TowerData Wizard_Tower = new TowerData(Towers.Wizard);
 		tree[Aether_Tower].AddNode(Wizard_Tower);
+    }
+
+    /// <summary>
+    /// Returns a list of base towers available
+    /// </summary>
+    /// <returns></returns>
+    public List<Towers> GetBaseTowers()
+    {
+        if (TowerUpgradeTree == null)
+            BuildTowerUpgradeTree(out TowerUpgradeTree);
+        List<Towers> bases = new List<Towers>();
+        // Go through all catagories
+        foreach (TowerNode<TowerData> catagory in TowerUpgradeTree.children)
+        {
+            // Go through all base towers in a catagory
+            // should only be one tower for now but just in case I added a loop
+            foreach (TowerNode<TowerData> baseTower in catagory.children)
+            {
+                bases.Add(baseTower.data.tower);
+            }
+        }
+        return bases;
     }
 
     /// <summary>
