@@ -397,6 +397,17 @@ public class GameLoader : MonoBehaviour
         return bases;
     }
 
+    public List<Towers> GetTowerUpgrades(Towers tower)
+    {
+        if (TowerUpgradeTree == null)
+            BuildTowerUpgradeTree(out TowerUpgradeTree);
+        List<Towers> upgrades = new List<Towers>();
+        foreach (TowerNode<TowerData> child in TowerUpgradeTree.children)
+        {
+            upgrades.Add(child.data.tower);
+        }
+    }
+
     /// <summary>
     /// Gets a snapshot of the given tower.
     /// </summary>
