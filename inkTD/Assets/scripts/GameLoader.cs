@@ -408,7 +408,7 @@ public class GameLoader : MonoBehaviour
             BuildTowerUpgradeTree(out TowerUpgradeTree);
         // if the upgrade tree does not contain the passed in tower, then return null
         if (TowerUpgradeTree[tower] == null)
-            return null
+            return null;
         
         List<Towers> upgrades = new List<Towers>();
         // go through the children of tower
