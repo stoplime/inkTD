@@ -414,6 +414,28 @@ public class GameLoader : MonoBehaviour
     }
 
     /// <summary>
+    /// Given a tower in the upgrade tree, returns a list of towers which is its possible upgrades
+    /// </summary>
+    /// <param name="tower"></param>
+    /// <returns></returns>
+    public List<Towers> GetTowerUpgrades(Towers tower)
+    {
+        if (TowerUpgradeTree == null)
+            BuildTowerUpgradeTree(out TowerUpgradeTree);
+        // if the upgrade tree does not contain the passed in tower, then return null
+        if (TowerUpgradeTree[tower] == null)
+            return null;
+        
+        List<Towers> upgrades = new List<Towers>();
+        // go through the children of tower
+        foreach (TowerNode<TowerData> child in TowerUpgradeTree[tower].children)
+        {
+            upgrades.Add(child.data.tower);
+        }
+        return upgrades;
+    }
+
+    /// <summary>
     /// Gets a snapshot of the given tower.
     /// </summary>
     /// <param name="tower">The given tower.</param>
