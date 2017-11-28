@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -126,16 +128,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Battering Ram
-  maxHealth: 150
-  health: 150
-  damage: 100
-  speed: 1
-  price: 12
+  maxHealth: 2500
+  health: 2500
+  damage: 700
+  speed: 1.2
+  price: 650
   ownerID: 0
   description: A ram made of wood with an iron tip for busting down castle gates.
   defense: 0
-  inkcomeValue: 6
-  dropInk: 6
+  inkcomeValue: 150
+  dropInk: 250
   gridID: 0
   animationHeight: 2
   debug: 0

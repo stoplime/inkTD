@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -111,17 +113,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Ghost
-  maxHealth: 120
-  health: 120
-  damage: 70
-  speed: 2
-  price: 20
+  maxHealth: 600
+  health: 600
+  damage: 150
+  speed: 1.5
+  price: 100
   ownerID: 0
   description: A spirit that lingers on the physical plane because of some unfinished
     buisness.
   defense: 0
-  inkcomeValue: 7
-  dropInk: 7
+  inkcomeValue: 30
+  dropInk: 50
   gridID: 0
   animationHeight: 2
   debug: 0

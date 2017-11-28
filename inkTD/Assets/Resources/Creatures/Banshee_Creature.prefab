@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -111,17 +113,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Banshee
-  maxHealth: 200
-  health: 200
-  damage: 150
+  maxHealth: 500000
+  health: 500000
+  damage: 150000
   speed: 3
-  price: 35
+  price: 600000
   ownerID: 0
   description: A ghost whose loud shrieks, screams, and wails are said to send bad
     omens to those who hear them.
   defense: 2
-  inkcomeValue: 18
-  dropInk: 18
+  inkcomeValue: 130000
+  dropInk: 250000
   gridID: 0
   animationHeight: 2
   debug: 0

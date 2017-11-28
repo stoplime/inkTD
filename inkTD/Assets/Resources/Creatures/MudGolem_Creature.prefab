@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -126,17 +128,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Mud Golem
-  maxHealth: 175
-  health: 175
-  damage: 70
-  speed: 1
-  price: 50
+  maxHealth: 25000
+  health: 25000
+  damage: 8000
+  speed: 1.5
+  price: 8000
   ownerID: 0
   description: An animated pile of earth said to perform any task that was written
     on paper and inserted into its mouth.
   defense: 2
-  inkcomeValue: 25
-  dropInk: 25
+  inkcomeValue: 2500
+  dropInk: 4000
   gridID: 0
   animationHeight: 2
   debug: 0

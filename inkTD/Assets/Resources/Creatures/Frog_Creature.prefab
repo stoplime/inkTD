@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -126,17 +128,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Frog
-  maxHealth: 150
-  health: 150
-  damage: 90
+  maxHealth: 7500
+  health: 7500
+  damage: 2500
   speed: 2
-  price: 25
+  price: 2200
   ownerID: 0
   description: A giant amphibian with powerful legs to help it jump and swim incredibly
     fast.
   defense: 0
-  inkcomeValue: 12
-  dropInk: 12
+  inkcomeValue: 800
+  dropInk: 1200
   gridID: 0
   animationHeight: 2
   debug: 0
