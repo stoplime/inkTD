@@ -17,6 +17,8 @@ public static class PlayerManager
 
     public const float DefaultIncome = 50f;
 
+    public const float ResellPercentage = 0.85f;
+
     private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose_Menu";
 
     public static WinLoseHandler winLoseScript;
@@ -155,6 +157,15 @@ public static class PlayerManager
     public static void AddBalance(int playerID, float value)
     {
         balance[playerID] += value;
+
+        if (value < 0)
+        {
+            StatManager.AddStat(playerID, Stats.InkSpent, value);
+        }
+        else
+        {
+            StatManager.AddStat(playerID, Stats.InkAccumulated, value);
+        }
 
         if (playerID == CurrentPlayer && OnCurrentPlayerBalanceChange != null)
             OnCurrentPlayerBalanceChange(null, EventArgs.Empty);
@@ -474,12 +485,13 @@ public static class PlayerManager
                 }
             }
         }
-        // print(pathFail);
+
         if (!pathFail)
         {
             if (GetBalance(playerID) >= ntScript.price)
             {
                 AddBalance(playerID, -ntScript.price);
+                StatManager.AddStat(playerID, Stats.TowersCreated, 1);
 
                 for (int i = 0; i < creatures.Count; i++)
                 {
@@ -513,6 +525,55 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Sells a tower at a given spot in a given grid. Returns a percentage of the cost based on ResellPercentage const in PlayerManager.
+    /// </summary>
+    /// <param name="gridID">The id of the grid where the tower will be sold.</param>
+    /// <param name="gridPos">The grid position that the tower will be sold.</param>
+    /// <returns></returns>
+    public static bool SellTower(int gridID, IntVector2 gridPos)
+    {
+        return SellTower(gridID, gridPos.x, gridPos.y, ResellPercentage);
+    }
+
+    /// <summary>
+    /// Sells a tower at a given spot in a given grid. Returns a percentage of the cost based on ResellPercentage const in PlayerManager.
+    /// </summary>
+    /// <param name="gridID">The id of the grid where the tower will be sold.</param>
+    /// <param name="gridPos">The grid position that the tower will be sold.</param>
+    /// <returns></returns>
+    public static bool SellTower(int gridID, int gridX, int gridY)
+    {
+        return SellTower(gridID, gridX, gridY, ResellPercentage);
+    }
+
+    /// <summary>
+    /// Sells a tower at a given spot in a given grid. Returns a percentage of the cost based on ResellPercentage const in PlayerManager.
+    /// </summary>
+    /// <param name="gridID">The id of the grid where the tower will be sold.</param>
+    /// <param name="gridPos">The grid position that the tower will be sold.</param>
+    /// <returns></returns>
+    public static bool SellTower(int gridID, int gridX, int gridY, float refundPercentage)
+    {
+        Grid grid = GetGrid(gridID);
+        GameObject towerObj = grid.getGridObject(gridX, gridY);
+        if (towerObj == null)
+            return false;
+
+        Tower towerScript = towerObj.GetComponent<Tower>();
+
+        if (towerScript == null)
+            return false;
+
+        AddBalance(gridID, towerScript.price * refundPercentage);
+        StatManager.AddStat(gridID, Stats.TowersSold, 1);
+
+        grid.setGridObject(gridX,gridY, null);
+        GameObject.Destroy(towerObj);
+
+        return true;
+    }
+
+    /// <summary>
     /// Creates a creature at every grid except the one that is spawning the creatures. Returns true if the creature was succesfully created, false otherwise.
     /// </summary>
     /// <param name="playerID">The ID of the player spawning this creautre.</param>
@@ -532,6 +593,7 @@ public static class PlayerManager
         }
         GameObject creature;
         AddIncome(playerID, clone.inkcomeValue);
+        StatManager.AddStat(playerID, Stats.CreaturesSpawned, 1);
         foreach (KeyValuePair<int, List<Creature>> v in creatures)
         {
             if (playerID != v.Key && !grids[v.Key].TowerCastleDead)

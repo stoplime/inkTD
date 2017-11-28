@@ -29,7 +29,7 @@ public class TowerClickHandler : MonoBehaviour
 
     public void Update()
     {
-        if (!Help.MouseOnUI && Input.GetButtonDown("Fire1") && Help.GetObjectInMousePath(out hit))
+        if (!Help.MouseOnUI && Input.GetButtonDown("Fire1") && !gameLoader.TowerTabMenu.Transitioning && Help.GetObjectInMousePath(out hit))
         {
             if (gameLoader.TowerTabMenu.ExtraInfo != null)
             {

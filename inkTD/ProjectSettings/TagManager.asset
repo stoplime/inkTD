@@ -16,6 +16,7 @@ TagManager:
   - InfoContent
   - TowerSelectMenuHor
   - TowerSelectMenuVer
+  - UpgradeButton
   layers:
   - Default
   - TransparentFX

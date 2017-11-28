@@ -189,11 +189,6 @@ public class Tower : InkObject
 
         creatures = PlayerManager.GetCreatures(ownerID);
 
-        if (radiusVisualizer != null)
-        {
-            radiusVisualizer.Range = range;
-        }
-
         towerTargetArea = GetComponent<SphereCollider>();
 
         rangeRounded = (int)(range + 0.5f);
@@ -300,6 +295,11 @@ public class Tower : InkObject
     {
         base.Pressed();
 
+        if (gameLoader == null)
+        {
+            gameLoader = Help.GetGameLoader();
+        }
+
         if (gameLoader.TowerTabMenu.AlternativeMenuActive || !gameLoader.TowerTabMenu.IsVisible)
         { //The upgrade menu can only be shown if the alternative menu is active or if the menu is simply not visible.
             GameObject leftRightMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuHor");
@@ -309,10 +309,9 @@ public class Tower : InkObject
 
             TowerInfoController currentController = gameLoader.towerControllerCurrentLeftRight;
 
-            currentController.SetTower(towerType);
+            currentController.SetTower(this, ownerID, PlayerManager.CurrentPlayer, gridPositionX, gridPositionY);
 
             gameLoader.TowerTabMenu.AlternativeMenuActive = true;
-            
             gameLoader.TowerTabMenu.ExtraInfo = this;
 
             visualizeRadius = true;
@@ -482,6 +481,8 @@ public class Tower : InkObject
             {
                 audioSource.PlayOneShot(shootSoundEffect);
             }
+            
+            StatManager.AddStat(ownerID, Stats.ProjectilesShots, 1);
         }
     }
 

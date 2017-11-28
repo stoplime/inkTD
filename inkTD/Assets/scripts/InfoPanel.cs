@@ -20,13 +20,11 @@ public class InfoPanel : MonoBehaviour
     public Button buyButton;
     public Camera towerCam;
 
-    [Tooltip("THe script used to spawn towers in this scene.")]
+    [Tooltip("The script used to spawn towers in this scene.")]
     public TowerSpawner towerSpawner;
-
-
-    public string objName, description;
-    public string[] modifiers;
-    public float cost, health, rateOfFire, damage, range, speed;
+    
+    private string objName, description;
+    private float cost, health, rateOfFire, damage, range, speed;
 
     private GameLoader info;
 
@@ -56,9 +54,6 @@ public class InfoPanel : MonoBehaviour
         towerSpawner.SetSelectedTower(tower);
 
         ApplyText();
-        //this.image.overrideSprite = image;
-        //TowerSpawner.selectedTowerPath = towerPath;
-        //towerCam.GetComponent<TowerCamera>().MoveCamera(i);
     }
 
     /// <summary>

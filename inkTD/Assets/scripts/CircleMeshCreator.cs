@@ -72,6 +72,7 @@ public class CircleMeshCreator : MonoBehaviour
         filter = GetComponent<MeshFilter>();
         GenerateMesh();
         filter.mesh = mesh;
+        Range = range;
 	}
 
     void OnValidate()
@@ -98,6 +99,7 @@ public class CircleMeshCreator : MonoBehaviour
                 filter.sharedMesh = mesh;
             }
         }
+        Range = range;
     }
 
     void OnDrawGizmos()
