@@ -129,6 +129,7 @@
     <Compile Include="Assets\scripts\TowerSpawner.cs" />
     <Compile Include="Assets\scripts\TowerUpgradeController.cs" />
     <Compile Include="Assets\scripts\UI_Tracker.cs" />
+    <Compile Include="Assets\scripts\UIScrollControl.cs" />
     <Compile Include="Assets\scripts\WinLoseHandler.cs" />
     <Compile Include="Assets\scripts\WorldText.cs" />
   </ItemGroup>

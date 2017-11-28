@@ -397,22 +397,6 @@ public class GameLoader : MonoBehaviour
         return bases;
     }
 
-    public List<Towers> GetUpgrades(Towers tower)
-    {
-        if (TowerUpgradeTree == null)
-            BuildTowerUpgradeTree(out TowerUpgradeTree);
-
-        List<Towers> children = new List<Towers>();
-        //TODO: Get the actual children from the tower upgrade tree.
-        //TowerNode<TowerData> data = Tower; //Note this does not work. It does not get the right data.
-        //foreach (var v in data.children)
-        //{
-        //    children.Add(v.data.tower);
-        //}
-        children = GetBaseTowers();
-        return children;
-    }
-
     /// <summary>
     /// Given a tower in the upgrade tree, returns a list of towers which is its possible upgrades
     /// </summary>

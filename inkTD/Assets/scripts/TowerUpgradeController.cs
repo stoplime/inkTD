@@ -19,6 +19,11 @@ public class TowerUpgradeController : MonoBehaviour
 
     public float upgradeOffset = 35f;
 
+    [Tooltip("toolbar that is affect by the children being scrolled within.")]
+    public Scrollbar childrenInfluencedScrollBar;
+
+    public float scrollBarSensitivity = 0.5f;
+
     private List<TowerInfoController> upgradeControllers = new List<TowerInfoController>();
 
     private GameLoader gameLoader;
@@ -49,9 +54,10 @@ public class TowerUpgradeController : MonoBehaviour
 
         if (currentTowerController.Owner == PlayerManager.CurrentPlayer && currentTowerController.Tower != null)
         {
-            List<Towers> upgrades = gameLoader.GetUpgrades(currentTowerController.Tower.towerType);
+            List<Towers> upgrades = gameLoader.GetTowerUpgrades(currentTowerController.Tower.towerType);
 
             GameObject obj;
+            UIScrollControl scrollController;
             TowerInfoController controller;
             RectTransform upgradeRect = new RectTransform();
             for (int i = 0; i < upgrades.Count; i++)
@@ -62,6 +68,13 @@ public class TowerUpgradeController : MonoBehaviour
                 upgradeControllers.Add(controller);
                 upgradeRect = obj.GetComponent<RectTransform>();
                 upgradeRect.anchoredPosition = new Vector3(rectTransform.rect.x, rectTransform.offsetMin.y - (spacePerUpgrade * i) - upgradeRect.rect.height * (i + 1) - upgradeOffset);
+
+                if (childrenInfluencedScrollBar != null)
+                {
+                    scrollController = obj.GetComponentInChildren<UIScrollControl>();
+                    scrollController.scrollBar = childrenInfluencedScrollBar;
+                    scrollController.sensitivity = scrollBarSensitivity;
+                }
             }
 
             if (upgrades.Count > 0)
