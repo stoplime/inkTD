@@ -207,82 +207,88 @@ namespace helper
         }
 
         /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
+        /// The length should be 0 if the best path doesn't exist.
         /// </summary>
         /// <param name="x">The horizontal position on the grid that will be checked.</param>
         /// <param name="y">The vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <returns>Returns true if the position is valid.</returns>
-        public static bool ValidPosition(int x, int y, int playerID)
+        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
+        public static int ValidPosition(int x, int y, int playerID)
         {
             return ValidPosition(x, y, playerID, PlayerManager.GetCreatures(playerID));
         }
 
         /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
+        /// The length should be 0 if the best path doesn't exist.
         /// </summary>
         /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <returns>Returns true if the position is valid.</returns>
-        public static bool ValidPosition(IntVector2 position, int playerID)
+        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
+        public static int ValidPosition(IntVector2 position, int playerID)
         {
             return ValidPosition(position.x, position.y, playerID, PlayerManager.GetCreatures(playerID));
         }
 
         /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
+        /// The length should be 0 if the best path doesn't exist.
         /// </summary>
         /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
         /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
-        /// <returns>Returns true if the position is valid.</returns>
-        public static bool ValidPosition(IntVector2 position, int playerID, List<Creature> creatures)
+        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
+        public static int ValidPosition(IntVector2 position, int playerID, List<Creature> creatures)
         {
             return ValidPosition(position.x, position.y, playerID, creatures);
         }
 
         /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
+        /// The length should be 0 if the best path doesn't exist.
         /// </summary>
         /// <param name="x">The horizontal position on the grid that will be checked.</param>
         /// <param name="y">The vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
         /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
-        /// <returns>Returns true if the position is valid.</returns>
-        public static bool ValidPosition(int x, int y, int playerID, List<Creature> creatures)
+        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
+        public static int ValidPosition(int x, int y, int playerID, List<Creature> creatures)
         {
             return ValidPosition(x, y, playerID, creatures, PlayerManager.GetGrid(playerID));
         }
 
         /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
+        /// The length should be 0 if the best path doesn't exist.
         /// </summary>
         /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
         /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
         /// <param name="grid">The grid of the player.</param>
-        /// <returns>Returns true if the position is valid.</returns>
-        public static bool ValidPosition(IntVector2 position, int playerID, List<Creature> creatures, Grid grid)
+        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
+        public static int ValidPosition(IntVector2 position, int playerID, List<Creature> creatures, Grid grid)
         {
             return ValidPosition(position.x, position.y, playerID, creatures, grid);
         }
 
         /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns true if the position is valid.
+        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
+        /// The length should be 0 if the best path doesn't exist.
         /// </summary>
         /// <param name="x">The horizontal position on the grid that will be checked.</param>
         /// <param name="y">The vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
         /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
         /// <param name="grid">The grid of the player.</param>
-        /// <returns>Returns true if the position is valid.</returns>
-        public static bool ValidPosition(int x, int y, int playerID, List<Creature> creatures, Grid grid)
+        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
+        public static int ValidPosition(int x, int y, int playerID, List<Creature> creatures, Grid grid)
         {
             //Determine if the coordinates are within the grid's bounds and an object is not already in the position.
             if (!grid.inArena(x, y))
-                return false;
+                return 0;
             if (grid.getGridObject(x, y) != null)
-                return false;
+                return 0;
 
             //empty game object used to generate a best path after filling the position's location on the grid.
             GameObject empty = new GameObject();
@@ -291,7 +297,8 @@ namespace helper
             grid.setGridObject(x, y, empty);
 
             //Does the new best path exist? Pathfail is used to determine if the new paths generated from the position fail the validity tests.
-            bool pathFail = PlayerManager.GetBestPath(playerID).Count == 0;
+            int pathLength = PlayerManager.GetBestPath(playerID).Count;
+            bool pathFail = pathLength == 0;
 
             if (!pathFail)
             {
@@ -309,12 +316,8 @@ namespace helper
             //Reseting the state of the grid and its creatures:
             grid.setGridObject(x, y, null);
             GameObject.Destroy(empty);
-            //for (int i = 0; i < creatures.Count; i++)
-            //{
-            //    creatures[i].updateTempPath();
-            //}
 
-            return !pathFail;
+            return pathLength;
         }
 
         /// <summary>
