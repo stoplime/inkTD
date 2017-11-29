@@ -17,6 +17,7 @@ TagManager:
   - TowerSelectMenuHor
   - TowerSelectMenuVer
   - UpgradeButton
+  - Obstacle
   layers:
   - Default
   - TransparentFX

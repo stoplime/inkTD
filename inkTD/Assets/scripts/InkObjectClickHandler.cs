@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TowerClickHandler : MonoBehaviour
+public class InkObjectClickHandler : MonoBehaviour
 {
 
     private GameLoader gameLoader;

@@ -117,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1220762248243230}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24, y: 2.0692182, z: 12}
+  m_LocalPosition: {x: 24, y: 0, z: 12}
   m_LocalScale: {x: 15, y: 12, z: 15}
   m_Children:
   - {fileID: 4256962607992432}
@@ -370,10 +370,12 @@ MonoBehaviour:
   ownerID: 0
   description: Behold! This tower is enlightened by its own intelligence! Truly a
     magnanimous and powerful tower which inspires awe in its victims!
-  towerType: 24
-  range: 7.5
   initialGridPositionX: 8
   initialGridPositionY: 4
+  existsInGrid: 1
+  sellable: 1
+  towerType: 24
+  range: 7.5
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -385,8 +387,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114914589775306224}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114427904199405672
 MonoBehaviour:
   m_ObjectHideFlags: 1

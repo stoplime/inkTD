@@ -65,11 +65,13 @@
      <Compile Include="Assets\scripts\EventArguments.cs" />
      <Compile Include="Assets\scripts\GameLoader.cs" />
      <Compile Include="Assets\scripts\Grid.cs" />
+     <Compile Include="Assets\scripts\GridSnapInkObject.cs" />
      <Compile Include="Assets\scripts\GridVisualizer.cs" />
      <Compile Include="Assets\scripts\Help.cs" />
      <Compile Include="Assets\scripts\InfoPanel.cs" />
      <Compile Include="Assets\scripts\Initializer.cs" />
      <Compile Include="Assets\scripts\InkObject.cs" />
+     <Compile Include="Assets\scripts\InkObjectClickHandler.cs" />
      <Compile Include="Assets\scripts\MainMenuScript.cs" />
      <Compile Include="Assets\scripts\MenuButton.cs" />
      <Compile Include="Assets\scripts\Modifier.cs" />
@@ -87,7 +89,6 @@
      <Compile Include="Assets\scripts\Toolbar_Handler.cs" />
      <Compile Include="Assets\scripts\Tower.cs" />
      <Compile Include="Assets\scripts\TowerCamera.cs" />
-     <Compile Include="Assets\scripts\TowerClickHandler.cs" />
      <Compile Include="Assets\scripts\TowerInfoController.cs" />
      <Compile Include="Assets\scripts\Towers.cs" />
      <Compile Include="Assets\scripts\TowerSpawner.cs" />

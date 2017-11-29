@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1747824625071908}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.0692182, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 44, y: 75, z: 44}
   m_Children:
   - {fileID: 4574355029733450}
@@ -107,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891192075045668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.02625624, z: 0.0000000019563005}
+  m_LocalPosition: {x: 0, y: 0.0033333332, z: -2.483608e-10}
   m_LocalScale: {x: 0.3409091, y: 1, z: 0.3409091}
   m_Children: []
   m_Father: {fileID: 4101826667346698}
@@ -371,10 +371,12 @@ MonoBehaviour:
   description: A tower which gets its strength from incredibly powerful wizards who
     have practiced their entire lives in the realm of magic. This is a top tier powerhouse
     of a magic tower!
-  towerType: 27
-  range: 15
   initialGridPositionX: 0
   initialGridPositionY: 0
+  existsInGrid: 1
+  sellable: 1
+  towerType: 27
+  range: 15
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -386,8 +388,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114822597129160218}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114771703797023534
 MonoBehaviour:
   m_ObjectHideFlags: 1

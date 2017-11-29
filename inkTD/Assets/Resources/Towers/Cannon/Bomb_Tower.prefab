@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1857297534274738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.02813169, z: 0.000000001565041}
+  m_LocalPosition: {x: 0, y: 0.0014285715, z: -7.947525e-11}
   m_LocalScale: {x: 0.16363636, y: 1, z: 0.16363636}
   m_Children: []
   m_Father: {fileID: 4592724123874140}
@@ -104,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1990056703932884}
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 18, y: 2.0692182, z: 18}
+  m_LocalPosition: {x: 18, y: 0, z: 18}
   m_LocalScale: {x: 55, y: 70, z: 55}
   m_Children:
   - {fileID: 4915297776498430}
@@ -371,10 +371,12 @@ MonoBehaviour:
   description: Hunker down because this beefy tower is going to blow your socks off!
     Its fantastic AOE can hit more targets at once than any tower before it! Indeed
     one may even say this tower is the bomb!
-  towerType: 13
-  range: 9
   initialGridPositionX: 6
   initialGridPositionY: 6
+  existsInGrid: 1
+  sellable: 1
+  towerType: 13
+  range: 9
   priorityTarget: 0
   projectileAreaRadius: 2.65
   projectileLife: 1000
@@ -386,8 +388,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114315610146389352}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114315610146389352
 MonoBehaviour:
   m_ObjectHideFlags: 1

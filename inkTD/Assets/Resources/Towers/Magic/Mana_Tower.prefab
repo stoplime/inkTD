@@ -117,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988751567310180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0033333332, z: -2.4836014e-10}
+  m_LocalPosition: {x: 0, y: 0.0013333333, z: -9.934406e-11}
   m_LocalScale: {x: 0.27272728, y: 1, z: 0.27272728}
   m_Children: []
   m_Father: {fileID: 4905512439560420}
@@ -130,7 +130,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138235627301146}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18, y: 2.0692182, z: 9}
+  m_LocalPosition: {x: 18, y: 0, z: 9}
   m_LocalScale: {x: 44, y: 75, z: 44}
   m_Children:
   - {fileID: 4288371693253784}
@@ -401,10 +401,12 @@ MonoBehaviour:
   description: A tower adept at concentrating magical energies to strike enemies down.
     The mana tower utilizes longer ranged attacks than its predecessors, but its speed
     suffers  shooting at only [s] times per minute.
-  towerType: 25
-  range: 12
   initialGridPositionX: 6
   initialGridPositionY: 3
+  existsInGrid: 1
+  sellable: 1
+  towerType: 25
+  range: 12
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -416,8 +418,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114214421561894522}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135107605418228332
 SphereCollider:
   m_ObjectHideFlags: 1

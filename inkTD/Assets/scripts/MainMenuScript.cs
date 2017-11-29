@@ -4,9 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[System.Serializable]
+public enum Levels
+{
+    MainMenu = 0,
+    Level1 = 1
+}
+
 public class MainMenuScript : MonoBehaviour
 {
     public static int levelNum;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -27,6 +35,11 @@ public class MainMenuScript : MonoBehaviour
     public void SetLevelNum(int levelNum)
     {
         MainMenuScript.levelNum = levelNum;
+    }
+
+    public void LoadLevel(int levelNum)
+    {
+        SceneManager.LoadScene(levelNum);
     }
 
     public void LoadLevel()

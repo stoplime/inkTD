@@ -2,31 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 using helper;
+using System;
 
-public class Obstacle : InkObject {
+[System.Serializable]
+public struct ObstaclePiece
+{
+    public GameObject obstaclePrefab;
+    public int gridPositionX;
+    public int gridPositionY;
+}
 
-	public bool Removeable;
+public class Obstacle : GridSnapInkObject
+{
+    [Tooltip("If checked/true then the obstacle can be purchased and removed.")]
+	public bool removeable;
 
-	public IntVector2 ObstacleSize;
+    [Tooltip("Not currently working")]
+    public ObstaclePiece[] additionalPieces;
 
-	public GameObject PlaceHolderObject;
+    [Tooltip("The object that the snapshot is taken of. Leave as null if you want the object this script is attached to.")]
+    public GameObject snapshotObject;
 
-	private GameObject[,] PlaceHolders;
+    public bool TakeSnapshot = true;
 
-	// Use this for initialization
-	void Start () {
-		PlaceHolders = new GameObject[ObstacleSize.x, ObstacleSize.y];
-		for (int i = 0; i < PlaceHolders.GetLength(0); i++)
-		{
-			for (int j = 0; j < PlaceHolders.GetLength(1); j++)
-			{
-				PlaceHolders[i, j] = PlaceHolderObject;
-			}
-		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public float snapShotDistance = 6f;
+
+    public Vector3 snapShotOffset = Vector3.zero;
+
+    /// <summary>
+    /// Gets the obstacle's personal ID.
+    /// </summary>
+    public Guid ObstacleID
+    {
+        get { return obstacleID; }
+    }
+
+    private Guid obstacleID = Guid.NewGuid();
+    
+    // Use this for initialization
+    public override void Start ()
+    {
+        base.Start();
+
+        gameLoader = Help.GetGameLoader();
+        if (TakeSnapshot)
+        {
+            if (snapshotObject == null)
+                gameLoader.TakeSnapShotOf(gameObject, obstacleID.ToString(), snapShotDistance, snapShotOffset, true);
+            else
+                gameLoader.TakeSnapShotOf(snapshotObject, obstacleID.ToString(), snapShotDistance, snapShotOffset, true);
+        }
+    }
 }

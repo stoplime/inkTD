@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using helper;
+using System.Text;
+
+public enum InkObjectTypes
+{
+    None = 0,
+    Tower = 1,
+    Obstacle = 2,
+    Creature = 3,
+}
 
 public class InkObject : MonoBehaviour
 {
@@ -214,5 +223,18 @@ public class InkObject : MonoBehaviour
     {
         // towerCam.GetComponent<TowerCamera>().MoveCamera(this);
         // visualizeRadius = true;
+    }
+
+    /// <summary>
+    /// Gets a string containing stat information that can be displayed in menues.
+    /// </summary>
+    /// <returns></returns>
+    public virtual string GetStatString()
+    {
+        string result = maxHealth.ToString() + "HP";
+        result += "\n";
+        result += "Costs " + price.ToString() + " Ink";
+        result += "\n";
+        return result;
     }
 }

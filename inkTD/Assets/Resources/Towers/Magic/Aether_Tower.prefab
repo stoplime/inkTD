@@ -104,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288869615545966}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21, y: 2.0692182, z: 9}
+  m_LocalPosition: {x: 21, y: 0, z: 9}
   m_LocalScale: {x: 44, y: 75, z: 44}
   m_Children:
   - {fileID: 4033022771075200}
@@ -401,10 +401,12 @@ MonoBehaviour:
   description: The aether is a mysterious place with mysterious power, and this tower
     draws from that place. This tower bolsters long range and high damage ([d]) over
     speed ([s]).
-  towerType: 26
-  range: 14
   initialGridPositionX: 7
   initialGridPositionY: 3
+  existsInGrid: 1
+  sellable: 1
+  towerType: 26
+  range: 14
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -416,8 +418,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114219451049173396}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135143965412966628
 SphereCollider:
   m_ObjectHideFlags: 1

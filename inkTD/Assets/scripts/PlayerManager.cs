@@ -464,7 +464,7 @@ public static class PlayerManager
         GameObject newTower = GameObject.Instantiate(towerPrefab) as GameObject; //Note: we can use an empty gameobject until we've confirmed the path is not obstructed.
         Tower ntScript = newTower.GetComponent<Tower>();
         ntScript.ownerID = playerID;
-        ntScript.SetTowerPosition(gridPos);
+        ntScript.SetGridPosition(gridPos);
 
         // Check if gridPos is a valid location for a tower to be placed
         bool pathFail = false;
@@ -571,6 +571,53 @@ public static class PlayerManager
         GameObject.Destroy(towerObj);
 
         return true;
+    }
+
+    /// <summary>
+    /// Deletes an object on a specific grid. Returns true if the object was removed and destroyed, returns false if the object was already null.
+    /// </summary>
+    /// <param name="gridID">The ID of the grid being modified.</param>
+    /// <param name="gridX">The x position of the object.</param>
+    /// <param name="gridY">The y position of the object.</param>
+    /// <returns></returns>
+    public static bool DeleteGridObject(int gridID, int gridX, int gridY)
+    {
+        Grid grid = GetGrid(gridID);
+        GameObject obj = grid.getGridObject(gridX, gridY);
+        if (obj == null)
+            return false;
+
+        grid.setGridObject(gridX, gridY, null);
+        GameObject.Destroy(obj);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Replaces a tower at the given destination within the player's grid.
+    /// </summary>
+    /// <param name="playerID">The id of the player who the new tower will belong to.</param>
+    /// <param name="gridX">The x location of the tower being replaced.</param>
+    /// <param name="gridY">The y location of the tower being replaced.</param>
+    /// <param name="newTower">The new tower that will be placed onto the grid.</param>
+    public static bool ReplaceTower(int playerID, int gridX, int gridY, Towers newTower)
+    {
+        return ReplaceTower(playerID, playerID, gridX, gridY, newTower);
+    }
+
+    /// <summary>
+    /// Replaces a tower at the given destination within the given grid.
+    /// </summary>
+    /// <param name="playerID">The id of the player who the new tower will belong to.</param>
+    /// <param name="gridID">The id of the grid the new tower will be replaced onto.</param>
+    /// <param name="gridX">The x location of the tower being replaced.</param>
+    /// <param name="gridY">The y location of the tower being replaced.</param>
+    /// <param name="newTower">The new tower that will be placed onto the grid.</param>
+    /// <returns></returns>
+    public static bool ReplaceTower(int playerID, int gridID, int gridX, int gridY, Towers newTower)
+    {
+        SellTower(playerID, gridX, gridY, 0f);
+        return PlaceTower(gridID, playerID, new IntVector2(gridX, gridY), Quaternion.identity, newTower, null, "", 0);
     }
 
     /// <summary>

@@ -18,11 +18,11 @@ public class TowerInfoController : MonoBehaviour
     public Button button;
 
     /// <summary>
-    /// Gets the tower this tower info controller is displaying.
+    /// Gets the object this info controller is displaying.
     /// </summary>
-    public Tower Tower
+    public GridSnapInkObject DisplayedObject
     {
-        get { return tower; }
+        get { return selectedObj; }
     }
 
     public int Owner
@@ -34,18 +34,67 @@ public class TowerInfoController : MonoBehaviour
 
     public int GridY { get { return gridY; } }
 
+    public InkObjectTypes HeldObjectType
+    {
+        get { return objectHeldType; }
+    }
+
     private GameLoader gameLoader;
-    private StringBuilder builder;
-    private Tower tower;
+    private GridSnapInkObject selectedObj;
     private int owner;
     private int gridX;
     private int gridY;
 
+    private InkObjectTypes objectHeldType = InkObjectTypes.Tower;
+    
     // Use this for initialization
     void Start ()
     {
         gameLoader = Help.GetGameLoader();
 	}
+
+    /// <summary>
+    /// Sets the obstacle info to correspond to the given tower.
+    /// </summary>
+    /// <param name="obstacle">The given obstacle whose info will be displayed.</param>
+    public void SetObstacle(Obstacle obstacle, int playerID, int playerWhoSelected, int gridX, int gridY)
+    {
+        if (gameLoader == null)
+            gameLoader = Help.GetGameLoader();
+
+        this.gridX = gridX;
+        this.gridY = gridY;
+        selectedObj = obstacle;
+        owner = playerID;
+
+        if (obstacle == null)
+        {
+            objectHeldType = InkObjectTypes.None;
+            towerPreview.sprite = gameLoader.defaultCreatureSprite;
+            statText.text = "";
+            description.text = "Sold!";
+            title.text = "Sold!";
+            button.gameObject.SetActive(false);
+        }
+        else
+        {
+            objectHeldType = InkObjectTypes.Obstacle;
+            string spriteName = obstacle.ObstacleID.ToString();
+            if (gameLoader.CachedSnapShotExists(spriteName))
+                towerPreview.sprite = gameLoader.GetCachedSnapShot(spriteName);
+            else
+                towerPreview.sprite = gameLoader.defaultCreatureSprite;
+
+            statText.text = obstacle.GetStatString();
+            description.text = obstacle.GetPostDescription();
+            title.text = obstacle.objName;
+
+            button.gameObject.SetActive(playerID == playerWhoSelected);
+        }
+
+        if (OnNewTower != null)
+            OnNewTower(this, EventArgs.Empty);
+    }
 
     /// <summary>
     /// Sets the tower info to correspond to the given tower.
@@ -58,37 +107,24 @@ public class TowerInfoController : MonoBehaviour
 
         this.gridX = gridX;
         this.gridY = gridY;
-        this.tower = tower;
+        selectedObj = tower;
         owner = playerID;
 
         if (tower == null)
         {
+            objectHeldType = InkObjectTypes.None;
             towerPreview.sprite = gameLoader.defaultCreatureSprite;
-
-            builder = new StringBuilder();
-            builder.AppendLine("HP");
-            builder.AppendLine(" Range");
-            builder.AppendLine(" Projectiles/Minute");
-            builder.AppendLine(" Damage");
-            builder.AppendLine("$");
-
-            statText.text = builder.ToString();
+            statText.text = "";
             description.text = "Sold!";
             title.text = "Sold!";
             button.gameObject.SetActive(false);
         }
         else
         {
+            objectHeldType = InkObjectTypes.Tower;
             towerPreview.sprite = gameLoader.GetTowerSprite(tower.towerType);
 
-            builder = new StringBuilder();
-            builder.AppendLine(tower.maxHealth.ToString() + "HP");
-            builder.AppendLine(tower.range.ToString() + " Range");
-            builder.AppendLine(tower.speed.ToString() + " Projectiles/Minute");
-            builder.AppendLine(tower.damage.ToString() + " Damage");
-            builder.AppendLine("$" + tower.price.ToString());
-
-            statText.text = builder.ToString();
+            statText.text = tower.GetStatString();
             description.text = tower.GetPostDescription();
             title.text = tower.objName;
             
@@ -101,15 +137,20 @@ public class TowerInfoController : MonoBehaviour
 
     public void OnUpgradePress()
     {
+        if (objectHeldType == InkObjectTypes.Tower)
+        {
+            TryUpgradeTower();
+        }
+    }
+    private void TryUpgradeTower()
+    {
+        Tower tower = selectedObj as Tower;
         if (gameLoader.GetTowerScript(tower.towerType).price <= PlayerManager.GetBalance(owner))
         {
+            PlayerManager.ReplaceTower(owner, gridX, gridY, tower.towerType);
             Grid grid = PlayerManager.GetGrid(owner);
-            //grid.setGridObject(gridX, gridY, null);
-            PlayerManager.SellTower(owner, gridX, gridY, 0f);
-            PlayerManager.PlaceTower(owner, owner, new IntVector2(gridX, gridY), Quaternion.identity, tower.towerType, null, "", 0);
-            tower = grid.getGridObject(gridX, gridY).GetComponent<Tower>();
-            SetTower(tower, owner, PlayerManager.CurrentPlayer, gridX, gridY);
-            tower.Pressed();
+            Tower towerScript = grid.getGridObject(gridX, gridY).GetComponent<Tower>();
+            towerScript.Pressed();
 
             if (UpgradePressed != null)
             {

@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1818223798824428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.020833334, z: -7.285232e-10}
+  m_LocalPosition: {x: 0, y: 0.008333334, z: -2.9140929e-10}
   m_LocalScale: {x: 0.46666667, y: 1, z: 0.46666667}
   m_Children: []
   m_Father: {fileID: 4474915376949870}
@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1462961082998640}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18, y: 2.0692182, z: 12}
+  m_LocalPosition: {x: 18, y: 0, z: 12}
   m_LocalScale: {x: 15, y: 12, z: 15}
   m_Children:
   - {fileID: 4092405109487820}
@@ -340,10 +340,12 @@ MonoBehaviour:
   description: A tower which attacks the mind through its projectiles, strange indeed
     but deadly nonetheless. It boasts a large spherical head, huh, not sure what to
     say about that strange addition to the tower.
-  towerType: 22
-  range: 7
   initialGridPositionX: 6
   initialGridPositionY: 4
+  existsInGrid: 1
+  sellable: 1
+  towerType: 22
+  range: 7
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -355,8 +357,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114874093578128116}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114808117934773806
 MonoBehaviour:
   m_ObjectHideFlags: 1
