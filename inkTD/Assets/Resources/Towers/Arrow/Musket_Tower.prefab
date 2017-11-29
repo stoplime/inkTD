@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1563290457805312}
+  m_RootGameObject: {fileID: 1521685595441672}
   m_IsPrefabParent: 1
---- !u!1 &1311140351840458
+--- !u!1 &1256885889658616
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4585537459384780}
-  - component: {fileID: 108858896026302626}
+  - component: {fileID: 4091414063372666}
+  - component: {fileID: 108247127839181662}
   m_Layer: 9
   m_Name: Point light
   m_TagString: Untagged
@@ -27,39 +27,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!1 &1563290457805312
+--- !u!1 &1356027887069056
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4189211133531800}
-  - component: {fileID: 33349539505403734}
-  - component: {fileID: 23284897024957284}
-  - component: {fileID: 82847034875548840}
-  - component: {fileID: 135178045805328858}
-  - component: {fileID: 114403616749882300}
-  - component: {fileID: 114772365069373414}
-  - component: {fileID: 65900262841643220}
-  m_Layer: 9
-  m_Name: Catapult_Tower
-  m_TagString: Tower
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1842340989779308
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4856007442806064}
-  - component: {fileID: 23305800642480812}
-  - component: {fileID: 33130527450141548}
-  - component: {fileID: 114278674043045166}
+  - component: {fileID: 4661067815169390}
+  - component: {fileID: 23593365686706200}
+  - component: {fileID: 33457214966583166}
+  - component: {fileID: 114104212621374978}
   m_Layer: 9
   m_Name: CircleVisualizer
   m_TagString: Untagged
@@ -67,53 +45,75 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &4189211133531800
+--- !u!1 &1521685595441672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4494005137537360}
+  - component: {fileID: 33278687013908060}
+  - component: {fileID: 23493160209261526}
+  - component: {fileID: 82578696380080560}
+  - component: {fileID: 135293715034178104}
+  - component: {fileID: 114943619368059530}
+  - component: {fileID: 114551889979061618}
+  - component: {fileID: 65529903955398280}
+  m_Layer: 9
+  m_Name: Musket_Tower
+  m_TagString: Tower
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4091414063372666
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 2.0692182, z: 18}
-  m_LocalScale: {x: 50, y: 80, z: 50}
-  m_Children:
-  - {fileID: 4856007442806064}
-  - {fileID: 4585537459384780}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4585537459384780
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1311140351840458}
+  m_GameObject: {fileID: 1256885889658616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0631, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4189211133531800}
+  m_Father: {fileID: 4494005137537360}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4856007442806064
+--- !u!4 &4494005137537360
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1842340989779308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.003125, z: -2.1855694e-10}
-  m_LocalScale: {x: 0.14, y: 1, z: 0.14}
-  m_Children: []
-  m_Father: {fileID: 4189211133531800}
+  m_GameObject: {fileID: 1521685595441672}
+  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 15, y: 2.0692182, z: 15}
+  m_LocalScale: {x: 13, y: 13, z: 13}
+  m_Children:
+  - {fileID: 4661067815169390}
+  - {fileID: 4091414063372666}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23284897024957284
+--- !u!4 &4661067815169390
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1356027887069056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.019230768, z: -8.406036e-10}
+  m_LocalScale: {x: 0.61538464, y: 1, z: 0.61538464}
+  m_Children: []
+  m_Father: {fileID: 4494005137537360}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23493160209261526
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
+  m_GameObject: {fileID: 1521685595441672}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -121,7 +121,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: a51e03cbfb3fff14fa1ce2ea97a3dec8, type: 2}
+  - {fileID: 2100000, guid: d3694cdeeaa3e0a4baa1606efbaabe7d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,12 +140,12 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!23 &23305800642480812
+--- !u!23 &23593365686706200
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1842340989779308}
+  m_GameObject: {fileID: 1356027887069056}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -172,38 +172,38 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33130527450141548
+--- !u!33 &33278687013908060
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1842340989779308}
+  m_GameObject: {fileID: 1521685595441672}
+  m_Mesh: {fileID: 4300000, guid: c30970d9ef359644ca3001f9eb99d01f, type: 3}
+--- !u!33 &33457214966583166
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1356027887069056}
   m_Mesh: {fileID: 0}
---- !u!33 &33349539505403734
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
-  m_Mesh: {fileID: 4300000, guid: 2df3020eb93a3a74f8f0d189f51c8685, type: 3}
---- !u!65 &65900262841643220
+--- !u!65 &65529903955398280
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
+  m_GameObject: {fileID: 1521685595441672}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.045774586, y: 0.053938117, z: 0.045422554}
-  m_Center: {x: -0.0011659503, y: 0.026969064, z: 0.00037000538}
---- !u!82 &82847034875548840
+  m_Size: {x: 0.17819497, y: 0.3713915, z: 0.18959486}
+  m_Center: {x: 0.00008955369, y: 0.18569575, z: -0.0072189574}
+--- !u!82 &82578696380080560
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
+  m_GameObject: {fileID: 1521685595441672}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -217,7 +217,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.89794576
   MaxDistance: 55
   Pan2D: 0
   rolloffMode: 1
@@ -278,12 +278,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!108 &108858896026302626
+--- !u!108 &108247127839181662
 Light:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1311140351840458}
+  m_GameObject: {fileID: 1256885889658616}
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
@@ -328,65 +328,28 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114278674043045166
+--- !u!114 &114104212621374978
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1842340989779308}
+  m_GameObject: {fileID: 1356027887069056}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 138c77461caaaaf46a4f206e00fedfbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   faces: 20
-  range: 0.14
+  range: 0.61538464
   yOffset: 0.1
   color: {r: 0, g: 1, b: 1, a: 1}
   drawViaGizmos: 0
---- !u!114 &114403616749882300
+--- !u!114 &114551889979061618
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objName: Catapult Tower
-  maxHealth: 1000
-  health: 1000
-  damage: 9
-  speed: 15
-  price: 15
-  ownerID: 0
-  description: A tower which utilizes low speed and large area of effect (AOE). It
-    is the spiritual rival of arrow towers.
-  towerType: 10
-  range: 7
-  initialGridPositionX: 3
-  initialGridPositionY: 6
-  priorityTarget: 0
-  projectileAreaRadius: 1
-  projectileLife: 1000
-  projectileObject: {fileID: 1809517007167910, guid: 153ec03f1c88e3745a78a75d41dab6ed,
-    type: 2}
-  projectileSpawnHeight: 0.8
-  shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
-  visualizeBezier: 0
-  visualizeRadius: 0
-  radiusVisualizerYOffset: 0.25
-  radiusVisualizer: {fileID: 114278674043045166}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
---- !u!114 &114772365069373414
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
+  m_GameObject: {fileID: 1521685595441672}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ad19d12cf18ded4a9dfc2a6feee2ed7, type: 3}
@@ -395,15 +358,53 @@ MonoBehaviour:
   samples: 20
   snapToObject: 0
   points: []
---- !u!135 &135178045805328858
+--- !u!114 &114943619368059530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1521685595441672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfe66944129ebe42adf1e89f849adfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objName: Musket Tower
+  maxHealth: 1000
+  health: 1000
+  damage: 25
+  speed: 45
+  price: 100
+  ownerID: 0
+  description: Powerful muskets were hoisted up and attached to this tower to make
+    it shoot further and faster. Unfortunately the crossbows had to go because there
+    just wasn't enough room for both.
+  towerType: 2
+  range: 8
+  initialGridPositionX: 5
+  initialGridPositionY: 5
+  priorityTarget: 0
+  projectileAreaRadius: 0
+  projectileLife: 1000
+  projectileObject: {fileID: 1809517007167910, guid: 153ec03f1c88e3745a78a75d41dab6ed,
+    type: 2}
+  projectileSpawnHeight: 0.8
+  shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
+  visualizeBezier: 0
+  visualizeRadius: 0
+  radiusVisualizerYOffset: 0.25
+  radiusVisualizer: {fileID: 114104212621374978}
+  existsInGrid: 1
+  towerCam: {fileID: 0}
+--- !u!135 &135293715034178104
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563290457805312}
+  m_GameObject: {fileID: 1521685595441672}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0875
+  m_Radius: 0.61538464
   m_Center: {x: 0, y: 0, z: 0}

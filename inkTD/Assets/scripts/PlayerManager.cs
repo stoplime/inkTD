@@ -574,6 +574,33 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Replaces a tower at the given destination within the player's grid.
+    /// </summary>
+    /// <param name="playerID">The id of the player who the new tower will belong to.</param>
+    /// <param name="gridX">The x location of the tower being replaced.</param>
+    /// <param name="gridY">The y location of the tower being replaced.</param>
+    /// <param name="newTower">The new tower that will be placed onto the grid.</param>
+    public static bool ReplaceTower(int playerID, int gridX, int gridY, Towers newTower)
+    {
+        return ReplaceTower(playerID, playerID, gridX, gridY, newTower);
+    }
+
+    /// <summary>
+    /// Replaces a tower at the given destination within the given grid.
+    /// </summary>
+    /// <param name="playerID">The id of the player who the new tower will belong to.</param>
+    /// <param name="gridID">The id of the grid the new tower will be replaced onto.</param>
+    /// <param name="gridX">The x location of the tower being replaced.</param>
+    /// <param name="gridY">The y location of the tower being replaced.</param>
+    /// <param name="newTower">The new tower that will be placed onto the grid.</param>
+    /// <returns></returns>
+    public static bool ReplaceTower(int playerID, int gridID, int gridX, int gridY, Towers newTower)
+    {
+        SellTower(playerID, gridX, gridY, 0f);
+        return PlaceTower(gridID, playerID, new IntVector2(gridX, gridY), Quaternion.identity, newTower, null, "", 0);
+    }
+
+    /// <summary>
     /// Creates a creature at every grid except the one that is spawning the creatures. Returns true if the creature was succesfully created, false otherwise.
     /// </summary>
     /// <param name="playerID">The ID of the player spawning this creautre.</param>
