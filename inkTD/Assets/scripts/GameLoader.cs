@@ -324,16 +324,13 @@ public class GameLoader : MonoBehaviour
 		// Lvl 1
 		TowerData Archer_Tower = new TowerData(Towers.Archer);
 		tree[Arrow].AddNode(Archer_Tower);
-        // Lvl 2
-        TowerData Crossbow_Tower = new TowerData(Towers.Crossbow);
-        tree[Archer_Tower].AddNode(Crossbow_Tower);
-        // Lvl 3
-        TowerData Musket_Tower = new TowerData(Towers.Musket);
-        tree[Crossbow_Tower].AddNode(Musket_Tower);
+		// Lvl 2
+		TowerData Crossbow_Tower = new TowerData(Towers.Crossbow);
+		tree[Archer_Tower].AddNode(Crossbow_Tower);
 
 
-        // Root Tower Cannon Type
-        TowerData Cannon = new TowerData(Towers.CannonCatagory);
+		// Root Tower Cannon Type
+		TowerData Cannon = new TowerData(Towers.CannonCatagory);
 		tree.AddNode(Cannon);
 		// Lvl 1
 		TowerData Catapult_Tower = new TowerData(Towers.Catapult);
