@@ -377,10 +377,12 @@ MonoBehaviour:
   price: 10
   ownerID: 0
   description: A fast firing tower that is the staple of all great tower mazes.
-  towerType: 0
-  range: 7
   initialGridPositionX: 3
   initialGridPositionY: 5
+  existsInGrid: 1
+  sellable: 1
+  towerType: 0
+  range: 7
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 1000
@@ -392,8 +394,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114592614270107694}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135672102620814420
 SphereCollider:
   m_ObjectHideFlags: 1

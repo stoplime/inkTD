@@ -216,8 +216,6 @@ public class Grid : MonoBehaviour {
 	public int OffsetX = 0;
 	public int OffsetY = 0;
 
-    private RaycastHit hit;
-
 	private void offsetEnds()
 	{
 		StartPosition = new IntVector2(startX, startY) + new IntVector2(OffsetX, OffsetY);
@@ -275,7 +273,7 @@ public class Grid : MonoBehaviour {
             towerCastle = value;
             towerCastleScript = towerCastle.GetComponent<Tower>();
             towerCastleScript.ownerID = ID;
-            towerCastleScript.SetTowerPosition(endX + OffsetX, endY + OffsetY);
+            towerCastleScript.SetGridPosition(endX + OffsetX, endY + OffsetY);
         }
     }
 

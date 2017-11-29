@@ -379,10 +379,12 @@ MonoBehaviour:
   description: A tower with muskets hoisted up and mounted prepared to fire at its
     enemies. Unfortunately the crossbows had to go, there simply wasn't enough room
     to fit both muskets and crossbows.
-  towerType: 2
-  range: 7
   initialGridPositionX: 5
   initialGridPositionY: 5
+  existsInGrid: 1
+  sellable: 1
+  towerType: 2
+  range: 7
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 1000
@@ -394,8 +396,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114317934349272730}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135554843733125306
 SphereCollider:
   m_ObjectHideFlags: 1

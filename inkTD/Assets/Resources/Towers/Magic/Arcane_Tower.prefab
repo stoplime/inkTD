@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1727134146262866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0033333332, z: -2.1855694e-10}
+  m_LocalPosition: {x: 0, y: -0.02625624, z: 0.0000000017215451}
   m_LocalScale: {x: 0.14, y: 1, z: 0.14}
   m_Children: []
   m_Father: {fileID: 4989748978190548}
@@ -409,10 +409,12 @@ MonoBehaviour:
   ownerID: 0
   description: Wow! What's that? Just [p] ink? Amazing! This cheap and powerful tower
     can be YOURS for just a single payment of [p] ink! Get it today!
-  towerType: 21
-  range: 7
   initialGridPositionX: 5
   initialGridPositionY: 3
+  existsInGrid: 1
+  sellable: 1
+  towerType: 21
+  range: 7
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -424,8 +426,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114332187769857646}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135884495516953562
 SphereCollider:
   m_ObjectHideFlags: 1

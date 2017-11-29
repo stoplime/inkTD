@@ -395,10 +395,12 @@ MonoBehaviour:
   ownerID: 0
   description: A tower composed partially of magical energy. The base of powerful
     magical towers.
-  towerType: 19
-  range: 6
   initialGridPositionX: 3
   initialGridPositionY: 3
+  existsInGrid: 1
+  sellable: 1
+  towerType: 19
+  range: 6
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -410,8 +412,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114801810527077880}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114446566818326406
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1025,10 +1025,12 @@ MonoBehaviour:
   ownerID: 0
   description: An amazing sight! Behold the castle hoisted atop a tower! If this guy
     is sieged then the magic pen will be lost!
-  towerType: 0
-  range: 0
   initialGridPositionX: 4
   initialGridPositionY: 2
+  existsInGrid: 0
+  sellable: 1
+  towerType: 0
+  range: 0
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 250
@@ -1040,8 +1042,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114420344460630748}
-  existsInGrid: 0
-  towerCam: {fileID: 0}
 --- !u!135 &135815339811403946
 SphereCollider:
   m_ObjectHideFlags: 1

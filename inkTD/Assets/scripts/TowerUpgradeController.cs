@@ -49,12 +49,36 @@ public class TowerUpgradeController : MonoBehaviour
             }
             upgradeControllers.Clear();
         }
-        if (currentTowerController.Tower != null)
-            sellButtonText.text = "Sell for " + (currentTowerController.Tower.price * PlayerManager.ResellPercentage) + " Ink";
 
-        if (currentTowerController.Owner == PlayerManager.CurrentPlayer && currentTowerController.Tower != null)
+        if (currentTowerController.DisplayedObject != null)
         {
-            List<Towers> upgrades = gameLoader.GetTowerUpgrades(currentTowerController.Tower.towerType);
+            sellButtonText.gameObject.SetActive(currentTowerController.DisplayedObject.sellable);
+
+            if (currentTowerController.DisplayedObject.sellable)
+            {
+                if (currentTowerController.HeldObjectType == InkObjectTypes.Tower)
+                {
+                    if (currentTowerController.DisplayedObject != null)
+                        sellButtonText.text = "Sell for " + (currentTowerController.DisplayedObject.price * PlayerManager.ResellPercentage) + " Ink";
+
+                    BuildTowerUpgradeList();
+                }
+                else if (currentTowerController.HeldObjectType == InkObjectTypes.Obstacle)
+                {
+                    if (currentTowerController.DisplayedObject != null)
+                        sellButtonText.text = "Remove for " + (currentTowerController.DisplayedObject.price) + " Ink";
+                }
+            }
+        }
+        
+    }
+
+    private void BuildTowerUpgradeList()
+    {
+        if (currentTowerController.Owner == PlayerManager.CurrentPlayer && currentTowerController.DisplayedObject != null)
+        {
+            Tower tower = currentTowerController.DisplayedObject as Tower;
+            List<Towers> upgrades = gameLoader.GetTowerUpgrades(tower.towerType);
 
             GameObject obj;
             UIScrollControl scrollController;
@@ -92,9 +116,24 @@ public class TowerUpgradeController : MonoBehaviour
 
     public void OnSellClick()
     {
-        Tower tower = currentTowerController.Tower;
-        PlayerManager.SellTower(tower.ownerID, tower.GridPositionX, tower.GridPositionY);
-        currentTowerController.SetTower(null, tower.ownerID, PlayerManager.CurrentPlayer,-1,-1);
-        Help.GetGameLoader().TowerTabMenu.ToggleMenuRollout();
+        if (currentTowerController.HeldObjectType == InkObjectTypes.Tower)
+        {
+            Tower tower = currentTowerController.DisplayedObject as Tower;
+            PlayerManager.SellTower(tower.ownerID, tower.GridPositionX, tower.GridPositionY);
+            currentTowerController.SetTower(null, tower.ownerID, PlayerManager.CurrentPlayer, -1, -1);
+            Help.GetGameLoader().TowerTabMenu.ToggleMenuRollout();
+        }
+        else if (currentTowerController.HeldObjectType == InkObjectTypes.Obstacle)
+        {
+            //TODO: Remove all additional pieces of the obstacle.
+            Obstacle obstacle = currentTowerController.DisplayedObject as Obstacle;
+            if (PlayerManager.GetBalance(PlayerManager.CurrentPlayer) >= obstacle.price)
+            {
+                PlayerManager.AddBalance(PlayerManager.CurrentPlayer, -obstacle.price);
+                PlayerManager.DeleteGridObject(obstacle.ownerID, obstacle.GridPositionX, obstacle.GridPositionY);
+                currentTowerController.SetObstacle(null, obstacle.ownerID, PlayerManager.CurrentPlayer, -1, -1);
+                Help.GetGameLoader().TowerTabMenu.ToggleMenuRollout();
+            }
+        }
     }
 }

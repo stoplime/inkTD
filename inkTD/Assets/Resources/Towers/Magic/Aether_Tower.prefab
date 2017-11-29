@@ -410,10 +410,12 @@ MonoBehaviour:
   description: The aether is a mysterious place with mysterious power, and this tower
     draws from that place. This tower bolsters long range and high damage ([d]) over
     speed ([s]).
-  towerType: 26
-  range: 14
   initialGridPositionX: 7
   initialGridPositionY: 3
+  existsInGrid: 1
+  sellable: 1
+  towerType: 26
+  range: 14
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -425,8 +427,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114219451049173396}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135143965412966628
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -378,10 +378,12 @@ MonoBehaviour:
   ownerID: 0
   description: A tower with medieval crossbows at the helm. Its speed and power make
     it an opposing tower.
-  towerType: 1
-  range: 7
   initialGridPositionX: 4
   initialGridPositionY: 5
+  existsInGrid: 1
+  sellable: 1
+  towerType: 1
+  range: 7
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 1000
@@ -393,8 +395,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114399807975503382}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135879372596757310
 SphereCollider:
   m_ObjectHideFlags: 1

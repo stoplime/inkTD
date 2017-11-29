@@ -379,10 +379,12 @@ MonoBehaviour:
   ownerID: 0
   description: The more powerful the magic tower, the more powerful life it can extinguish,
     and this tower is the next step in powerful magic towers!
-  towerType: 20
-  range: 6.5
   initialGridPositionX: 4
   initialGridPositionY: 3
+  existsInGrid: 1
+  sellable: 1
+  towerType: 20
+  range: 6.5
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -394,8 +396,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114346372436544270}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114346372436544270
 MonoBehaviour:
   m_ObjectHideFlags: 1

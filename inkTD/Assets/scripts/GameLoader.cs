@@ -210,15 +210,26 @@ public class GameLoader : MonoBehaviour
 
     private Dictionary<Creatures, CreatureData> creatures = new Dictionary<Creatures, CreatureData>();
 
+    private Dictionary<string, Sprite> cachedSnapShots = new Dictionary<string, Sprite>();
+
     private int snapshotLayerNumber = 0;
 
     private TabMenu towerTabMenu;
+
+    private Quaternion defaultSnapShotCameraRotation;
+    private Vector3 defaultSnapShotCameraPosition;
     
     // Use this for initialization
     void Awake ()
     {
         snapshotLayerNumber = LayerMask.NameToLayer(snapshotLayer);
         
+        if (snapshotCamera != null)
+        {
+            defaultSnapShotCameraPosition = snapshotCamera.transform.position;
+            defaultSnapShotCameraRotation = snapshotCamera.transform.rotation;
+        }
+
         //Loading in creatures:
         CreatureData creatureData;
         for (int i = 0; i < creatureEntries.Length; i++)
@@ -280,6 +291,9 @@ public class GameLoader : MonoBehaviour
         if (snapshotCamera == null)
             throw new System.Exception("GameLoader script is missing a snapshot camera!");
 
+        snapshotCamera.transform.position = defaultSnapShotCameraPosition;
+        snapshotCamera.transform.rotation = defaultSnapShotCameraRotation;
+        
         for (int i = 0; i < towerEntries.Length; i++)
         {
             if (towerEntries[i].prefab != null)
@@ -310,6 +324,102 @@ public class GameLoader : MonoBehaviour
         //Not setting the snapshot camera's target texture may result in the last tower's snapshot getting overwritten upon using the camera again.
         //snapshotCamera.targetTexture = null;
         RenderTexture.active = null;
+    }
+
+    /// <summary>
+    /// Takes a snapshot of an object.
+    /// </summary>
+    /// <param name="obj">The object having a snapshot taken of.</param>
+    /// <param name="name">The name of the snapshot, if cached this will need to be known.</param>
+    /// <param name="cache">If true the gameloader will cache the snapshot for use later.</param>
+    public Sprite TakeSnapShotOf(GameObject obj, string name, float snapShotDistance, bool cache)
+    {
+        return TakeSnapShotOf(obj, name, snapShotDistance, Vector3.zero, cache);
+    }
+
+    /// <summary>
+    /// Takes a snapshot of an object.
+    /// </summary>
+    /// <param name="obj">The object having a snapshot taken of.</param>
+    /// <param name="name">The name of the snapshot, if cached this will need to be known.</param>
+    /// <param name="cache">If true the gameloader will cache the snapshot for use later.</param>
+    /// <returns></returns>
+    public Sprite TakeSnapShotOf(GameObject obj, string name, float snapShotDistance, Vector3 snapShotOffset, bool cache)
+    {
+        if (obj == null)
+            throw new System.Exception("Snapshot object is null.");
+
+        //Loading towers and creating their snapshots:
+        Sprite snapshotResult = new Sprite();
+        RenderTexture render = new RenderTexture(snapshotWidth, snapshotHeight, snapshotDepth);
+        Texture2D texture;
+        int[] prevLayers;
+
+        prevLayers = new int[obj.transform.childCount + 1];
+        prevLayers[0] = obj.layer;
+        for (int i = 1; i < obj.transform.childCount; i++)
+        {
+            prevLayers[i] = obj.transform.GetChild(i - 1).gameObject.layer;
+        }
+
+        if (snapshotCamera == null)
+            throw new System.Exception("GameLoader script is missing a snapshot camera!");
+
+        snapshotCamera.transform.position = obj.transform.position + obj.transform.forward * snapShotDistance;
+        snapshotCamera.transform.LookAt(obj.transform);
+        snapshotCamera.transform.position += snapShotOffset;
+        obj.layer = snapshotLayerNumber;
+        for (int i = 1; i < obj.transform.childCount; i++)
+        {
+            obj.transform.GetChild(i - 1).gameObject.layer = snapshotLayerNumber;
+        }
+        snapshotCamera.targetTexture = render;
+        snapshotCamera.Render();
+
+        obj.layer = prevLayers[0];
+        for (int i = 1; i < obj.transform.childCount; i++)
+        {
+            obj.transform.GetChild(i - 1).gameObject.layer = prevLayers[i];
+        }
+
+        RenderTexture.active = render;
+        texture = new Texture2D(snapshotWidth, snapshotHeight);
+        texture.ReadPixels(new Rect(0, 0, render.width, render.height), 0, 0);
+        texture.Apply();
+
+        snapshotResult = Sprite.Create(texture, new Rect(0, 0, snapshotWidth, snapshotHeight), Vector2.zero);
+        snapshotResult.name = name;
+
+        //Not setting the snapshot camera's target texture may result in the last tower's snapshot getting overwritten upon using the camera again.
+        //snapshotCamera.targetTexture = null;
+        RenderTexture.active = null;
+        
+        if (cache)
+        {
+            cachedSnapShots.Add(snapshotResult.name, snapshotResult);
+        }
+
+        return snapshotResult;
+    }
+
+    /// <summary>
+    /// Gets the cached sprite with the given name.
+    /// </summary>
+    /// <param name="name">The name of the sprite.</param>
+    /// <returns></returns>
+    public Sprite GetCachedSnapShot(string name)
+    {
+        return cachedSnapShots[name];
+    }
+
+    /// <summary>
+    /// Returns true if a cached snapshot with the given name exists in the game loader.
+    /// </summary>
+    /// <param name="name">The name of the sprite.</param>
+    /// <returns></returns>
+    public bool CachedSnapShotExists(string name)
+    {
+        return cachedSnapShots.ContainsKey(name);
     }
 
     /// <summary>

@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780757283151038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.003125, z: -2.1855694e-10}
+  m_LocalPosition: {x: 0, y: -0.024615226, z: 0.0000000017215451}
   m_LocalScale: {x: 0.16, y: 1, z: 0.16}
   m_Children: []
   m_Father: {fileID: 4583379325766336}
@@ -378,10 +378,12 @@ MonoBehaviour:
   ownerID: 0
   description: This tower utilizes trebuchets in order to defeat enemies, giving it
     a large area of effect when its 90kg projectiles hit their target.
-  towerType: 11
-  range: 8
   initialGridPositionX: 4
   initialGridPositionY: 6
+  existsInGrid: 1
+  sellable: 1
+  towerType: 11
+  range: 8
   priorityTarget: 0
   projectileAreaRadius: 1.8
   projectileLife: 1000
@@ -393,8 +395,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114388699050614804}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135531258721086744
 SphereCollider:
   m_ObjectHideFlags: 1

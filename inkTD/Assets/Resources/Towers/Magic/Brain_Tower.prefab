@@ -89,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260736444261366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.16410151, z: 0.000000005738484}
+  m_LocalPosition: {x: 0, y: 0.020833334, z: -7.285232e-10}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4337343780046786}
@@ -379,10 +379,12 @@ MonoBehaviour:
   description: Large veiny protrusions pop from about the spherical head of the tower
     making an appearance like a brain. Indeed unlike before I can say with confidence
     this tower is big headed!
-  towerType: 23
-  range: 7.5
   initialGridPositionX: 7
   initialGridPositionY: 4
+  existsInGrid: 1
+  sellable: 1
+  towerType: 23
+  range: 7.5
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -394,8 +396,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114566545430561514}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!135 &135288819058607528
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -464,7 +464,7 @@ public static class PlayerManager
         GameObject newTower = GameObject.Instantiate(towerPrefab) as GameObject; //Note: we can use an empty gameobject until we've confirmed the path is not obstructed.
         Tower ntScript = newTower.GetComponent<Tower>();
         ntScript.ownerID = playerID;
-        ntScript.SetTowerPosition(gridPos);
+        ntScript.SetGridPosition(gridPos);
 
         // Check if gridPos is a valid location for a tower to be placed
         bool pathFail = false;
@@ -569,6 +569,26 @@ public static class PlayerManager
 
         grid.setGridObject(gridX,gridY, null);
         GameObject.Destroy(towerObj);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Deletes an object on a specific grid. Returns true if the object was removed and destroyed, returns false if the object was already null.
+    /// </summary>
+    /// <param name="gridID">The ID of the grid being modified.</param>
+    /// <param name="gridX">The x position of the object.</param>
+    /// <param name="gridY">The y position of the object.</param>
+    /// <returns></returns>
+    public static bool DeleteGridObject(int gridID, int gridX, int gridY)
+    {
+        Grid grid = GetGrid(gridID);
+        GameObject obj = grid.getGridObject(gridX, gridY);
+        if (obj == null)
+            return false;
+
+        grid.setGridObject(gridX, gridY, null);
+        GameObject.Destroy(obj);
 
         return true;
     }

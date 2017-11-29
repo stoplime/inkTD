@@ -380,10 +380,12 @@ MonoBehaviour:
   description: A tower which gets its strength from incredibly powerful wizards who
     have practiced their entire lives in the realm of magic. This is a top tier powerhouse
     of a magic tower!
-  towerType: 27
-  range: 15
   initialGridPositionX: 0
   initialGridPositionY: 0
+  existsInGrid: 1
+  sellable: 1
+  towerType: 27
+  range: 15
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
@@ -395,8 +397,6 @@ MonoBehaviour:
   visualizeRadius: 0
   radiusVisualizerYOffset: 0.25
   radiusVisualizer: {fileID: 114822597129160218}
-  existsInGrid: 1
-  towerCam: {fileID: 0}
 --- !u!114 &114771703797023534
 MonoBehaviour:
   m_ObjectHideFlags: 1
