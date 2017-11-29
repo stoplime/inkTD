@@ -103,13 +103,10 @@ public class TowerInfoController : MonoBehaviour
     {
         if (gameLoader.GetTowerScript(tower.towerType).price <= PlayerManager.GetBalance(owner))
         {
+            PlayerManager.ReplaceTower(owner, gridX, gridY, tower.towerType);
             Grid grid = PlayerManager.GetGrid(owner);
-            //grid.setGridObject(gridX, gridY, null);
-            PlayerManager.SellTower(owner, gridX, gridY, 0f);
-            PlayerManager.PlaceTower(owner, owner, new IntVector2(gridX, gridY), Quaternion.identity, tower.towerType, null, "", 0);
-            tower = grid.getGridObject(gridX, gridY).GetComponent<Tower>();
-            SetTower(tower, owner, PlayerManager.CurrentPlayer, gridX, gridY);
-            tower.Pressed();
+            Tower towerScript = grid.getGridObject(gridX, gridY).GetComponent<Tower>();
+            towerScript.Pressed();
 
             if (UpgradePressed != null)
             {
