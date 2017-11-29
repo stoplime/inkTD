@@ -54,6 +54,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -69,6 +70,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -111,16 +113,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Eagle
-  maxHealth: 200
-  health: 200
-  damage: 150
+  maxHealth: 12000
+  health: 12000
+  damage: 4500
   speed: 3
-  price: 35
+  price: 5000
   ownerID: 0
   description: A large bird of prey, known for its diet of human flesh.
   defense: 2
-  inkcomeValue: 18
-  dropInk: 18
+  inkcomeValue: 1500
+  dropInk: 2500
   gridID: 0
   animationHeight: 2
   debug: 0

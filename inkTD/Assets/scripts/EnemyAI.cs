@@ -62,6 +62,8 @@ public class EnemyAI : MonoBehaviour {
 
     private int towersInPlay = 0;
 
+    private int TowerPlacementBackToFrontOffset = 0;
+
     // For creature spawning hoards
     private List<Creature> SpawnCreaturesWave;
 
@@ -194,14 +196,32 @@ public class EnemyAI : MonoBehaviour {
 
         IntVector2 selectedTowerPos;
 
+        int currentPathLength = bestPath.Count;
+
         // picks a random point on the best path as the starting tower placement choice
         HPosition randomPathPos = new HPosition();
-        randomPathPos.position = bestPath[UnityEngine.Random.Range(0, bestPath.Count -1)];
+        // if (TowerPlacementBackToFrontOffset >= currentPathLength)
+        // {
+            randomPathPos.position = bestPath[UnityEngine.Random.Range(0, currentPathLength -1)];
+        // }
+        // else
+        // {
+        //     randomPathPos.position = bestPath[currentPathLength - TowerPlacementBackToFrontOffset - 1];
+        //     TowerPlacementBackToFrontOffset++;
+        // }
         randomPathPos.value = 1;
-        if (Help.ValidPosition(randomPathPos.position, playerID, creatures, currentGrid))
+        int newPathLength = Help.ValidPosition(randomPathPos.position, playerID, creatures, currentGrid);
+        int deltaPathLength = newPathLength - currentPathLength;
+        if (deltaPathLength < 0)
+        {
+            deltaPathLength = 0;
+        }
+        if (newPathLength != 0)
         {
             possiblePositions.Add(randomPathPos);
-            heuristicWeights.Add(1);
+
+            heuristicWeights.Add(deltaPathLength +1);
+            // heuristicWeights.Add(1);
         }
 
         // Check around the random Point on the best path based on TowerPlacementRange
@@ -210,14 +230,21 @@ public class EnemyAI : MonoBehaviour {
             for (int y = randomPathPos.position.y - TowerPlacementRange; y < randomPathPos.position.y; y++)
             {
                 IntVector2 testPoint = new IntVector2(x, y);
-                if (Help.ValidPosition(testPoint, playerID, creatures, currentGrid))
+                newPathLength = Help.ValidPosition(testPoint, playerID, creatures, currentGrid);
+                deltaPathLength = newPathLength - currentPathLength;
+                if (deltaPathLength < 0)
+                {
+                    deltaPathLength = 0;
+                }
+                if (newPathLength != 0)
                 {
                     HPosition validPos = new HPosition();
                     validPos.position = testPoint;
                     // Value will be 1/(x+1) where x is the distance to the randomPathPos
                     // Value will be normalized first before setting it as the heuristic
                     float dist = testPoint.Dist(randomPathPos.position);
-                    heuristicWeights.Add( 1/((dist*dist)+1) );
+                    heuristicWeights.Add( (1/((dist*dist)+1)) * (deltaPathLength+1) );
+                    // heuristicWeights.Add( (1/((dist*dist)+1)) );
                     possiblePositions.Add(validPos);
                 }
             }
@@ -249,8 +276,6 @@ public class EnemyAI : MonoBehaviour {
             }
             else
             {
-                // I have no idea why it would run here
-                throw new Exception("This error should not have occured, but its a problem in the AI class in TryTowerPlacement()");
                 return false;
             }
         }
