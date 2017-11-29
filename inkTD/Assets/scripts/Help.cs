@@ -637,7 +637,7 @@ namespace helper
         /// An event that runs whenever the resolution changes.
         /// </summary>
         public static event EventHandler onResolutionChange;
-
+        
     }
 }
 

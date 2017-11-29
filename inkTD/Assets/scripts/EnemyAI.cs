@@ -61,6 +61,8 @@ public class EnemyAI : MonoBehaviour {
 
     private GameLoader gameData;
 
+    private Dictionary<IntVector2, float> TowerPathIntersects;
+
     // Represents the likelyhood of selecting which base tower on tower placement, has length number of base towers
     private List<float> BaseTowerDistribution;
     private List<Towers> BaseTowers;
@@ -75,12 +77,14 @@ public class EnemyAI : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        TowerPathIntersects = new Dictionary<IntVector2, float>();
+
         actionTimer = new TaylorTimer(TimerValue);
         actionTimer.Elapsed += ActionTimer_Elapsed;
 
         stateWeights = new List<float>();
         stateWeights.Add(0.1f);  // 10% Idle
-        stateWeights.Add(0.0f);  // 60% Place Tower
+        stateWeights.Add(0.6f);  // 60% Place Tower
         stateWeights.Add(0.05f); // 5% Upgrade Towers
         stateWeights.Add(0.2f);  // 20% Spawn a Creaure Wave
         stateWeights.Add(0.05f); // 5% Applying Modifiers
@@ -181,6 +185,10 @@ public class EnemyAI : MonoBehaviour {
         {
             ComputeCreatureSpawn();
         }
+        else if (state == AIStates.UpgradeTowers)
+        {
+            ComputeUpgradeTowers();
+        }
     }
 
     // Timer update function, runs the Queue for creature spawning
@@ -216,8 +224,6 @@ public class EnemyAI : MonoBehaviour {
             }
             creatureWeights.Reverse();
             Normalize(creatureWeights);
-            // print(affordableCreatures.Count);
-            print(SelectWeightedRandom(creatureWeights));
             Creatures selectedCreature = affordableCreatures[affordableCreatures.Count - SelectWeightedRandom(creatureWeights) -1];
             float creaturePrice = gameData.GetCreatureScript(selectedCreature).price;
             float halfBudget = budget * 0.5f;
@@ -323,6 +329,7 @@ public class EnemyAI : MonoBehaviour {
             if (placed)
             {
                 towersInPlay += 1;
+                TowerPathIntersects.Add(selectedTowerPos, PlayerManager.GetTowerPathIntersect(playerID, selectedTowerPos));
                 return true;
             }
             else
@@ -334,6 +341,49 @@ public class EnemyAI : MonoBehaviour {
         {
             // Not enough money to place the tower
             return false;
+        }
+    }
+
+    private void ComputeUpgradeTowers()
+    {
+        List<IntVector2> towerPoses = new List<IntVector2>();
+        List<float> towerUpgradeWeight = new List<float>();
+        foreach (KeyValuePair<IntVector2, float> item in TowerPathIntersects)
+        {
+            if (item.Value > 0)
+            {
+                towerPoses.Add(item.Key);
+                towerUpgradeWeight.Add(item.Value);
+            }
+        }
+        Normalize(towerUpgradeWeight);
+        IntVector2 selectedTowerPos = towerPoses[SelectWeightedRandom(towerUpgradeWeight)];
+
+        // Get tower script from selected tower pos
+        GameObject towerObject = PlayerManager.GetGrid(playerID).getGridObject(selectedTowerPos);
+        Tower selectedTowerScript = towerObject.GetComponent("Tower") as Tower;
+        if (selectedTowerScript != null)
+        {
+            List<Towers> upgrades = gameData.GetTowerUpgrades(selectedTowerScript.towerType);
+            if (upgrades.Count == 1)
+            {
+                // only one option for upgrades
+                if (PlayerManager.GetBalance(playerID) >= gameData.GetTowerScript(upgrades[0]).price)
+                {
+                    PlayerManager.DeleteGridObject(playerID, selectedTowerPos.x, selectedTowerPos.y);
+                    PlayerManager.PlaceTower(playerID, playerID, selectedTowerPos, Quaternion.identity, gameData.GetTowerPrefab(upgrades[0]), null, "", 0);
+                }
+            }
+            else if (upgrades.Count > 1)
+            {
+                // Pick one
+                int upgradeChoice = UnityEngine.Random.Range(0, upgrades.Count-1);
+                if (PlayerManager.GetBalance(playerID) >= gameData.GetTowerScript(upgrades[upgradeChoice]).price)
+                {
+                    PlayerManager.DeleteGridObject(playerID, selectedTowerPos.x, selectedTowerPos.y);
+                    PlayerManager.PlaceTower(playerID, playerID, selectedTowerPos, Quaternion.identity, gameData.GetTowerPrefab(upgrades[upgradeChoice]), null, "", 0);
+                }
+            }
         }
     }
 

@@ -696,6 +696,37 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Gets the number of best path grid units are in range of a tower.
+    /// </summary>
+    /// <param name="playerID">the grid and tower id</param>
+    /// <param name="towerPos">the tower's position</param>
+    /// <returns>Returns -1 if towers is not found</returns>
+    public static float GetTowerPathIntersect(int playerID, IntVector2 towerPos)
+    {
+        Grid grid = GetGrid(playerID);
+        if (grid.isGridEmpty(towerPos))
+            return -1;
+        
+        GameObject towerObject = grid.getGridObject(towerPos);
+        Tower towerScript = towerObject.GetComponent("Tower") as Tower;
+        if (towerScript == null)
+            return -1;
+        
+        float count = 0;
+        List<IntVector2> currentBestPath = GetBestPath(playerID);
+        float towerRange = towerScript.range;
+        foreach (IntVector2 pathPos in currentBestPath)
+        {
+            float dist = towerPos.Dist(pathPos);
+            if (dist <= towerRange)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /// <summary>
     /// An event that runs when the current player's balance of ink changes.
     /// </summary>
     public static event EventHandler OnCurrentPlayerBalanceChange;
