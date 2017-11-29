@@ -56,7 +56,7 @@ public class InkObject : MonoBehaviour
     /// Ink cost for both towers and creatures
     /// </summary>
     [Tooltip("The cost to purchase this tower. Example 50")]
-    public int price;
+    public float price;
 
     /// <summary>
     /// ID for the grid parent.

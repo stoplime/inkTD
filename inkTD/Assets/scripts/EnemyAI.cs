@@ -46,10 +46,15 @@ public class EnemyAI : MonoBehaviour {
     [Tooltip("A custom tower selection distribution, leave blank for a random distribution. Should have a length of the number of base towers available")]
     public List<float> CustomBaseTowerDistribution;
 
+    [Tooltip("How fast the AI Creature spawns in milliseconds")]
+    public int CreatureSpawnTime = 750;
+
 	private Grid currentGrid;
     private List<Creature> creatures;
 
     private TaylorTimer actionTimer;
+
+    private TaylorTimer creatureQueue;
 
     private AIStates state = AIStates.PlacingTowers;
     private List<float> stateWeights;
@@ -65,7 +70,7 @@ public class EnemyAI : MonoBehaviour {
     private int TowerPlacementBackToFrontOffset = 0;
 
     // For creature spawning hoards
-    private List<Creature> SpawnCreaturesWave;
+    private Queue<Creatures> SpawnCreaturesWave;
 
 	// Use this for initialization
 	void Start ()
@@ -75,7 +80,7 @@ public class EnemyAI : MonoBehaviour {
 
         stateWeights = new List<float>();
         stateWeights.Add(0.1f);  // 10% Idle
-        stateWeights.Add(0.6f);  // 60% Place Tower
+        stateWeights.Add(0.0f);  // 60% Place Tower
         stateWeights.Add(0.05f); // 5% Upgrade Towers
         stateWeights.Add(0.2f);  // 20% Spawn a Creaure Wave
         stateWeights.Add(0.05f); // 5% Applying Modifiers
@@ -99,8 +104,12 @@ public class EnemyAI : MonoBehaviour {
         {
             BaseTowerDistribution = CustomBaseTowerDistribution;
         }
-        
 
+        creatureQueue = new TaylorTimer(CreatureSpawnTime);
+        creatureQueue.Elapsed += CreatureQueueTimer_Elapsed;
+
+        SpawnCreaturesWave = new Queue<Creatures>();
+        
         SetState(state);
     }
 
@@ -165,6 +174,7 @@ public class EnemyAI : MonoBehaviour {
             if (!TryTowerPlacement())
             {
                 // Maybe decrease the chance to trying to spawn a tower?
+                stateWeights[(int)AIStates.PlacingTowers] -= 0.001f;
             }
         }
         else if (state == AIStates.SpawningCreatures)
@@ -173,12 +183,53 @@ public class EnemyAI : MonoBehaviour {
         }
     }
 
+    // Timer update function, runs the Queue for creature spawning
+    private void CreatureQueueTimer_Elapsed(object sender, System.EventArgs e)
+    {
+        SpawnNextCreature();
+    }
+
+    private void SpawnNextCreature()
+    {
+        if (SpawnCreaturesWave.Count > 0)
+        {
+            PlayerManager.CreateCreature(playerID, SpawnCreaturesWave.Dequeue(), false);
+        }
+    }
+
     private void ComputeCreatureSpawn()
     {
         if (state != AIStates.SpawningCreatures)
             return;
         
-        PlayerManager.CreateCreature(playerID, Creatures.BatteringRam, true);
+        // budget spending for creatures will be a random between 30% to 80% of ink money
+        float budget = PlayerManager.GetBalance(playerID); // UnityEngine.Random.Range(0.3f, 0.8f) *
+        List<Creatures> affordableCreatures = gameData.GetAffordableCreatures(budget * 0.5f);
+        List<float> creatureWeights;
+
+        while (affordableCreatures.Count > 0)
+        {
+            creatureWeights = new List<float>();
+            for (int i = affordableCreatures.Count - 1; i >= 0; i--)
+            {
+                creatureWeights.Add(1/((i+1f)*(i+1f)));
+            }
+            creatureWeights.Reverse();
+            Normalize(creatureWeights);
+            // print(affordableCreatures.Count);
+            print(SelectWeightedRandom(creatureWeights));
+            Creatures selectedCreature = affordableCreatures[affordableCreatures.Count - SelectWeightedRandom(creatureWeights) -1];
+            float creaturePrice = gameData.GetCreatureScript(selectedCreature).price;
+            float halfBudget = budget * 0.5f;
+            while(budget >= halfBudget)
+            {
+                budget -= creaturePrice;
+                PlayerManager.AddBalance(playerID, -creaturePrice);
+                SpawnCreaturesWave.Enqueue(selectedCreature);
+            }
+            affordableCreatures = gameData.GetAffordableCreatures(halfBudget);
+        }
+        // once a list of creatures is made, set the queue to spawn them
     }
 
     private bool TryTowerPlacement()
@@ -243,7 +294,7 @@ public class EnemyAI : MonoBehaviour {
                     // Value will be 1/(x+1) where x is the distance to the randomPathPos
                     // Value will be normalized first before setting it as the heuristic
                     float dist = testPoint.Dist(randomPathPos.position);
-                    heuristicWeights.Add( (1/((dist*dist)+1)) * (deltaPathLength+1) );
+                    heuristicWeights.Add( (1/((dist+1)*(dist+1))) * (deltaPathLength+1) );
                     // heuristicWeights.Add( (1/((dist*dist)+1)) );
                     possiblePositions.Add(validPos);
                 }
@@ -290,5 +341,6 @@ public class EnemyAI : MonoBehaviour {
     void Update ()
     {
         actionTimer.Update();
+        creatureQueue.Update();
     }
 }

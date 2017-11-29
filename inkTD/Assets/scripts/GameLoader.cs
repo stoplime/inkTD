@@ -420,6 +420,25 @@ public class GameLoader : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets a list of creatures that can be afforded with a given price budget
+    /// </summary>
+    /// <param name="price"></param>
+    /// <returns></returns>
+    public List<Creatures> GetAffordableCreatures(float price)
+    {
+        List<Creatures> affordables = new List<Creatures>();
+        foreach (KeyValuePair<Creatures, CreatureData> item in creatures)
+        {
+            if (item.Value.creatureScript.price <= price)
+            {
+                affordables.Add(item.Key);
+            }
+        }
+        affordables.Sort();
+        return affordables;
+    }
+
+    /// <summary>
     /// Gets a snapshot of the given tower.
     /// </summary>
     /// <param name="tower">The given tower.</param>
