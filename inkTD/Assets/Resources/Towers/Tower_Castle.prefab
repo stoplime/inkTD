@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 135815339811403946}
   - component: {fileID: 114608886200589218}
   - component: {fileID: 114093207479916354}
+  - component: {fileID: 114497772977889884}
   m_Layer: 9
   m_Name: Tower_Castle
   m_TagString: Tower
@@ -1014,6 +1015,24 @@ MonoBehaviour:
   yOffset: 0.1
   color: {r: 0, g: 1, b: 1, a: 1}
   drawViaGizmos: 0
+--- !u!114 &114497772977889884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1682955317098528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 5
+  Yoffset: 8
+  Margin: 0.1
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114608886200589218
 MonoBehaviour:
   m_ObjectHideFlags: 1

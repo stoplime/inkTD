@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scale: 1
+  Scale: 1.5
   Yoffset: 2
   Margin: 0.05
   maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,

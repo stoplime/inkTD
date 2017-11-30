@@ -35,13 +35,12 @@ public class HealthBar : MonoBehaviour {
 	void Start () {
 		parent = gameObject.GetComponentInParent<InkObject>();
 
-		Transform maxHealthOffsetTransform = transform;
-		maxHealthOffsetTransform.position += new Vector3(0, Yoffset, 0);
+		Vector3 maxHealthOffset = transform.position + new Vector3(0, Yoffset, 0);
 
-		maxHealthBar = (GameObject)Instantiate(maxHealthBarPrefab, maxHealthOffsetTransform.position, transform.rotation);
-		healthBar = (GameObject)Instantiate(healthBarPrefab, maxHealthOffsetTransform.position, transform.rotation);
+		maxHealthBar = (GameObject)Instantiate(maxHealthBarPrefab, maxHealthOffset, transform.rotation);
+		healthBar = (GameObject)Instantiate(healthBarPrefab, maxHealthOffset, transform.rotation);
 
-		Vector3 targetLook = 2*maxHealthOffsetTransform.position - Camera.main.transform.position;
+		Vector3 targetLook = 2*maxHealthOffset - Camera.main.transform.position;
 		maxHealthBar.transform.LookAt(targetLook);
 		healthBar.transform.LookAt(targetLook);
 		

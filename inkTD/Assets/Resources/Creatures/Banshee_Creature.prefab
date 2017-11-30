@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54756153606908046}
   - component: {fileID: 114257082997104858}
   - component: {fileID: 114724749813327214}
+  - component: {fileID: 114438280355780278}
   m_Layer: 0
   m_Name: Banshee_Creature
   m_TagString: Untagged
@@ -117,18 +118,36 @@ MonoBehaviour:
   health: 500000
   damage: 150000
   speed: 3
-  price: 600000
+  price: 300000
   ownerID: 0
   description: A ghost whose loud shrieks, screams, and wails are said to send bad
     omens to those who hear them.
   defense: 2
-  inkcomeValue: 130000
-  dropInk: 250000
+  inkcomeValue: 100000
+  dropInk: 100000
   gridID: 0
   animationHeight: 2
   debug: 0
   OffsetTranslation: {x: 0, y: 1, z: 0}
   OffsetRotation: {x: 0, y: 0, z: 0}
+--- !u!114 &114438280355780278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1151898938495600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1.5
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114724749813327214
 MonoBehaviour:
   m_ObjectHideFlags: 1

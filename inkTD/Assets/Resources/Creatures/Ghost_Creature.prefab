@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54035602121531840}
   - component: {fileID: 114026720323842310}
   - component: {fileID: 114942114948564378}
+  - component: {fileID: 114934770272205882}
   m_Layer: 0
   m_Name: Ghost_Creature
   m_TagString: Untagged
@@ -115,7 +116,7 @@ MonoBehaviour:
   objName: Ghost
   maxHealth: 600
   health: 600
-  damage: 150
+  damage: 50
   speed: 1.5
   price: 100
   ownerID: 0
@@ -129,6 +130,24 @@ MonoBehaviour:
   debug: 0
   OffsetTranslation: {x: 0, y: 1, z: 0}
   OffsetRotation: {x: 0, y: 0, z: 0}
+--- !u!114 &114934770272205882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025015313856266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1.5
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114942114948564378
 MonoBehaviour:
   m_ObjectHideFlags: 1
