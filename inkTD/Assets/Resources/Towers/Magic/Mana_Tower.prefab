@@ -117,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988751567310180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.02625624, z: 0.0000000019563011}
+  m_LocalPosition: {x: 0, y: 0.0033333332, z: -2.4836014e-10}
   m_LocalScale: {x: 0.27272728, y: 1, z: 0.27272728}
   m_Children: []
   m_Father: {fileID: 4905512439560420}
@@ -419,7 +419,7 @@ MonoBehaviour:
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 900
-  projectileObject: {fileID: 1809517007167910, guid: 153ec03f1c88e3745a78a75d41dab6ed,
+  projectileObject: {fileID: 1791382324357224, guid: eb39cd65d9d6ec14f9f02e2f4d7f9646,
     type: 2}
   projectileSpawnHeight: 0.8
   shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
