@@ -87,7 +87,7 @@ public class EnemyAI : MonoBehaviour {
         stateWeights.Add(0.1f);  // 10% Idle
         stateWeights.Add(0.6f);  // 60% Place Tower
         stateWeights.Add(0.05f); // 5% Upgrade Towers
-        stateWeights.Add(0.0f);  // 20% Spawn a Creaure Wave
+        stateWeights.Add(0.1f);  // 10% Spawn a Creaure Wave
         stateWeights.Add(0.05f); // 5% Applying Modifiers
         stateWeights.Add(0.1f);  // 10% Removing useless Towers
 
@@ -398,7 +398,7 @@ public class EnemyAI : MonoBehaviour {
 
         // Get tower script from selected tower pos
         GameObject towerObject = PlayerManager.GetGrid(playerID).getGridObject(selectedTowerPos);
-        Tower selectedTowerScript = towerObject.GetComponent("Tower") as Tower;
+        Tower selectedTowerScript = towerObject.GetComponent<Tower>();
         if (selectedTowerScript != null)
         {
             List<Towers> upgrades = gameData.GetTowerUpgrades(selectedTowerScript.towerType);
@@ -445,7 +445,7 @@ public class EnemyAI : MonoBehaviour {
         GameObject towerObject = PlayerManager.GetGrid(playerID).getGridObject(selectedTower);
         if (towerObject == null)
             return false;
-        Tower selectedTowerScript = towerObject.GetComponent("Tower") as Tower;
+        Tower selectedTowerScript = towerObject.GetComponent<Tower>();
         if (selectedTowerScript != null)
         {
             TowerPathIntersects.Remove(selectedTower);

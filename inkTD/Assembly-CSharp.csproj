@@ -67,6 +67,7 @@
      <Compile Include="Assets\scripts\Grid.cs" />
      <Compile Include="Assets\scripts\GridSnapInkObject.cs" />
      <Compile Include="Assets\scripts\GridVisualizer.cs" />
+     <Compile Include="Assets\scripts\HealthBar.cs" />
      <Compile Include="Assets\scripts\Help.cs" />
      <Compile Include="Assets\scripts\InfoPanel.cs" />
      <Compile Include="Assets\scripts\Initializer.cs" />

@@ -708,7 +708,7 @@ public static class PlayerManager
             return -1;
         
         GameObject towerObject = grid.getGridObject(towerPos);
-        Tower towerScript = towerObject.GetComponent("Tower") as Tower;
+        Tower towerScript = towerObject.GetComponent<Tower>();
         if (towerScript == null)
             return -1;
         
@@ -752,7 +752,7 @@ public static class PlayerManager
                 continue;
             
             GameObject towerObject = grid.getGridObject(towerPoses[i]);
-            Tower towerScript = towerObject.GetComponent("Tower") as Tower;
+            Tower towerScript = towerObject.GetComponent<Tower>();
             if (towerScript == null)
                 continue;
             

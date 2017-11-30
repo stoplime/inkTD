@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 54765668986691154}
   - component: {fileID: 114248080229487140}
   - component: {fileID: 114445567204893734}
+  - component: {fileID: 114827042232257300}
   m_Layer: 0
   m_Name: Stickman_Creature
   m_TagString: Untagged
@@ -161,6 +162,24 @@ MonoBehaviour:
   startColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   endColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   visualizerObject: {fileID: 0}
+--- !u!114 &114827042232257300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1515593311210572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!135 &135744774397534226
 SphereCollider:
   m_ObjectHideFlags: 1
