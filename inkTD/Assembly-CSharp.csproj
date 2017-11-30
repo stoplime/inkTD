@@ -78,6 +78,7 @@
      <Compile Include="Assets\scripts\Obstacle.cs" />
      <Compile Include="Assets\scripts\PathTraverser.cs" />
      <Compile Include="Assets\scripts\PathVisualizer.cs" />
+     <Compile Include="Assets\scripts\PauseMenu.cs" />
      <Compile Include="Assets\scripts\PlayerManager.cs" />
      <Compile Include="Assets\scripts\Projectile_Controller.cs" />
      <Compile Include="Assets\scripts\PurchaseType.cs" />
@@ -104,7 +105,7 @@
      <None Include="Assets\Shaders\sclicer.shader" />
      <None Include="Assets\Shaders\FixedColor.shader" />
      <None Include="Assets\Shaders\XZWaveTransparentShader.shader" />
-     <None Include="Assets\Resources\CreatureStates.txt" />
+     <None Include="Assets\Resources\CreatureStats.txt" />
      <None Include="Assets\Shaders\Texture.shader" />
      <None Include="Assets\Shaders\WindyGrass.shader" />
      <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
