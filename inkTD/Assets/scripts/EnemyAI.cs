@@ -87,9 +87,9 @@ public class EnemyAI : MonoBehaviour {
         stateWeights.Add(0.1f);  // 10% Idle
         stateWeights.Add(0.6f);  // 60% Place Tower
         stateWeights.Add(0.05f); // 5% Upgrade Towers
-        stateWeights.Add(0.2f);  // 20% Spawn a Creaure Wave
+        stateWeights.Add(0.0f);  // 20% Spawn a Creaure Wave
         stateWeights.Add(0.05f); // 5% Applying Modifiers
-        stateWeights.Add(0.0f);  // 10% Removing useless Towers
+        stateWeights.Add(0.1f);  // 10% Removing useless Towers
 
         currentGrid = PlayerManager.GetGrid(playerID);
         creatures = PlayerManager.GetCreatures(playerID);
@@ -190,6 +190,13 @@ public class EnemyAI : MonoBehaviour {
         else if (state == AIStates.UpgradeTowers)
         {
             ComputeUpgradeTowers();
+        }
+        else if (state == AIStates.RemoveTowers)
+        {
+            if (!TryTowerRemoval())
+            {
+
+            }
         }
     }
 
@@ -346,6 +353,12 @@ public class EnemyAI : MonoBehaviour {
             {
                 towersInPlay += 1;
                 TowerPathIntersects.Add(selectedTowerPos, PlayerManager.GetTowerPathIntersect(playerID, selectedTowerPos));
+                // reevaluate the towerPath Intersect
+                List<IntVector2> keys = new List<IntVector2>(TowerPathIntersects.Keys);
+                foreach (IntVector2 key in keys)
+                {
+                    TowerPathIntersects[key] = PlayerManager.GetTowerPathIntersect(playerID, key);
+                }
                 return true;
             }
             else
@@ -362,8 +375,16 @@ public class EnemyAI : MonoBehaviour {
 
     private void ComputeUpgradeTowers()
     {
+        if (state != AIStates.UpgradeTowers)
+            return;
+
         List<IntVector2> towerPoses = new List<IntVector2>();
         List<float> towerUpgradeWeight = new List<float>();
+        List<IntVector2> keys = new List<IntVector2>(TowerPathIntersects.Keys);
+        foreach (IntVector2 key in keys)
+        {
+            TowerPathIntersects[key] = PlayerManager.GetTowerPathIntersect(playerID, key);
+        }
         foreach (KeyValuePair<IntVector2, float> item in TowerPathIntersects)
         {
             if (item.Value > 0)
@@ -381,26 +402,58 @@ public class EnemyAI : MonoBehaviour {
         if (selectedTowerScript != null)
         {
             List<Towers> upgrades = gameData.GetTowerUpgrades(selectedTowerScript.towerType);
-            if (upgrades.Count == 1)
+            int upgradeChoice = 0;
+            if (upgrades.Count == 0)
             {
-                // only one option for upgrades
-                if (PlayerManager.GetBalance(playerID) >= gameData.GetTowerScript(upgrades[0]).price)
-                {
-                    PlayerManager.DeleteGridObject(playerID, selectedTowerPos.x, selectedTowerPos.y);
-                    PlayerManager.PlaceTower(playerID, playerID, selectedTowerPos, Quaternion.identity, gameData.GetTowerPrefab(upgrades[0]), null, "", 0);
-                }
+                return;
             }
-            else if (upgrades.Count > 1)
+            else if (upgrades.Count == 1)
             {
                 // Pick one
-                int upgradeChoice = UnityEngine.Random.Range(0, upgrades.Count-1);
-                if (PlayerManager.GetBalance(playerID) >= gameData.GetTowerScript(upgrades[upgradeChoice]).price)
-                {
-                    PlayerManager.DeleteGridObject(playerID, selectedTowerPos.x, selectedTowerPos.y);
-                    PlayerManager.PlaceTower(playerID, playerID, selectedTowerPos, Quaternion.identity, gameData.GetTowerPrefab(upgrades[upgradeChoice]), null, "", 0);
-                }
+                upgradeChoice = UnityEngine.Random.Range(0, upgrades.Count-1);
+            }
+            if (PlayerManager.GetBalance(playerID) >= gameData.GetTowerScript(upgrades[upgradeChoice]).price)
+            {
+                PlayerManager.DeleteGridObject(playerID, selectedTowerPos.x, selectedTowerPos.y);
+                PlayerManager.PlaceTower(playerID, playerID, selectedTowerPos, Quaternion.identity, gameData.GetTowerPrefab(upgrades[upgradeChoice]), null, "", 0);
+                TowerPathIntersects[selectedTowerPos] = PlayerManager.GetTowerPathIntersect(playerID, selectedTowerPos);
             }
         }
+    }
+
+    private bool TryTowerRemoval()
+    {
+        if (state != AIStates.RemoveTowers)
+            return false;
+        
+        // check through the list of towers, if the towerPathIntersect is 0 then remove the towers
+        List<IntVector2> unusedTowers = new List<IntVector2>();
+        foreach (KeyValuePair<IntVector2, float> item in TowerPathIntersects)
+        {
+            if (item.Value == 0)
+            {
+                unusedTowers.Add(item.Key);
+            }
+        }
+        int selectedTowerToRemove = 0;
+        if (unusedTowers.Count < 1)
+            return false;
+        else if (unusedTowers.Count > 1)
+            selectedTowerToRemove = UnityEngine.Random.Range(0, unusedTowers.Count-1);
+        
+        IntVector2 selectedTower = unusedTowers[selectedTowerToRemove];
+        GameObject towerObject = PlayerManager.GetGrid(playerID).getGridObject(selectedTower);
+        if (towerObject == null)
+            return false;
+        Tower selectedTowerScript = towerObject.GetComponent("Tower") as Tower;
+        if (selectedTowerScript != null)
+        {
+            TowerPathIntersects.Remove(selectedTower);
+            PlayerManager.SellTower(playerID, selectedTower);
+            towersInPlay--;
+            return true;
+        }
+        return false;
     }
 
     private float SumTowerPathIntersect(out List<IntVector2> towerPoses)

@@ -727,6 +727,16 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Gets the total number of intersect area between all towers in playerID and the playerID path
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <returns></returns>
+    public static float GetTotalTowerPathIntersect(int playerID, List<IntVector2> towerPoses)
+    {
+        return GetTotalTowerPathIntersect(playerID, towerPoses, PlayerManager.GetBestPath(playerID));
+    }
+
+    /// <summary>
     /// Gets the total number of intersect area between all towers and the given path
     /// </summary>
     /// <param name="playerID"></param>
@@ -746,7 +756,7 @@ public static class PlayerManager
             if (towerScript == null)
                 continue;
             
-            float towerRange = towerScript.range;
+            float towerRange = towerScript.range/Grid.gridSize;
             foreach (IntVector2 pathPos in currentPath)
             {
                 float dist = towerPoses[i].Dist(pathPos);
