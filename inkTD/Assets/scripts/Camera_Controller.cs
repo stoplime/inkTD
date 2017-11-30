@@ -24,6 +24,8 @@ public class Camera_Controller : MonoBehaviour
 
     private BezierVisualizer bVisualizer;
 
+    public PauseMenu pause;
+
     // Use this for initialization
     void Start ()
     {
@@ -64,6 +66,11 @@ public class Camera_Controller : MonoBehaviour
         {
             position.x += panSpeed * Time.deltaTime;
             cameraTransform.position = position;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pause.Pause();
         }
 
         //Mouse Wheel for Y and Z motion

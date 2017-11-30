@@ -28,5 +28,7 @@ public class Initializer : MonoBehaviour {
     {
         PlayerManager.SetBalance(ID, StartInk);
         PlayerManager.SetIncome(ID, StartInkcome);
+        PauseMenu.isPaused = false;
+        PauseMenu.CheckIfPaused();
     }
 }
