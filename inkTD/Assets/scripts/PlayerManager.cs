@@ -727,6 +727,39 @@ public static class PlayerManager
     }
 
     /// <summary>
+    /// Gets the total number of intersect area between all towers and the given path
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <returns></returns>
+    public static float GetTotalTowerPathIntersect(int playerID, List<IntVector2> towerPoses, List<IntVector2> currentPath)
+    {
+        float total = 0;
+        Grid grid = GetGrid(playerID);
+        
+        for (int i = 0; i < towerPoses.Count; i++)
+        {
+            if (grid.isGridEmpty(towerPoses[i]))
+                continue;
+            
+            GameObject towerObject = grid.getGridObject(towerPoses[i]);
+            Tower towerScript = towerObject.GetComponent("Tower") as Tower;
+            if (towerScript == null)
+                continue;
+            
+            float towerRange = towerScript.range;
+            foreach (IntVector2 pathPos in currentPath)
+            {
+                float dist = towerPoses[i].Dist(pathPos);
+                if (dist <= towerRange)
+                {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    /// <summary>
     /// An event that runs when the current player's balance of ink changes.
     /// </summary>
     public static event EventHandler OnCurrentPlayerBalanceChange;

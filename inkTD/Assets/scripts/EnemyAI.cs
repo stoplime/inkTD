@@ -29,7 +29,8 @@ public enum AIStates
     PlacingTowers = 1,
     UpgradeTowers = 2,
     SpawningCreatures = 3,
-    ApplyModifiers = 4
+    ApplyModifiers = 4,
+    RemoveTowers = 5
 }
 
 public class EnemyAI : MonoBehaviour {
@@ -88,6 +89,7 @@ public class EnemyAI : MonoBehaviour {
         stateWeights.Add(0.05f); // 5% Upgrade Towers
         stateWeights.Add(0.2f);  // 20% Spawn a Creaure Wave
         stateWeights.Add(0.05f); // 5% Applying Modifiers
+        stateWeights.Add(0.0f);  // 10% Removing useless Towers
 
         currentGrid = PlayerManager.GetGrid(playerID);
         creatures = PlayerManager.GetCreatures(playerID);
@@ -267,17 +269,23 @@ public class EnemyAI : MonoBehaviour {
         //     TowerPlacementBackToFrontOffset++;
         // }
         randomPathPos.value = 1;
-        int newPathLength = Help.ValidPosition(randomPathPos.position, playerID, creatures, currentGrid);
-        int deltaPathLength = newPathLength - currentPathLength;
-        if (deltaPathLength < 0)
+        List<IntVector2> tempBestPath;
+        int newPathLength = Help.ValidPosition(randomPathPos.position, playerID, creatures, currentGrid, out tempBestPath);
+        
+        List<IntVector2> towerPoses;
+        float currentTowerPathIntersect = SumTowerPathIntersect(out towerPoses);
+        float newTowerPathIntersect = PlayerManager.GetTotalTowerPathIntersect(playerID, towerPoses, tempBestPath);
+
+        float deltaIntersect = newTowerPathIntersect - currentTowerPathIntersect;
+        if (deltaIntersect < 0)
         {
-            deltaPathLength = 0;
+            deltaIntersect = 0;
         }
         if (newPathLength != 0)
         {
             possiblePositions.Add(randomPathPos);
 
-            heuristicWeights.Add(deltaPathLength +1);
+            heuristicWeights.Add(deltaIntersect +1);
             // heuristicWeights.Add(1);
         }
 
@@ -287,20 +295,28 @@ public class EnemyAI : MonoBehaviour {
             for (int y = randomPathPos.position.y - TowerPlacementRange; y < randomPathPos.position.y; y++)
             {
                 IntVector2 testPoint = new IntVector2(x, y);
-                newPathLength = Help.ValidPosition(testPoint, playerID, creatures, currentGrid);
-                deltaPathLength = newPathLength - currentPathLength;
-                if (deltaPathLength < 0)
+                newPathLength = Help.ValidPosition(testPoint, playerID, creatures, currentGrid, out tempBestPath);
+
+                currentTowerPathIntersect = SumTowerPathIntersect(out towerPoses);
+                newTowerPathIntersect = PlayerManager.GetTotalTowerPathIntersect(playerID, towerPoses, tempBestPath);
+                
+                deltaIntersect = newTowerPathIntersect - currentTowerPathIntersect;
+                if (deltaIntersect < 0)
                 {
-                    deltaPathLength = 0;
+                    deltaIntersect = 0;
                 }
+                // else
+                // {
+                //     print(deltaIntersect);
+                // }
                 if (newPathLength != 0)
                 {
                     HPosition validPos = new HPosition();
                     validPos.position = testPoint;
-                    // Value will be 1/(x+1) where x is the distance to the randomPathPos
+                    // Value will be 1/(x+1)^2 where x is the distance to the randomPathPos
                     // Value will be normalized first before setting it as the heuristic
                     float dist = testPoint.Dist(randomPathPos.position);
-                    heuristicWeights.Add( (1/((dist+1)*(dist+1))) * (deltaPathLength+1) );
+                    heuristicWeights.Add( (1/((dist+1)*(dist+1))) * (deltaIntersect+1) );
                     // heuristicWeights.Add( (1/((dist*dist)+1)) );
                     possiblePositions.Add(validPos);
                 }
@@ -385,6 +401,18 @@ public class EnemyAI : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private float SumTowerPathIntersect(out List<IntVector2> towerPoses)
+    {
+        float total = 0;
+        towerPoses = new List<IntVector2>();
+        foreach (KeyValuePair<IntVector2, float> item in TowerPathIntersects)
+        {
+            towerPoses.Add(item.Key);
+            total += item.Value;
+        }
+        return total;
     }
 
     // Update is called once per frame
