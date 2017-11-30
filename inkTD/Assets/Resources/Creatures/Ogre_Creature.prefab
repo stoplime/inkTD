@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54455128349387434}
   - component: {fileID: 114634478335564164}
   - component: {fileID: 114438626726779756}
+  - component: {fileID: 114538325289250926}
   m_Layer: 0
   m_Name: Ogre_Creature
   m_TagString: Untagged
@@ -116,6 +117,24 @@ MonoBehaviour:
   startColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   endColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   visualizerObject: {fileID: 0}
+--- !u!114 &114538325289250926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847305350745634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1.5
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114634478335564164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +149,7 @@ MonoBehaviour:
   objName: Ogre
   maxHealth: 1400
   health: 1400
-  damage: 350
+  damage: 100
   speed: 0.8
   price: 300
   ownerID: 0

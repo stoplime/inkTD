@@ -213,77 +213,15 @@ namespace helper
         /// <param name="x">The horizontal position on the grid that will be checked.</param>
         /// <param name="y">The vertical position on the grid that will be checked.</param>
         /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
-        public static int ValidPosition(int x, int y, int playerID)
-        {
-            return ValidPosition(x, y, playerID, PlayerManager.GetCreatures(playerID));
-        }
-
-        /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
-        /// The length should be 0 if the best path doesn't exist.
-        /// </summary>
-        /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
-        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
-        public static int ValidPosition(IntVector2 position, int playerID)
-        {
-            return ValidPosition(position.x, position.y, playerID, PlayerManager.GetCreatures(playerID));
-        }
-
-        /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
-        /// The length should be 0 if the best path doesn't exist.
-        /// </summary>
-        /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
-        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
-        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
-        public static int ValidPosition(IntVector2 position, int playerID, List<Creature> creatures)
-        {
-            return ValidPosition(position.x, position.y, playerID, creatures);
-        }
-
-        /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
-        /// The length should be 0 if the best path doesn't exist.
-        /// </summary>
-        /// <param name="x">The horizontal position on the grid that will be checked.</param>
-        /// <param name="y">The vertical position on the grid that will be checked.</param>
-        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
-        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
-        public static int ValidPosition(int x, int y, int playerID, List<Creature> creatures)
-        {
-            return ValidPosition(x, y, playerID, creatures, PlayerManager.GetGrid(playerID));
-        }
-
-        /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
-        /// The length should be 0 if the best path doesn't exist.
-        /// </summary>
-        /// <param name="position">The horizontal and vertical position on the grid that will be checked.</param>
-        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
         /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
         /// <param name="grid">The grid of the player.</param>
         /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
-        public static int ValidPosition(IntVector2 position, int playerID, List<Creature> creatures, Grid grid)
+        public static int ValidPosition(IntVector2 pos, int playerID, List<Creature> creatures, Grid grid, out List<IntVector2> tempBestPath)
         {
-            return ValidPosition(position.x, position.y, playerID, creatures, grid);
-        }
+            int x = pos.x;
+            int y = pos.y;
+            tempBestPath = new List<IntVector2>();
 
-        /// <summary>
-        /// Determines if a given x and y on the playerID's grid is a valid position and a tower can be placed there. Returns the length of the best path.
-        /// The length should be 0 if the best path doesn't exist.
-        /// </summary>
-        /// <param name="x">The horizontal position on the grid that will be checked.</param>
-        /// <param name="y">The vertical position on the grid that will be checked.</param>
-        /// <param name="playerID">The ID of the player whose grid is being checked.</param>
-        /// <param name="creatures">The creatures of the player's grid that is being checked.</param>
-        /// <param name="grid">The grid of the player.</param>
-        /// <returns>Returns the length of the best path. The length should be 0 if the best path doesn't exist.</returns>
-        public static int ValidPosition(int x, int y, int playerID, List<Creature> creatures, Grid grid)
-        {
             //Determine if the coordinates are within the grid's bounds and an object is not already in the position.
             if (!grid.inArena(x, y))
                 return 0;
@@ -297,7 +235,8 @@ namespace helper
             grid.setGridObject(x, y, empty);
 
             //Does the new best path exist? Pathfail is used to determine if the new paths generated from the position fail the validity tests.
-            int pathLength = PlayerManager.GetBestPath(playerID).Count;
+            tempBestPath = PlayerManager.GetBestPath(playerID);
+            int pathLength = tempBestPath.Count;
             bool pathFail = pathLength == 0;
 
             if (!pathFail)

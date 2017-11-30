@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54244213496082628}
   - component: {fileID: 114056662656652672}
   - component: {fileID: 114428150134230386}
+  - component: {fileID: 114153807343684702}
   m_Layer: 0
   m_Name: Owlbear_Creature
   m_TagString: Untagged
@@ -128,6 +129,24 @@ MonoBehaviour:
   debug: 0
   OffsetTranslation: {x: 0, y: 1, z: 0}
   OffsetRotation: {x: 0, y: 0, z: 0}
+--- !u!114 &114153807343684702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981709807886148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1.5
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114428150134230386
 MonoBehaviour:
   m_ObjectHideFlags: 1

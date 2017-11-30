@@ -708,7 +708,7 @@ public static class PlayerManager
             return -1;
         
         GameObject towerObject = grid.getGridObject(towerPos);
-        Tower towerScript = towerObject.GetComponent("Tower") as Tower;
+        Tower towerScript = towerObject.GetComponent<Tower>();
         if (towerScript == null)
             return -1;
         
@@ -724,6 +724,49 @@ public static class PlayerManager
             }
         }
         return count;
+    }
+
+    /// <summary>
+    /// Gets the total number of intersect area between all towers in playerID and the playerID path
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <returns></returns>
+    public static float GetTotalTowerPathIntersect(int playerID, List<IntVector2> towerPoses)
+    {
+        return GetTotalTowerPathIntersect(playerID, towerPoses, PlayerManager.GetBestPath(playerID));
+    }
+
+    /// <summary>
+    /// Gets the total number of intersect area between all towers and the given path
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <returns></returns>
+    public static float GetTotalTowerPathIntersect(int playerID, List<IntVector2> towerPoses, List<IntVector2> currentPath)
+    {
+        float total = 0;
+        Grid grid = GetGrid(playerID);
+        
+        for (int i = 0; i < towerPoses.Count; i++)
+        {
+            if (grid.isGridEmpty(towerPoses[i]))
+                continue;
+            
+            GameObject towerObject = grid.getGridObject(towerPoses[i]);
+            Tower towerScript = towerObject.GetComponent<Tower>();
+            if (towerScript == null)
+                continue;
+            
+            float towerRange = towerScript.range/Grid.gridSize;
+            foreach (IntVector2 pathPos in currentPath)
+            {
+                float dist = towerPoses[i].Dist(pathPos);
+                if (dist <= towerRange)
+                {
+                    total++;
+                }
+            }
+        }
+        return total;
     }
 
     /// <summary>

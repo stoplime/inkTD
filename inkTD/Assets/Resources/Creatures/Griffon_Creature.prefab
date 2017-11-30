@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54505652955056538}
   - component: {fileID: 114475061143794488}
   - component: {fileID: 114528214224255452}
+  - component: {fileID: 114266154472605416}
   m_Layer: 0
   m_Name: Griffon_Creature
   m_TagString: Untagged
@@ -101,6 +102,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114266154472605416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1400811215688944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1.5
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114475061143794488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,17 +132,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Griffon
-  maxHealth: 300
-  health: 300
-  damage: 100
-  speed: 2
-  price: 7500000
+  maxHealth: 10000000
+  health: 10000000
+  damage: 800000
+  speed: 3
+  price: 1000000
   ownerID: 0
   description: Creatures with the bodies of lions, and the heads, wings, and talons
     of hawks
   defense: 0
-  inkcomeValue: 37
-  dropInk: 37
+  inkcomeValue: 1
+  dropInk: 1
   gridID: 0
   animationHeight: 2
   debug: 0

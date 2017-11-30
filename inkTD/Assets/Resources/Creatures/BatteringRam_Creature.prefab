@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54722793583575806}
   - component: {fileID: 114874847217910984}
   - component: {fileID: 114095700968183514}
+  - component: {fileID: 114523277650762994}
   m_Layer: 0
   m_Name: BatteringRam_Creature
   m_TagString: Untagged
@@ -116,6 +117,24 @@ MonoBehaviour:
   startColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   endColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   visualizerObject: {fileID: 0}
+--- !u!114 &114523277650762994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1280074592346130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4467bdb0794664230909800798c9e6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scale: 1.5
+  Yoffset: 2
+  Margin: 0.05
+  maxHealthBarPrefab: {fileID: 1264983017212282, guid: ea1f8410f76194e07a5f4411c208b887,
+    type: 2}
+  healthBarPrefab: {fileID: 1134087209659786, guid: aeb9d366c3b0040349ecb5ca08a72f3a,
+    type: 2}
 --- !u!114 &114874847217910984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,9 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objName: Battering Ram
-  maxHealth: 2500
-  health: 2500
-  damage: 700
+  maxHealth: 1800
+  health: 1800
+  damage: 300
   speed: 1.2
   price: 650
   ownerID: 0
