@@ -2407,7 +2407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 1
-  TimerValue: 10
+  TimerValue: 500
   TowerPlacementRange: 3
   CustomBaseTowerDistribution: []
   CreatureSpawnTime: 750
@@ -11605,12 +11605,27 @@ Prefab:
     - target: {fileID: 114195557843980244, guid: 427de868207ef425aad42430ace7ad00,
         type: 2}
       propertyPath: StartInk
-      value: 10000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114371296364637212, guid: 427de868207ef425aad42430ace7ad00,
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449589611718874, guid: 427de868207ef425aad42430ace7ad00,
+        type: 2}
+      propertyPath: color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449589611718874, guid: 427de868207ef425aad42430ace7ad00,
+        type: 2}
+      propertyPath: color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449589611718874, guid: 427de868207ef425aad42430ace7ad00,
+        type: 2}
+      propertyPath: color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 427de868207ef425aad42430ace7ad00, type: 2}

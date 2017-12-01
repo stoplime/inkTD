@@ -341,6 +341,11 @@ public class EnemyAI : MonoBehaviour {
         selectedTowerPos = possiblePositions[SelectWeightedRandom(heuristicWeights)].position;
         
         // Once a valid Tower location has been selected, find the appropriate tower to go in that location
+        if (BaseTowers.Count == 0)
+        {
+            print("Base Towers are empty");
+            return false;
+        }
         Towers selectedTower = BaseTowers[SelectWeightedRandom(BaseTowerDistribution)];
         Tower selectedTowerScript = gameData.GetTowerScript(selectedTower);
 
