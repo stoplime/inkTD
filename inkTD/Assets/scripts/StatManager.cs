@@ -63,7 +63,7 @@ public static class StatManager
     }
 
     /// <summary>
-    /// Gets the specific stat.
+    /// Gets the specific stat. Returns 0 if the stat is not present.
     /// </summary>
     /// <param name="playerID">The player's ID.</param>
     /// <param name="stat">The stat will be returned..</param>
@@ -71,6 +71,10 @@ public static class StatManager
     public static double GetStat(int playerID, Stats stat)
     {
         CheckKeyValidity(playerID);
-        return stats[playerID][stat];
+
+        if (!stats[playerID].ContainsKey(stat))
+            return 0;
+        else
+            return stats[playerID][stat];
     }
 }

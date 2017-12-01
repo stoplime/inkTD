@@ -44,11 +44,15 @@ public class EnemyAI : MonoBehaviour {
     [Tooltip("The Range of towers to be checked before placing. Making this large can take too long and place towers way too far off the main path.")]    
     public int TowerPlacementRange = 3;
 
+    [Tooltip("How fast the AI Creature spawns in milliseconds")]
+    public int CreatureSpawnTime = 750;
+
+    [Tooltip("The chance that the AI will choose an optimal tower placement on the first interation through the main path.")]
+    public float OptimizeTowerPath = 0.8f;
+
     [Tooltip("A custom tower selection distribution, leave blank for a random distribution. Should have a length of the number of base towers available")]
     public List<float> CustomBaseTowerDistribution;
 
-    [Tooltip("How fast the AI Creature spawns in milliseconds")]
-    public int CreatureSpawnTime = 750;
 
 	private Grid currentGrid;
     private List<Creature> creatures;
@@ -57,7 +61,7 @@ public class EnemyAI : MonoBehaviour {
 
     private TaylorTimer creatureQueue;
 
-    private AIStates state = AIStates.PlacingTowers;
+    private AIStates state = AIStates.Idle;
     private List<float> stateWeights;
 
     private GameLoader gameData;
@@ -220,7 +224,7 @@ public class EnemyAI : MonoBehaviour {
             return;
         
         // budget spending for creatures will be a random between 30% to 80% of ink money
-        float budget = PlayerManager.GetBalance(playerID); // UnityEngine.Random.Range(0.3f, 0.8f) *
+        float budget = UnityEngine.Random.Range(0.3f, 0.8f) * PlayerManager.GetBalance(playerID); // UnityEngine.Random.Range(0.3f, 0.8f) *
         List<Creatures> affordableCreatures = gameData.GetAffordableCreatures(budget * 0.5f);
         List<float> creatureWeights;
 
@@ -265,16 +269,17 @@ public class EnemyAI : MonoBehaviour {
         int currentPathLength = bestPath.Count;
 
         // picks a random point on the best path as the starting tower placement choice
+        bool firstRun = false;
         HPosition randomPathPos = new HPosition();
-        // if (TowerPlacementBackToFrontOffset >= currentPathLength)
-        // {
+        if (TowerPlacementBackToFrontOffset >= currentPathLength)
+        {
             randomPathPos.position = bestPath[UnityEngine.Random.Range(0, currentPathLength -1)];
-        // }
-        // else
-        // {
-        //     randomPathPos.position = bestPath[currentPathLength - TowerPlacementBackToFrontOffset - 1];
-        //     TowerPlacementBackToFrontOffset++;
-        // }
+        }
+        else
+        {
+            randomPathPos.position = bestPath[currentPathLength - TowerPlacementBackToFrontOffset - 2];
+            firstRun = true;
+        }
         randomPathPos.value = 1;
         List<IntVector2> tempBestPath;
         int newPathLength = Help.ValidPosition(randomPathPos.position, playerID, creatures, currentGrid, out tempBestPath);
@@ -297,35 +302,38 @@ public class EnemyAI : MonoBehaviour {
         }
 
         // Check around the random Point on the best path based on TowerPlacementRange
-        for (int x = randomPathPos.position.x - TowerPlacementRange; x < randomPathPos.position.x; x++)
+        if (TowerPlacementBackToFrontOffset >= currentPathLength || OptimizeTowerPath < UnityEngine.Random.value)
         {
-            for (int y = randomPathPos.position.y - TowerPlacementRange; y < randomPathPos.position.y; y++)
+            for (int x = randomPathPos.position.x - TowerPlacementRange; x < randomPathPos.position.x; x++)
             {
-                IntVector2 testPoint = new IntVector2(x, y);
-                newPathLength = Help.ValidPosition(testPoint, playerID, creatures, currentGrid, out tempBestPath);
+                for (int y = randomPathPos.position.y - TowerPlacementRange; y < randomPathPos.position.y; y++)
+                {
+                    IntVector2 testPoint = new IntVector2(x, y);
+                    newPathLength = Help.ValidPosition(testPoint, playerID, creatures, currentGrid, out tempBestPath);
 
-                currentTowerPathIntersect = SumTowerPathIntersect(out towerPoses);
-                newTowerPathIntersect = PlayerManager.GetTotalTowerPathIntersect(playerID, towerPoses, tempBestPath);
-                
-                deltaIntersect = newTowerPathIntersect - currentTowerPathIntersect;
-                if (deltaIntersect < 0)
-                {
-                    deltaIntersect = 0;
-                }
-                // else
-                // {
-                //     print(deltaIntersect);
-                // }
-                if (newPathLength != 0)
-                {
-                    HPosition validPos = new HPosition();
-                    validPos.position = testPoint;
-                    // Value will be 1/(x+1)^2 where x is the distance to the randomPathPos
-                    // Value will be normalized first before setting it as the heuristic
-                    float dist = testPoint.Dist(randomPathPos.position);
-                    heuristicWeights.Add( (1/((dist+1)*(dist+1))) * (deltaIntersect+1) );
-                    // heuristicWeights.Add( (1/((dist*dist)+1)) );
-                    possiblePositions.Add(validPos);
+                    currentTowerPathIntersect = SumTowerPathIntersect(out towerPoses);
+                    newTowerPathIntersect = PlayerManager.GetTotalTowerPathIntersect(playerID, towerPoses, tempBestPath);
+                    
+                    deltaIntersect = newTowerPathIntersect - currentTowerPathIntersect;
+                    if (deltaIntersect < 0)
+                    {
+                        deltaIntersect = 0;
+                    }
+                    // else
+                    // {
+                    //     print(deltaIntersect);
+                    // }
+                    if (newPathLength != 0)
+                    {
+                        HPosition validPos = new HPosition();
+                        validPos.position = testPoint;
+                        // Value will be 1/(x+1)^2 where x is the distance to the randomPathPos
+                        // Value will be normalized first before setting it as the heuristic
+                        float dist = testPoint.Dist(randomPathPos.position);
+                        heuristicWeights.Add( (1/((dist+1)*(dist+1))) * (deltaIntersect+1) );
+                        // heuristicWeights.Add( (1/((dist*dist)+1)) );
+                        possiblePositions.Add(validPos);
+                    }
                 }
             }
         }
@@ -364,6 +372,10 @@ public class EnemyAI : MonoBehaviour {
                 {
                     TowerPathIntersects[key] = PlayerManager.GetTowerPathIntersect(playerID, key);
                 }
+                if (firstRun)
+                {
+                    TowerPlacementBackToFrontOffset++;
+                }
                 return true;
             }
             else
@@ -397,6 +409,10 @@ public class EnemyAI : MonoBehaviour {
                 towerPoses.Add(item.Key);
                 towerUpgradeWeight.Add(item.Value);
             }
+        }
+        if (towerPoses.Count == 0)
+        {
+            return;
         }
         Normalize(towerUpgradeWeight);
         IntVector2 selectedTowerPos = towerPoses[SelectWeightedRandom(towerUpgradeWeight)];

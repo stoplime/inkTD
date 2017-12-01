@@ -79,7 +79,7 @@ public class TowerInfoController : MonoBehaviour
         else
         {
             objectHeldType = InkObjectTypes.Obstacle;
-            string spriteName = obstacle.ObstacleID.ToString();
+            string spriteName = obstacle.SnapShotName;
             if (gameLoader.CachedSnapShotExists(spriteName))
                 towerPreview.sprite = gameLoader.GetCachedSnapShot(spriteName);
             else
@@ -151,6 +151,8 @@ public class TowerInfoController : MonoBehaviour
             Grid grid = PlayerManager.GetGrid(owner);
             Tower towerScript = grid.getGridObject(gridX, gridY).GetComponent<Tower>();
             towerScript.Pressed();
+
+            StatManager.AddStat(owner, Stats.TowersUpgraded, 1);
 
             if (UpgradePressed != null)
             {

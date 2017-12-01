@@ -61,7 +61,7 @@ public class TowerUpgradeController : MonoBehaviour
                     if (currentTowerController.DisplayedObject != null)
                         sellButtonText.text = "Sell for " + (currentTowerController.DisplayedObject.price * PlayerManager.ResellPercentage) + " Ink";
 
-                    BuildTowerUpgradeList();
+                    BuildTowerUpgradeList(gameLoader.TowerTabMenu.Anchor == UIAnchors.Left || gameLoader.TowerTabMenu.Anchor == UIAnchors.Right);
                 }
                 else if (currentTowerController.HeldObjectType == InkObjectTypes.Obstacle)
                 {
@@ -73,7 +73,7 @@ public class TowerUpgradeController : MonoBehaviour
         
     }
 
-    private void BuildTowerUpgradeList()
+    private void BuildTowerUpgradeList(bool menuLeftRightOriented)
     {
         if (currentTowerController.Owner == PlayerManager.CurrentPlayer && currentTowerController.DisplayedObject != null)
         {
@@ -91,7 +91,16 @@ public class TowerUpgradeController : MonoBehaviour
                 controller.SetTower(gameLoader.GetTowerScript(upgrades[i]), currentTowerController.Owner, PlayerManager.CurrentPlayer, currentTowerController.GridX, currentTowerController.GridY);
                 upgradeControllers.Add(controller);
                 upgradeRect = obj.GetComponent<RectTransform>();
-                upgradeRect.anchoredPosition = new Vector3(rectTransform.rect.x, rectTransform.offsetMin.y - (spacePerUpgrade * i) - upgradeRect.rect.height * (i + 1) - upgradeOffset);
+
+                if (menuLeftRightOriented)
+                {
+                    upgradeRect.anchoredPosition = new Vector3(rectTransform.rect.x, rectTransform.offsetMin.y - (spacePerUpgrade * i) - upgradeRect.rect.height * (i + 1) - upgradeOffset);
+                }
+                else
+                {
+                    upgradeRect.anchoredPosition = new Vector3(rectTransform.offsetMax.x + (spacePerUpgrade * i) + upgradeRect.rect.width * (i + 1) + upgradeOffset, rectTransform.rect.y);
+                    upgradeRect.offsetMax = new Vector2(upgradeRect.offsetMax.x, rectTransform.offsetMax.y);
+                }
 
                 if (childrenInfluencedScrollBar != null)
                 {
@@ -101,15 +110,32 @@ public class TowerUpgradeController : MonoBehaviour
                 }
             }
 
-            if (upgrades.Count > 0)
+            if (menuLeftRightOriented)
             {
-                contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, -upgradeRect.offsetMin.y);
-                contentRect.anchoredPosition = new Vector2(contentRect.anchoredPosition.x, 0f);
+                if (upgrades.Count > 0)
+                {
+                    contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, -upgradeRect.offsetMin.y);
+                    contentRect.anchoredPosition = new Vector2(contentRect.anchoredPosition.x, 0f);
+                }
+                else
+                {
+                    contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, -(rectTransform.anchorMin.y - spacePerUpgrade));
+                    contentRect.anchoredPosition = new Vector2(contentRect.anchoredPosition.x, 0f);
+                }
             }
             else
             {
-                contentRect.sizeDelta = new Vector2(contentRect.sizeDelta.x, -(rectTransform.anchorMin.y - spacePerUpgrade));
-                contentRect.anchoredPosition = new Vector2(contentRect.anchoredPosition.x, 0f);
+                if (upgrades.Count > 0)
+                {
+                    //TODO: Remove this hard code:
+                    contentRect.sizeDelta = new Vector2(upgradeRect.offsetMax.x - Screen.width, contentRect.sizeDelta.y); //hardcoded screen.
+                    contentRect.anchoredPosition = new Vector2(0f, contentRect.anchoredPosition.y);
+                }
+                else
+                {
+                    contentRect.sizeDelta = new Vector2((rectTransform.anchorMax.x - spacePerUpgrade), contentRect.sizeDelta.y);
+                    contentRect.anchoredPosition = new Vector2(0f, contentRect.anchoredPosition.y);
+                }
             }
         }
     }

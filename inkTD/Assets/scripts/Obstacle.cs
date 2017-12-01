@@ -37,20 +37,32 @@ public class Obstacle : GridSnapInkObject
         get { return obstacleID; }
     }
 
+    /// <summary>
+    /// Returns the name of the cached snapshot of this obstacle, if it has one.
+    /// </summary>
+    public string SnapShotName
+    {
+        get { return snapShotName; }
+    }
+
     private Guid obstacleID = Guid.NewGuid();
+
+    private string snapShotName;
     
     // Use this for initialization
     public override void Start ()
     {
         base.Start();
 
+        snapShotName = objName; //Alternatively we can use obstacleID.ToString() though it is not recommended.
+
         gameLoader = Help.GetGameLoader();
-        if (TakeSnapshot)
+        if (TakeSnapshot && !gameLoader.CachedSnapShotExists(objName))
         {
             if (snapshotObject == null)
-                gameLoader.TakeSnapShotOf(gameObject, obstacleID.ToString(), snapShotDistance, snapShotOffset, true);
+                gameLoader.TakeSnapShotOf(gameObject, snapShotName, snapShotDistance, snapShotOffset, true);
             else
-                gameLoader.TakeSnapShotOf(snapshotObject, obstacleID.ToString(), snapShotDistance, snapShotOffset, true);
+                gameLoader.TakeSnapShotOf(snapshotObject, snapShotName, snapShotDistance, snapShotOffset, true);
         }
     }
 }
