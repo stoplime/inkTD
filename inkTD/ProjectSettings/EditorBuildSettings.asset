@@ -26,3 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/FogLevel.unity
     guid: 192d9bcf8d0beeb448199f287c043f6a
+  - enabled: 1
+    path: Assets/MountainLevel.unity
+    guid: f82e8da350dca3f49914c433eef0e341

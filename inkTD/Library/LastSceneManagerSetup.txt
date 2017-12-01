@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/FogLevel.unity
+- path: Assets/MountainLevel.unity
   isLoaded: 1
   isActive: 1

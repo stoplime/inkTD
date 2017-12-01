@@ -19,7 +19,7 @@ public static class PlayerManager
 
     public const float ResellPercentage = 0.85f;
 
-    private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose_Menu";
+    private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose Menu";
 
     public static WinLoseHandler winLoseScript;
 
@@ -160,7 +160,7 @@ public static class PlayerManager
 
         if (value < 0)
         {
-            StatManager.AddStat(playerID, Stats.InkSpent, value);
+            StatManager.AddStat(playerID, Stats.InkSpent, -value);
         }
         else
         {
@@ -678,9 +678,9 @@ public static class PlayerManager
                 return false;
             }
         }
-
         GameObject creature;
         AddIncome(playerID, clone.inkcomeValue);
+        StatManager.AddStat(playerID, Stats.CreaturesSpawned, 1);
         foreach (KeyValuePair<int, List<Creature>> v in creatures)
         {
             if (playerID != v.Key && !grids[v.Key].TowerCastleDead)
