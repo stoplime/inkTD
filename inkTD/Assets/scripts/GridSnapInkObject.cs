@@ -134,9 +134,21 @@ public class GridSnapInkObject : InkObject
             GameObject leftRightMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuHor");
             GameObject upDownMenu = GameObject.FindGameObjectWithTag("TowerSelectMenuVer");
 
-            GameObject selectedMenu = leftRightMenu; //TODO: Determine whether the tower menu button is on left/right or up/down.
+            GameObject selectedMenu;
+            TowerInfoController currentController;
 
-            TowerInfoController currentController = gameLoader.towerControllerCurrentLeftRight;
+            if (gameLoader.TowerTabMenu.Anchor == UIAnchors.Bottom || gameLoader.TowerTabMenu.Anchor == UIAnchors.Top)
+            {
+                selectedMenu = upDownMenu;
+                currentController = gameLoader.towerControllerCurrentUpDown;
+            }
+            else
+            {
+                selectedMenu = leftRightMenu;
+                currentController = gameLoader.towerControllerCurrentLeftRight;
+            }
+
+             
 
             if (this is Tower)
             {
