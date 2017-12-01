@@ -235,16 +235,19 @@ public class Grid : MonoBehaviour {
     void Awake() {
 		gridOffset = new IntVector2(OffsetX, OffsetY);
         grid = new GameObject[grid_width, grid_height];
+        // Moved the offsetEnds to here from the Start function
+		offsetEnds();
     }
 
 	// Use this for initialization
 	void Start () {
-		offsetEnds();
+        // For some reason the Start function does not get called
+        // offsetEnds();
 	}
 
 	// Update is called once per frame
 	void Update () {
-
+        
 	}
 
     /// <summary>
@@ -260,12 +263,12 @@ public class Grid : MonoBehaviour {
     /// <summary>
     /// Gets the start position for this grid.
     /// </summary>
-    public IntVector2 StartPosition { get; private set; }
+    public IntVector2 StartPosition;
 
     /// <summary>
     /// Gets the end position for this grid.
     /// </summary>
-    public IntVector2 EndPosition { get; private set; }
+    public IntVector2 EndPosition;
 
     /// <summary>
     /// Gets or sets the tower castle assigned to this grid. Note: This does not instantiate the tower castle, but it does force the tower castle's position to the end of the grid's path.

@@ -47,6 +47,10 @@ public class TowerSpawner : MonoBehaviour {
 
 	public void SelectLocation()
 	{
+        if (gameLoader == null)
+        {
+            Start();
+        }
         if (!gameLoader.TowerTabMenu.IsVisible || gameLoader.TowerTabMenu.AlternativeMenuActive)
         {
             if (existingHighlight != null && existingHighlight.transform.position.y > -90)

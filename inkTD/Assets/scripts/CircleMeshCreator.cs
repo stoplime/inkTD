@@ -79,7 +79,7 @@ public class CircleMeshCreator : MonoBehaviour
     {
         Range = range;
         YOffset = yOffset;
-        Faces = faces;
+        // Faces = faces;
     }
 
     private void GenerateMesh()
