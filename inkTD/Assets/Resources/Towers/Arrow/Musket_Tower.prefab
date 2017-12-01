@@ -379,7 +379,7 @@ MonoBehaviour:
   priorityTarget: 0
   projectileAreaRadius: 0
   projectileLife: 1000
-  projectileObject: {fileID: 1809517007167910, guid: 153ec03f1c88e3745a78a75d41dab6ed,
+  projectileObject: {fileID: 1562181295037842, guid: fbd4bc810ea83ca4c83901d256085386,
     type: 2}
   projectileSpawnHeight: 0.8
   shootSoundEffect: {fileID: 8300000, guid: 8d8d6c584d7e4944099757945b19a8f1, type: 3}
