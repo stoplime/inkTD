@@ -27,6 +27,11 @@ public class Grid : MonoBehaviour {
 	/// For code, use EndPosition instead.
 	/// </summary>
     public int endY = 1;
+
+    /// <summary>
+    /// If true the objects placed in the grid will be offsetted by the terrain.
+    /// </summary>
+    public bool offsetByTerrain = false;
     
     /// <summary>
     /// The size of the individual grid tiles.

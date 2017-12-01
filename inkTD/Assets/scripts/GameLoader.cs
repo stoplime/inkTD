@@ -337,12 +337,14 @@ public class GameLoader : MonoBehaviour
         Texture2D texture;
         GameObject snapshotTower;
         int prevLayer;
+        Vector3 pos;
 
         if (snapshotCamera == null)
             throw new System.Exception("GameLoader script is missing a snapshot camera!");
 
         snapshotCamera.transform.position = defaultSnapShotCameraPosition;
         snapshotCamera.transform.rotation = defaultSnapShotCameraRotation;
+
         
         for (int i = 0; i < towerEntries.Length; i++)
         {
@@ -351,9 +353,15 @@ public class GameLoader : MonoBehaviour
                 snapshotTower = Instantiate(towerEntries[i].prefab);
 
                 prevLayer = snapshotTower.layer;
-                snapshotTower.transform.position = snapshotCamera.transform.position + snapshotCamera.transform.forward * towerSnapshotDistance;
+
+                pos = snapshotCamera.transform.position;
+                //if (Terrain.activeTerrain != null)
+                //    pos.y = Terrain.activeTerrain.SampleHeight(pos);
+                pos += snapshotCamera.transform.forward * towerSnapshotDistance;
+
+                snapshotTower.transform.position = pos;
                 //NOTE: Since tower pivot point is at the bottom we must offset it. 1.5 is roughly hard coded since 2 doesn't result in the tower being centered in its snapshot.
-                snapshotTower.transform.position -= snapshotTower.transform.up * (towers[towerEntries[i].tower].towerScript.Height / 3f);
+                snapshotTower.transform.position -= snapshotTower.transform.up * (towers[towerEntries[i].tower].towerScript.Bounds.extents.y / 1.1f);
                 snapshotTower.layer = snapshotLayerNumber;
                 snapshotCamera.targetTexture = render;
                 snapshotCamera.Render();
@@ -415,7 +423,12 @@ public class GameLoader : MonoBehaviour
         if (snapshotCamera == null)
             throw new System.Exception("GameLoader script is missing a snapshot camera!");
 
-        snapshotCamera.transform.position = obj.transform.position + obj.transform.forward * snapShotDistance;
+        Vector3 pos = obj.transform.position;
+        if (Terrain.activeTerrain != null)
+            pos.y = Terrain.activeTerrain.SampleHeight(pos);
+        pos += obj.transform.forward * snapShotDistance;
+
+        snapshotCamera.transform.position = pos;
         snapshotCamera.transform.LookAt(obj.transform);
         snapshotCamera.transform.position += snapShotOffset;
         obj.layer = snapshotLayerNumber;
