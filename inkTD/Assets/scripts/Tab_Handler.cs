@@ -352,6 +352,11 @@ public class Tab_Handler : MonoBehaviour
             Help.BlankButton.transform.position = pos;
         }
 	}
+
+    void OnDestroy()
+    {
+        Help.onResolutionChange -= onResolutionChange;
+    }
 }
 
 /// <summary>

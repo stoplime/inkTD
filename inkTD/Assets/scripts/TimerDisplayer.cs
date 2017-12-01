@@ -102,4 +102,10 @@ public class TimerDisplayer : MonoBehaviour
     {
         timer.Update();
 	}
+
+    void OnDestroy()
+    {
+        PlayerManager.OnCurrentPlayerBalanceChange -= PlayerManager_OnCurrentPlayerBalanceChange;
+        PlayerManager.OnCurrentPlayerIncomeChange -= PlayerManager_OnCurrentPlayerIncomeChange;
+    }
 }

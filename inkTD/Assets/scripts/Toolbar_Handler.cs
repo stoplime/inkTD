@@ -40,6 +40,11 @@ public class Toolbar_Handler : MonoBehaviour
         toolbarRectangle.sizeDelta = new Vector2(toolbarRectangle.sizeDelta.x, Screen.height * (1 - cameraScreenPercentage));
     }
 
+    void OnDestroy()
+    {
+        helper.Help.onResolutionChange -= onResolutionChange;
+    }
+
     // Use this for initialization
     //void Start ()
     //{
