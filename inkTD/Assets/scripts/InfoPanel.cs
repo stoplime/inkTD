@@ -11,6 +11,7 @@ public class InfoPanel : MonoBehaviour
     public Image image;
     public Text nameText;
     public Text costText;
+    public Text incomeText;
     public Text rangeText;
     public Text damageText;
     public Text descriptionText;
@@ -24,7 +25,7 @@ public class InfoPanel : MonoBehaviour
     public TowerSpawner towerSpawner;
     
     private string objName, description;
-    private float cost, health, rateOfFire, damage, range, speed;
+    private float cost, income, health, rateOfFire, damage, range, speed;
 
     private GameLoader info;
 
@@ -73,6 +74,7 @@ public class InfoPanel : MonoBehaviour
         description = creatureScript.description;
         health = creatureScript.health;
         cost = creatureScript.price;
+        income = creatureScript.inkcomeValue;
         damage = creatureScript.damage;
         speed = creatureScript.damage;
         image.overrideSprite = info.GetCreatureSprite(creature);
@@ -115,6 +117,11 @@ public class InfoPanel : MonoBehaviour
         costText.text = "Cost: " + Convert.ToString(cost);
         damageText.text = "Damage: " + Convert.ToString(damage);
 
+        if (incomeText != null)
+        {
+            incomeText.text = "Income: " + Convert.ToString(income);
+        }
+
         if (rangeText != null)
         {
             rangeText.text = "Range: " + Convert.ToString(range);
@@ -140,6 +147,11 @@ public class InfoPanel : MonoBehaviour
         descriptionText.text = "";
         costText.text = "";
         damageText.text = "";
+
+        if (incomeText != null)
+        {
+            incomeText.text = "";
+        }
         
         if (rangeText != null)
         {
