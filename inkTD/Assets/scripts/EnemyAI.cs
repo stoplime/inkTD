@@ -271,13 +271,14 @@ public class EnemyAI : MonoBehaviour {
         // picks a random point on the best path as the starting tower placement choice
         bool firstRun = false;
         HPosition randomPathPos = new HPosition();
-        if (TowerPlacementBackToFrontOffset >= currentPathLength)
+        if (TowerPlacementBackToFrontOffset > currentPathLength /2 )
         {
             randomPathPos.position = bestPath[UnityEngine.Random.Range(0, currentPathLength -1)];
+            TowerPlacementBackToFrontOffset = 1000000;
         }
         else
         {
-            randomPathPos.position = bestPath[currentPathLength - TowerPlacementBackToFrontOffset - 2];
+            randomPathPos.position = bestPath[currentPathLength - TowerPlacementBackToFrontOffset -1];
             firstRun = true;
         }
         randomPathPos.value = 1;
