@@ -86,7 +86,7 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: c75fbfdbd3715e249afd10f23fb6f3d0,
+  m_LightingDataAsset: {fileID: 112000002, guid: 83e65fca0d52c3c45b00156d0a7208c0,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -4095,7 +4095,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4330359971055666, guid: 6d2c182086a0d4748b3f6236f183e382, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.02813169
+      value: -0.028131688
       objectReference: {fileID: 0}
     - target: {fileID: 4330359971055666, guid: 6d2c182086a0d4748b3f6236f183e382, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7630,7 +7630,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4429847603309108, guid: 3afa7a316786e6946b65ebb2aa6f4e01, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.0000000025563434
+      value: 0.0000000025563436
       objectReference: {fileID: 0}
     - target: {fileID: 33270157942500098, guid: 3afa7a316786e6946b65ebb2aa6f4e01,
         type: 2}
@@ -8278,7 +8278,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4334382109451786, guid: 94de333e42fa88944893a1e9daa3afe4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.1514783
+      value: -0.15147832
       objectReference: {fileID: 0}
     - target: {fileID: 4334382109451786, guid: 94de333e42fa88944893a1e9daa3afe4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -11435,11 +11435,11 @@ Prefab:
       objectReference: {fileID: 723179045}
     - target: {fileID: 4900482739074260, guid: 876408189926d87449bb991b42dd0a6e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.1514783
+      value: -0.15147832
       objectReference: {fileID: 0}
     - target: {fileID: 4900482739074260, guid: 876408189926d87449bb991b42dd0a6e, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.000000006621327
+      value: 0.000000006621328
       objectReference: {fileID: 0}
     - target: {fileID: 114972025071467932, guid: 876408189926d87449bb991b42dd0a6e,
         type: 2}
@@ -13486,11 +13486,11 @@ Prefab:
       objectReference: {fileID: 1764716870}
     - target: {fileID: 4066609492303022, guid: 43c5b109a0f83c1448ec76b949275202, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.1514783
+      value: -0.15147832
       objectReference: {fileID: 0}
     - target: {fileID: 4066609492303022, guid: 43c5b109a0f83c1448ec76b949275202, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.000000006621327
+      value: 0.000000006621328
       objectReference: {fileID: 0}
     - target: {fileID: 114940609350934020, guid: 43c5b109a0f83c1448ec76b949275202,
         type: 2}
