@@ -15,7 +15,10 @@ public class PauseMenu : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        soundEffectsSlider.value = AudioListener.volume;
+        if(soundEffectsSlider != null)
+        {
+            soundEffectsSlider.value = AudioListener.volume;
+        }
 	}
 	
 	// Update is called once per frame
