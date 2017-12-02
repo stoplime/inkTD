@@ -10,7 +10,12 @@ public class PauseMenu : MonoBehaviour
     public Button closeButton;
     public GameObject pauseMenu;
     public Slider soundEffectsSlider;
+    public Toggle fullScreenToggle;
+    public Dropdown resolutionsDropdown;
     public static bool isPaused;
+    public static bool isFullScreen;
+    public Resolution[] resolutions;
+    public int selectedResoultion;
 
     // Use this for initialization
     void Start ()
@@ -18,6 +23,27 @@ public class PauseMenu : MonoBehaviour
         if(soundEffectsSlider != null)
         {
             soundEffectsSlider.value = AudioListener.volume;
+        }
+        isFullScreen = Screen.fullScreen;
+        if (fullScreenToggle != null)
+        {
+            fullScreenToggle.isOn = isFullScreen;
+        }
+        resolutions = Screen.resolutions;
+        // print("Run the start");
+        if (resolutionsDropdown != null)
+        {
+            List<string> options = new List<string>();
+            for (int i = 0; i < resolutions.Length; i++)
+            {
+                options.Add(resolutions[i].width.ToString() + "x" + resolutions[i].height.ToString());
+                if (resolutions[i].Equals(Screen.currentResolution))
+                {
+                    selectedResoultion = i;
+                }
+            }
+            resolutionsDropdown.AddOptions(options);
+            resolutionsDropdown.value = selectedResoultion;
         }
 	}
 	
@@ -30,16 +56,16 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         isPaused = !isPaused;
-        Debug.Log(isPaused);
+        // Debug.Log(isPaused);
         if (isPaused)
         {
             Time.timeScale = 0.0f;
-            this.gameObject.SetActive(true);
+            pauseMenu.SetActive(true);
         }
         else
         {
             Time.timeScale = 1.0f;
-            this.gameObject.SetActive(false);
+            pauseMenu.SetActive(false);
         }
     }
 
@@ -63,5 +89,25 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void ToggleFullScreen()
+    {
+        isFullScreen = !isFullScreen;
+        Screen.fullScreen = isFullScreen;
+    }
+
+    public void OnChangeResolution()
+    {
+        if (resolutions == null)
+        {
+            Start();
+        }
+        if (resolutionsDropdown != null)
+        {
+            selectedResoultion = resolutionsDropdown.value;
+        }
+        Screen.SetResolution(resolutions[selectedResoultion].width, resolutions[selectedResoultion].height, isFullScreen);
+        // print("Resolution Change");
     }
 }

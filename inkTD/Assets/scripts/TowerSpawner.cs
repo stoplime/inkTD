@@ -87,7 +87,12 @@ public class TowerSpawner : MonoBehaviour {
                 existingHighlight.transform.position = new Vector3(0, -100, 0);
             }
         }
+        else if (Help.MouseOnUI && existingHighlight != null)
+        {
+            existingHighlight.transform.position = new Vector3(0, -100, 0);
+        }
 	}
+    
 
 	// Use this for initialization
 	void Start () {
