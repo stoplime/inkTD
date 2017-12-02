@@ -33,6 +33,7 @@ public class PauseMenu : MonoBehaviour
         // print("Run the start");
         if (resolutionsDropdown != null)
         {
+            resolutionsDropdown.ClearOptions();
             List<string> options = new List<string>();
             for (int i = 0; i < resolutions.Length; i++)
             {
@@ -109,5 +110,17 @@ public class PauseMenu : MonoBehaviour
         }
         Screen.SetResolution(resolutions[selectedResoultion].width, resolutions[selectedResoultion].height, isFullScreen);
         // print("Resolution Change");
+    }
+
+    public void OnAntiAlias(bool value)
+    {
+        if (value)
+        {
+            QualitySettings.antiAliasing = 2;
+        }
+        else
+        {
+            QualitySettings.antiAliasing = 0;
+        }
     }
 }
