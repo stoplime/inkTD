@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public Button pauseButton;
     public Button closeButton;
     public GameObject pauseMenu;
+    public Slider musicSlider;
     public Slider soundEffectsSlider;
     public Toggle fullScreenToggle;
     public Dropdown resolutionsDropdown;
@@ -16,11 +17,13 @@ public class PauseMenu : MonoBehaviour
     public static bool isFullScreen;
     public Resolution[] resolutions;
     public int selectedResoultion;
+    public AudioSource music;
 
     // Use this for initialization
     void Start ()
     {
-        if(soundEffectsSlider != null)
+        music.ignoreListenerVolume = true;
+        if (soundEffectsSlider != null)
         {
             soundEffectsSlider.value = AudioListener.volume;
         }
@@ -82,7 +85,12 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void ChangeVolume()
+    public void ChangeMusicVolume()
+    {
+        music.volume = musicSlider.value;
+    }
+
+    public void ChangeSoundEffectVolume()
     {
         AudioListener.volume = soundEffectsSlider.value;
     }
