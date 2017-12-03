@@ -95,6 +95,12 @@ namespace helper
         /// </summary>
         public static RectTransform BlankButtonRect { get { return blankButtonRect; } }
 
+        public static float MusicVolume
+        {
+            get{return musicVolume;} 
+            set{musicVolume = value;}
+        }
+
         /// <summary>
         /// Gets or sets the volume of the sound effects emitted from towers.
         /// </summary>
@@ -110,6 +116,7 @@ namespace helper
 
         private static GameObject blankButton = null;
 
+        private static float musicVolume = 0.5f;
         private static float towerSoundEffectVolume = 0.50f;
 
         /// <summary>
