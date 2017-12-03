@@ -22,8 +22,10 @@ public class PauseMenu : MonoBehaviour
 
     void Awake()
     {
-        
-        musicPlayer.GetComponent<AudioSource>().volume = Help.MusicVolume;
+        if (musicPlayer != null)
+        {
+            musicPlayer.GetComponent<AudioSource>().volume = Help.MusicVolume;
+        }
     }
 
     // Use this for initialization
