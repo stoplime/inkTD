@@ -19,6 +19,8 @@ public class SaveState
 	public List<int> creatureSpawnTimeKeys;
 	public List<float> creatureSpawnTimeValues;
 	public List<int> deadPlayers;
+	public float musicVolume;
+	public float soundEffectVolume;
 }
 
 public class SaveLoad : MonoBehaviour {
@@ -38,6 +40,12 @@ public class SaveLoad : MonoBehaviour {
 		StreamReader reader = new StreamReader(filePath);
 		SaveState data = JsonConvert.DeserializeObject<SaveState>(reader.ReadToEnd());
 		reader.Close();
+		PauseMenu options = GetComponent<PauseMenu>();
+		if (options != null)
+		{
+			options.SetMusicVolume(data.musicVolume);
+			options.SetSoundEffectVolume(data.soundEffectVolume);
+		}
 		PlayerManager.LoadSave(data);
 	}
 

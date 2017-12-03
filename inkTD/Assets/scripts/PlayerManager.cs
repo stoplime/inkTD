@@ -130,6 +130,8 @@ public static class PlayerManager
             data.creatureSpawnTimeValues.Add(creatureSpawnTime[data.creatureSpawnTimeKeys[i]]); 
         }
         data.deadPlayers = deadPlayers;
+        data.musicVolume = Help.MusicVolume;
+        data.soundEffectVolume = Help.TowerSoundEffectVolume;
         return data;
     }
 
@@ -140,7 +142,6 @@ public static class PlayerManager
             grids[data.gridsKeys[i]].ResetGrid();
             if (data.gridsObjects != null)
             {
-                MonoBehaviour.print(data.gridsObjects.Count);
                 for (int j = 0; j < data.gridsObjects[i].Count; j++)
                 {
                     data.gridsObjects[i][j].InstantiateTower(data.gridsKeys[i]);

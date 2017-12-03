@@ -102,10 +102,22 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public void SetMusicVolume(float value)
+    {
+        musicSlider.value = value;
+        ChangeMusicVolume();
+    }
+
     public void ChangeMusicVolume()
     {
         musicPlayer.GetComponent<AudioSource>().volume = musicSlider.value;
         Help.MusicVolume = musicSlider.value;
+    }
+
+    public void SetSoundEffectVolume(float value)
+    {
+        soundEffectsSlider.value = value;
+        ChangeSoundEffectVolume();
     }
 
     public void ChangeSoundEffectVolume()
