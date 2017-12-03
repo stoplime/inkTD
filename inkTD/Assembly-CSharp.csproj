@@ -120,6 +120,7 @@
      <Compile Include="Assets\scripts\MainMenuScript.cs" />
      <Compile Include="Assets\scripts\MenuButton.cs" />
      <Compile Include="Assets\scripts\Modifier.cs" />
+     <Compile Include="Assets\scripts\MusicLoader.cs" />
      <Compile Include="Assets\scripts\Obstacle.cs" />
      <Compile Include="Assets\scripts\PathTraverser.cs" />
      <Compile Include="Assets\scripts\PathVisualizer.cs" />

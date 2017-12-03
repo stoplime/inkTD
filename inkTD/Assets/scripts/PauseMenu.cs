@@ -20,6 +20,12 @@ public class PauseMenu : MonoBehaviour
     public Resolution[] resolutions;
     public int selectedResoultion;
 
+    void Awake()
+    {
+        
+        musicPlayer.GetComponent<AudioSource>().volume = Help.MusicVolume;
+    }
+
     // Use this for initialization
     void Start ()
     {
@@ -27,7 +33,7 @@ public class PauseMenu : MonoBehaviour
         {
             if (musicPlayer != null)
             {
-                musicSlider.value = musicPlayer.GetComponent<AudioSource>().volume;
+                musicSlider.value = Help.MusicVolume;
             }
             else
             {
@@ -99,6 +105,7 @@ public class PauseMenu : MonoBehaviour
     public void ChangeMusicVolume()
     {
         musicPlayer.GetComponent<AudioSource>().volume = musicSlider.value;
+        Help.MusicVolume = musicSlider.value;
     }
 
     public void ChangeSoundEffectVolume()

@@ -20,7 +20,7 @@ public static class PlayerManager
     public const float ResellPercentage = 0.85f;
 
     private const string WinLoseMenuPrefabPath = "Misc Prefabs/Win_Lose Menu";
-
+    
     public static WinLoseHandler winLoseScript;
 
     /// <summary>
