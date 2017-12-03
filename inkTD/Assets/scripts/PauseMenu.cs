@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using helper;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -13,19 +14,29 @@ public class PauseMenu : MonoBehaviour
     public Slider soundEffectsSlider;
     public Toggle fullScreenToggle;
     public Dropdown resolutionsDropdown;
+    public GameObject musicPlayer;
     public static bool isPaused;
     public static bool isFullScreen;
     public Resolution[] resolutions;
     public int selectedResoultion;
-    public AudioSource music;
 
     // Use this for initialization
     void Start ()
     {
-        music.ignoreListenerVolume = true;
-        if (soundEffectsSlider != null)
+        if (musicSlider != null)
         {
-            soundEffectsSlider.value = AudioListener.volume;
+            if (musicPlayer != null)
+            {
+                musicSlider.value = musicPlayer.GetComponent<AudioSource>().volume;
+            }
+            else
+            {
+                musicSlider.enabled = false;
+            }
+        }
+        if(soundEffectsSlider != null)
+        {
+            soundEffectsSlider.value = Help.TowerSoundEffectVolume;
         }
         isFullScreen = Screen.fullScreen;
         if (fullScreenToggle != null)
@@ -87,12 +98,12 @@ public class PauseMenu : MonoBehaviour
 
     public void ChangeMusicVolume()
     {
-        music.volume = musicSlider.value;
+        musicPlayer.GetComponent<AudioSource>().volume = musicSlider.value;
     }
 
     public void ChangeSoundEffectVolume()
     {
-        AudioListener.volume = soundEffectsSlider.value;
+        Help.TowerSoundEffectVolume = soundEffectsSlider.value;
     }
 
     public void QuitGame()
