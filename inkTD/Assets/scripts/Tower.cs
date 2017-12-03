@@ -4,6 +4,42 @@ using UnityEngine;
 using helper;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
+public class TowerState
+{
+    public Towers towerType;
+    public float health;
+    public IntVector2 pos;
+
+    public TowerState()
+    {
+    }
+    public TowerState(Towers towerType, float health)
+    {
+        this.towerType = towerType;
+        this.health = health;
+    }
+    public TowerState(Towers towerType, IntVector2 pos)
+    {
+        this.towerType = towerType;
+        this.pos = pos;
+    }
+
+    public void InstantiateTower(int id)
+    {
+        if (towerType == Towers.TowerCastle)
+        {
+            GameObject towerCastleObject = MonoBehaviour.Instantiate(Resources.Load<GameObject>("Towers/Tower_Castle"));
+            towerCastleObject.name = "Player " + (id + 1).ToString() + "'s Tower Castle";
+            towerCastleObject.GetComponent<Tower>().health = health;
+            PlayerManager.GetGrid(id).TowerCastle = towerCastleObject;
+        }
+        else
+        {
+            PlayerManager.PlaceTower(id, id, pos, Quaternion.identity, towerType, null, "", 0);
+        }
+    }
+}
 public class Tower : GridSnapInkObject
 {
     [Header("General Settings")]

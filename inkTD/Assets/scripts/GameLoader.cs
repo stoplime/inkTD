@@ -313,6 +313,7 @@ public class GameLoader : MonoBehaviour
 
                 if (creatures.ContainsKey(creatureType))
                 {
+                    creatures[creatureType].creatureScript.creatureType = creatureType;
                     creatures[creatureType].creatureScript.maxHealth = health;
                     creatures[creatureType].creatureScript.health = health;
                     creatures[creatureType].creatureScript.damage = damage;

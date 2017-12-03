@@ -4,8 +4,18 @@ using UnityEngine;
 using helper;
 using System;
 
+// [System.Serializable]
+// public class CreatureState
+// {
+// 	public Creatures creatureType;
+// 	public float health;
+// 	public IntVector2 pos;
+// }
 public class Creature : InkObject
 {
+	[Tooltip("The creatures enum type.")]
+	public Creatures creatureType;
+
 	[Tooltip("A percentage taken off of the regular damage.")]
     public float defense;
 

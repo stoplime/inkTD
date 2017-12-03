@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace helper
 {
+    [System.Serializable]
     public struct IntVector2
     {
         public int x, y;

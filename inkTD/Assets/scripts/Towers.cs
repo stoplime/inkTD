@@ -1,5 +1,6 @@
 ﻿public enum Towers
 {
+    TowerCastle = 100,
     MagicCatagory = -4,
     CannonCatagory = -3,
     ArrowCatagory = -2,

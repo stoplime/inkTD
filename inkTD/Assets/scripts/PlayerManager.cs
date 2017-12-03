@@ -73,6 +73,107 @@ public static class PlayerManager
     /// </summary>
     public const int CurrentPlayer = 0;
 
+    public static SaveState MakeSave()
+    {
+        SaveState data = new SaveState();
+        data.gridsKeys = new List<int>(grids.Keys);
+        data.gridsObjects = new List< List<TowerState> >();
+        for (int i = 0; i < data.gridsKeys.Count; i++)
+        {
+            data.gridsObjects.Add(new List<TowerState>());
+            Grid field = grids[data.gridsKeys[i]];
+            List<GameObject> objectsOnField = field.GetAllGridObjects();
+            for (int j = 0; j < objectsOnField.Count; j++)
+            {
+                Tower towerScript = objectsOnField[j].GetComponent<Tower>();
+                TowerState towerState;
+                if (towerScript != null)
+                {
+                    if (towerScript.towerType == Towers.TowerCastle)
+                    {
+                        towerState = new TowerState(towerScript.towerType, towerScript.health);
+                    }
+                    else
+                    {
+                        towerState = new TowerState(towerScript.towerType, towerScript.GridPosition);
+                    }
+                    data.gridsObjects[i].Add(towerState);
+                }
+            }
+        }
+
+        data.incomeKeys = new List<int>(income.Keys);
+        data.incomeValues = new List<float>();
+        for (int i = 0; i < data.incomeKeys.Count; i++)
+        {
+            data.incomeValues.Add(income[data.incomeKeys[i]]); 
+        }
+
+        data.balanceKeys = new List<int>(balance.Keys);
+        data.balanceValues = new List<float>();
+        for (int i = 0; i < data.balanceKeys.Count; i++)
+        {
+            data.balanceValues.Add(balance[data.balanceKeys[i]]); 
+        }
+        
+        // data.creaturesKeys = new List<int>(creatures.Keys);
+        // data.creaturesValues = new List< List<Creature> >();
+        // for (int i = 0; i < data.creaturesKeys.Count; i++)
+        // {
+        //     data.creaturesValues.Add(creatures[data.creaturesKeys[i]]); 
+        // }
+        
+        data.creatureSpawnTimeKeys = new List<int>(creatureSpawnTime.Keys);
+        data.creatureSpawnTimeValues = new List<float>();
+        for (int i = 0; i < data.creatureSpawnTimeKeys.Count; i++)
+        {
+            data.creatureSpawnTimeValues.Add(creatureSpawnTime[data.creatureSpawnTimeKeys[i]]); 
+        }
+        data.deadPlayers = deadPlayers;
+        return data;
+    }
+
+    public static void LoadSave(SaveState data)
+    {
+        for (int i = 0; i < data.gridsKeys.Count; i++)
+        {
+            grids[data.gridsKeys[i]].ResetGrid();
+            if (data.gridsObjects != null)
+            {
+                MonoBehaviour.print(data.gridsObjects.Count);
+                for (int j = 0; j < data.gridsObjects[i].Count; j++)
+                {
+                    data.gridsObjects[i][j].InstantiateTower(data.gridsKeys[i]);
+                }
+            }
+        }
+        
+        income.Clear();
+        for (int i = 0; i < data.incomeKeys.Count; i++)
+        {
+            income[data.incomeKeys[i]] = data.incomeValues[i]; 
+        }
+        
+        balance.Clear();
+        for (int i = 0; i < data.balanceKeys.Count; i++)
+        {
+            balance[data.balanceKeys[i]] = data.balanceValues[i]; 
+        }
+        
+        // creatures.Clear();
+        // for (int i = 0; i < data.creaturesKeys.Count; i++)
+        // {
+        //     creatures[data.creaturesKeys[i]] = data.creaturesValues[i]; 
+        // }
+
+        creatureSpawnTime.Clear();
+        for (int i = 0; i < data.creatureSpawnTimeKeys.Count; i++)
+        {
+            creatureSpawnTime[data.creatureSpawnTimeKeys[i]] = data.creatureSpawnTimeValues[i]; 
+        }
+        deadPlayers = data.deadPlayers;
+    }
+
     /// <summary>
     /// Meathod to add the creature into the creatures list.
     /// </summary>
@@ -408,23 +509,6 @@ public static class PlayerManager
     {
         if (grids.ContainsKey(playerID))
             grids[playerID].setGridObject(x, y, null);
-    }
-
-    /// <summary>
-    /// Places a tower of the given prefab at the given location if the position is valid, and the player with the ID of playerID has enough ink in their balance.
-    /// </summary>
-    /// <param name="gridID">The ID of the grid where the tower will be placed.</param>
-    /// <param name="playerID">The ID of the player whose ink will decrease for purchasing the tower.</param>
-    /// <param name="gridPos">The position to place the tower.</param>
-    /// <param name="orientation">The angle/rotation orientation of the tower.</param>
-    /// <param name="towerPrefab">The name of the tower prefab.</param>
-    /// <param name="notEnoughInkObject">The gameobject that appears when there is not enough ink.</param>
-    /// <param name="notEnoughInkText">The text that is applied the the notEnoughInkObject.</param>
-    /// <param name="textLife">The time the notEnoughInkObject stick around for (if applicable).</param>
-    /// <returns></returns>
-    public static bool PlaceTower(int gridID, int playerID, IntVector2 gridPos, Quaternion orientation, string towerPrefab, GameObject notEnoughInkObject, string notEnoughInkText, int textLife)
-    {
-        return PlaceTower(gridID, playerID, gridPos, orientation, Resources.Load("Towers/" + towerPrefab) as GameObject, notEnoughInkObject, notEnoughInkText, textLife);
     }
 
     /// <summary>

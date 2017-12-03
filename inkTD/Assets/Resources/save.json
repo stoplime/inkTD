@@ -1,0 +1,85 @@
+{
+  "gridsKeys": [
+    0,
+    1
+  ],
+  "gridsObjects": [
+    [
+      {
+        "towerType": 19,
+        "health": 0.0,
+        "pos": {
+          "x": 3,
+          "y": 3
+        }
+      },
+      {
+        "towerType": 0,
+        "health": 0.0,
+        "pos": {
+          "x": 3,
+          "y": 5
+        }
+      },
+      {
+        "towerType": 10,
+        "health": 0.0,
+        "pos": {
+          "x": 3,
+          "y": 6
+        }
+      },
+      {
+        "towerType": 20,
+        "health": 0.0,
+        "pos": {
+          "x": 4,
+          "y": 3
+        }
+      },
+      {
+        "towerType": 1,
+        "health": 0.0,
+        "pos": {
+          "x": 4,
+          "y": 5
+        }
+      }
+    ],
+    [
+      {
+        "towerType": 19,
+        "health": 0.0,
+        "pos": {
+          "x": 44,
+          "y": 5
+        }
+      }
+    ]
+  ],
+  "incomeKeys": [
+    0,
+    1
+  ],
+  "incomeValues": [
+    10.0,
+    15.0
+  ],
+  "balanceKeys": [
+    0,
+    1
+  ],
+  "balanceValues": [
+    110.0,
+    6.0
+  ],
+  "creatureSpawnTimeKeys": [
+    0,
+    1
+  ],
+  "creatureSpawnTimeValues": [
+    333.0,
+    333.0
+  ],
+  "deadPlayers": []
+}

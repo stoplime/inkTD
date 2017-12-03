@@ -4,6 +4,7 @@ using UnityEngine;
 using helper;
 using System;
 
+[System.Serializable]
 public class Grid : MonoBehaviour {
 
 	public int ID;
@@ -92,6 +93,22 @@ public class Grid : MonoBehaviour {
     /// If the grid's tower castle has died.
     /// </summary>
     private bool isDead = false;
+
+    public List<GameObject> GetAllGridObjects()
+    {
+        List<GameObject> allObjects = new List<GameObject>();
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                if (grid[i,j] != null)
+                {
+                    allObjects.Add(grid[i,j]);
+                }
+            }
+        }
+        return allObjects;
+    }
 
 	public void setGridObject(IntVector2 xy, GameObject obj){
 		grid[xy.x - gridOffset.x, xy.y - gridOffset.y] = obj;
@@ -250,6 +267,21 @@ public class Grid : MonoBehaviour {
         
 	}
 
+    public void ResetGrid()
+    {
+        for (int i = 0; i < grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < grid.GetLength(1); j++)
+            {
+                if (grid[i,j] != null)
+                {
+                    Destroy(grid[i,j]);
+                    grid[i,j] = null;
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Calls the OnGridChange event if it exists.
     /// </summary>
@@ -281,6 +313,7 @@ public class Grid : MonoBehaviour {
             towerCastle = value;
             towerCastleScript = towerCastle.GetComponent<Tower>();
             towerCastleScript.ownerID = ID;
+            towerCastleScript.towerType = Towers.TowerCastle;
             towerCastleScript.SetGridPosition(endX + OffsetX, endY + OffsetY);
         }
     }
